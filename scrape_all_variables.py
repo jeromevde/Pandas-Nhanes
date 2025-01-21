@@ -39,28 +39,31 @@ def extract_table_to_dataframe():
 
 def extract_variable_info(doc_link):
     # Extract variables and their descriptions from a given documentation link
-    print(doc_link)
-    response = requests.get(doc_link)
-    response.raise_for_status()
-    
-    soup = BeautifulSoup(response.content, "html.parser")
-    codebook_section = soup.find("ul", id="CodebookLinks")
-    
-    if not codebook_section:
-        return pd.DataFrame()  # Return an empty DataFrame
-    
-    variables = []
-    for li in codebook_section.find_all("li")[::-1]:
-        link_tag = li.find("a")
-        if link_tag:
-            href = link_tag.get("href")
-            text = link_tag.text.strip()
-            if " - " in text:
-                variable_name, variable_explanation = text.split(" - ", 1)
-                variable_doc_link = doc_link + href
-                variables.append([variable_name, variable_explanation, variable_doc_link])
-    
-    return pd.DataFrame(variables, columns=["variable name", "variable explanation", "variable documentation link"])
+    try:
+        print(doc_link)
+        response = requests.get(doc_link)
+        response.raise_for_status()
+        
+        soup = BeautifulSoup(response.content, "html.parser")
+        codebook_section = soup.find("ul", id="CodebookLinks")
+        
+        if not codebook_section:
+            return pd.DataFrame()  # Return an empty DataFrame
+        
+        variables = []
+        for li in codebook_section.find_all("li")[::-1]:
+            link_tag = li.find("a")
+            if link_tag:
+                href = link_tag.get("href")
+                text = link_tag.text.strip()
+                if " - " in text:
+                    variable_name, variable_explanation = text.split(" - ", 1)
+                    variable_doc_link = doc_link + href
+                    variables.append([variable_name, variable_explanation, variable_doc_link])
+        
+        return pd.DataFrame(variables, columns=["variable name", "variable explanation", "variable documentation link"])
+    except Exception as e:
+        return pd.DataFrame(columns=["variable name", "variable explanation", "variable documentation link"])
 
 def main():
     # Fetch all datasets
