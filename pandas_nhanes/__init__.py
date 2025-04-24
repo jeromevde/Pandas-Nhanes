@@ -13,4 +13,6 @@ from .api import (
     get_variable_data,
     list_cycle_variables,
     download_full_cycle_dataframe,
+    list_cycles,
+    get_variable_description,
 )

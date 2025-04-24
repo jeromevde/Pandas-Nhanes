@@ -20,12 +20,29 @@ def list_cycle_variables(cycle):
 
     Examples
     --------
-    >>> from pandas_nhanes.api import list_cycle_variables
+    >>> from pandas_nhanes import list_cycle_variables
     >>> vars_df = list_cycle_variables('2021-2023')
     >>> print(vars_df.head())
     """
-    data = pd.read_csv("nhanes_variables.csv")
+    import importlib.resources
+    with importlib.resources.path("pandas_nhanes", "nhanes_variables.csv") as csv_path:
+        data = pd.read_csv(csv_path)
     return data[data["cycle name"] == cycle][["variable name", "variable explanation", "cycle dataset link"]]
+
+
+def list_cycles():
+    """
+    List all available NHANES cycles.
+
+    Returns
+    -------
+    list of str
+        List of unique NHANES cycle names.
+    """
+    import importlib.resources
+    with importlib.resources.path("pandas_nhanes", "nhanes_variables.csv") as csv_path:
+        data = pd.read_csv(csv_path)
+    return list(data["cycle name"].unique())
 
 
 def get_variable_data(variables, cycle):
@@ -59,8 +76,10 @@ def get_variable_data(variables, cycle):
     if isinstance(variables, str):
         variables = [variables]
     # Find all rows in the variable metadata for the given cycle and requested variables
-    matching_rows = list_cycle_variables(cycle)
-    matching_rows = matching_rows[matching_rows["variable name"].isin(variables)]
+    import importlib.resources
+    with importlib.resources.path("pandas_nhanes", "nhanes_variables.csv") as csv_path:
+        data = pd.read_csv(csv_path)
+    matching_rows = data[(data["cycle name"] == cycle) & (data["variable name"].isin(variables))]
     found_vars = set(matching_rows["variable name"])
     missing_vars = set(variables) - found_vars
     if missing_vars:
