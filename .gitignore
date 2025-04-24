@@ -1,1 +1,73 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+dist/
+.eggs/
+*.egg-info/
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+.pytest_cache/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# pyenv
+.python-version
+
+# mypy
+.mypy_cache/
+.dmypy.json
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Sphinx build
+/docs/build/
+
+# MacOS
+.DS_Store
+
+# Data or partial/intermediate results
 partial_results
+
+# System files
+Thumbs.db
+Desktop.ini
+
+# Environment files
+.env
+.venv
+venv/
+ENV/
+
+# Local test results
+*.log
+
+# Ignore NHANES data downloads (if any)
+nhanes_data/

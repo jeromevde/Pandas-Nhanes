@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pandas_nhanes"
+version = "0.1.1"
+description = "Tools for accessing and processing NHANES data with pandas"
+authors = [
+  { name="Your Name", email="your@email.com" }
+]
+readme = "README.md"
+license = { file = "LICENSE" }
+dependencies = [
+  "pandas",
+  "requests",
+  "tqdm"
+]
