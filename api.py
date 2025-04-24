@@ -1,14 +1,9 @@
-
 #%%
 import pandas as pd
 import requests
-import requests
-import os
-import pandas as pd
 import io
-import pandas as pd
 from collections import OrderedDict
-import qgrid
+from tqdm import tqdm
 
 #%%
 from itables import show
@@ -27,7 +22,7 @@ def list_cycle_description():
 #%%
 def list_cycle_variables(cycle):
     data = pd.read_csv("nhanes_variables.csv")
-    return data[data["cycle name"] == cycle][["variable name", "variable explanation"]]
+    return data[data["cycle name"] == cycle][["variable name", "variable explanation", "cycle dataset link"]]
 
 # list_cycle_variables("1999-2004")
 
@@ -88,6 +83,7 @@ def get_variable_data(variables, cycle):
     Raises:
     - ValueError: If any variables are not found in the specified cycle or in the dataset.
     """
+
     # If input is a single string, convert it to a list
     if isinstance(variables, str):
         variables = [variables]
@@ -131,7 +127,53 @@ def get_variable_data(variables, cycle):
     result = pd.concat(dfs, axis=1)
     
     return result
-    
+
+#%%
+
+def download_full_cycle_dataframe(cycle, replace_names_with_descriptions=False):
+    """
+    Download and merge all datasets for a given cycle, joining on SEQN.
+    Returns the full merged DataFrame for the cycle.
+    If replace_names_with_descriptions is True, variable names are replaced by their descriptions.
+    """
+    # Get the DataFrame listing all datasets for the cycle
+    cycle_variables = list_cycle_variables(cycle)
+    print("DEBUG: cycle_variables columns:", cycle_variables.columns)
+    # Get unique dataset links for the cycle
+    # (rest of function unchanged)
+    dataset_links = cycle_variables["cycle dataset link"].unique()
+
+    dfs = []
+    for dataset_link in tqdm(dataset_links, desc="Downloading datasets"):
+        df = download_xpt_as_csv(dataset_link)
+        if "SEQN" in df.columns:
+            df = df.groupby("SEQN").mean(numeric_only=True)
+            dfs.append(df)
+    # Merge all DataFrames on SEQN (outer join to preserve all SEQN values)
+    if dfs:
+        full_df = pd.concat(dfs, axis=1, join="outer")
+        if replace_names_with_descriptions:
+            # Build mapping from variable name to description
+            var_desc = cycle_variables.set_index("variable name")["variable explanation"].to_dict()
+            # Prepare new columns: keep SEQN as is if present, otherwise replace variable names
+            new_columns = []
+            for col in full_df.columns:
+                if col == "SEQN":
+                    new_columns.append(col)
+                else:
+                    new_columns.append(var_desc.get(col, col))
+            full_df.columns = new_columns
+        return full_df
+    else:
+        raise ValueError(f"No datasets found for cycle {cycle}")
+
+
+res = download_full_cycle_dataframe("2021-2023", replace_names_with_descriptions=True)
+
+
+#%%
+
+
 
 show(list_cycle_variables("2021-2023"))
 
