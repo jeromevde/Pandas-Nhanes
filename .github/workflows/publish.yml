@@ -1,0 +1,65 @@
+name: Publish to PyPI
+
+permissions:
+  contents: write
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for version bumping
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install build tools
+      run: |
+        echo "[WORKFLOW] Installing build and publish dependencies..."
+        python -m pip install --upgrade pip
+        pip install build twine
+
+    - name: Make bump script executable
+      run: |
+        echo "[WORKFLOW] Making bump_version.sh executable..."
+        chmod +x .github/workflows/bump_version.sh
+
+    - name: Version bump (if needed)
+      id: version_check
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "[WORKFLOW] Running bump_version.sh..."
+        NEW_VERSION=$(./.github/workflows/bump_version.sh)
+        echo "[WORKFLOW] Version to use: $NEW_VERSION"
+        echo "version=$NEW_VERSION" >> $GITHUB_OUTPUT
+
+    - name: Checkout latest commit
+      run: |
+        echo "[WORKFLOW] Fetching and checking out latest commit..."
+        git fetch origin main
+        git checkout origin/main
+        
+    - name: Build package
+      if: steps.version_check.outputs.version != ''
+      run: |
+        echo "[WORKFLOW] Building package..."
+        python -m build
+
+    - name: Publish to PyPI
+      if: steps.version_check.outputs.version != ''
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+      run: |
+        echo "[WORKFLOW] Publishing to PyPI..."
+        python -m twine upload dist/*
+        echo "[WORKFLOW] Publish complete."
