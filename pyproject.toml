@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pandas_nhanes"
-version = "0.1.1"
+version = "0.1.5"
 description = "Tools for accessing and processing NHANES data with pandas"
 authors = [
   { name="Your Name", email="your@email.com" }
