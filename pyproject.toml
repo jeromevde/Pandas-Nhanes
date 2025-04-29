@@ -14,5 +14,6 @@ license = { file = "LICENSE" }
 dependencies = [
   "pandas",
   "requests",
-  "tqdm"
+  "tqdm",
+  "itables"
 ]
