@@ -39,3 +39,8 @@ explore()
 # Download a dataset as a pandas DataFrame
 TST_L = get_dataset("TST_L")
 ```
+
+## Examples
+
+![estradiol](Examples/estradiol.png)
+![testosterone](Examples/testosterone.png)
