@@ -24,15 +24,18 @@ pip install -e .
 ## Usage
 
 ```python
-from pandas_nhanes import get_variables, get_dataset
-
+from pandas_nhanes import get_variables, get_dataset, explore
+```
+```python
 # Get the full NHANES variable table
 variables = get_variables()
-print(variables.head())
+```
 
+```python
+# Explore the variables table in an interactive HTML table in browser
+explore()
+```
+```python
 # Download a dataset as a pandas DataFrame
-# (use the 'dataset link' column from the variables table)
-dataset = variables.iloc[0]['dataset']
-df = get_dataset(dataset)
-print(df.head())
+TST_L = get_dataset("TST_L")
 ```
