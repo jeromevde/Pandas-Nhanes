@@ -10,11 +10,13 @@ setup(
     packages=find_packages(),
     install_requires=[
         "pandas>=2.0.0",
-        "openpyxl>=3.0.0",  # for Excel support
+        "requests",
+        "tqdm",
+        "itables"
     ],
     author="Jerome",
     author_email="",
-    description="A Python API for accessing USDA FoodData Central data",
+    description="A Python API for accessing NHANES data",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     url="https://github.com/jeromevde/pandas_nhanes",
