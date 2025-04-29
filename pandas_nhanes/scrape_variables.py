@@ -8,6 +8,8 @@ from concurrent.futures import ThreadPoolExecutor
 import os
 from tqdm import tqdm
 import logging
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Target URL
 TARGET_URL = "https://wwwn.cdc.gov/nchs/nhanes/search/datapage.aspx"
@@ -49,7 +51,12 @@ def extract_table_to_dataframe():
         
         data.append([cycle, doc_link, data_link])
     
-    return pd.DataFrame(data, columns=["cycle name", "cycle documentation link", "cycle dataset link"])
+    # Also extract dataset name from the dataset documentation link
+    df = pd.DataFrame(data, columns=["cycle name", "dataset documentation link", "dataset link"])
+    df["dataset"] = df["dataset documentation link"].apply(lambda x: os.path.splitext(os.path.basename(x))[0] if pd.notnull(x) else None)
+    # Reorder columns
+    df = df[["cycle name", "dataset", "dataset link", "dataset documentation link"]]
+    return df
 
 def extract_variable_info(doc_link):
     """Extract variable information from a documentation page."""
@@ -66,28 +73,28 @@ def extract_variable_info(doc_link):
     for li in codebook_section.find_all("li"):
         link_tag = li.find("a")
         if link_tag:
-            href = link_tag.get("href")
             text = link_tag.text.strip()
             if " - " in text:
                 variable_name, variable_explanation = text.split(" - ", 1)
-                variable_doc_link = doc_link + href
-                variables.append([variable_name, variable_explanation, variable_doc_link])
+                variables.append([variable_name, variable_explanation])
     
-    return pd.DataFrame(variables, columns=["variable name", "variable explanation", "variable documentation link"])
+    return pd.DataFrame(variables, columns=["variable name", "variable explanation"])
 
 def process_dataset(index, row):
     """Process a single dataset row and save its variables DataFrame."""
     try:
         cycle_name = row["cycle name"]
-        cycle_doc_link = row["cycle documentation link"]
-        cycle_data_link = row["cycle dataset link"]
+        dataset = row["dataset"]
+        dataset_link = row["dataset link"]
+        dataset_doc_link = row["dataset documentation link"]
         
-        if cycle_doc_link:
-            variables_df = extract_variable_info(cycle_doc_link)
+        if dataset_doc_link:
+            variables_df = extract_variable_info(dataset_doc_link)
             if not variables_df.empty:
-                variables_df.insert(2, "cycle name", cycle_name)
-                variables_df["cycle documentation link"] = cycle_doc_link
-                variables_df["cycle dataset link"] = cycle_data_link
+                variables_df.insert(0, "cycle name", cycle_name)
+                variables_df.insert(1, "dataset", dataset)
+                variables_df.insert(2, "dataset link", dataset_link)
+                variables_df.insert(3, "dataset documentation link", dataset_doc_link)
                 # Save partial result
                 filename = f"partial_results/dataset_{index}.csv"
                 variables_df.to_csv(filename, index=False)
@@ -137,8 +144,19 @@ def main():
 
     if all_dfs:
         final_df = pd.concat(all_dfs, ignore_index=True)
-        final_df.set_index("variable name", inplace=True)
-        final_df.sort_values(by="cycle name", inplace=True)
+        # Reorder columns as requested
+        columns_order = [
+            "cycle name",
+            "dataset",
+            "variable name",
+            "variable explanation",
+            "dataset link",
+            "dataset documentation link"
+        ]
+        # Only keep columns that exist in the DataFrame
+        columns_order = [col for col in columns_order if col in final_df.columns]
+        final_df = final_df[columns_order]
+        final_df.sort_values(by=["cycle name", "dataset", "variable name"], inplace=True)
         return final_df
     else:
         print("No variables found.")
@@ -148,5 +166,5 @@ if __name__ == "__main__":
     final_dataframe = main()
     if final_dataframe is not None and not final_dataframe.empty:
         print(final_dataframe)
-        final_dataframe.to_csv("nhanes_variables.csv")
+        final_dataframe.to_csv("nhanes_variables.csv", index=False)
 # %%
