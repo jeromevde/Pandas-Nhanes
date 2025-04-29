@@ -1,1 +1,2 @@
 include pandas_nhanes/nhanes_variables.csv
+include pandas_nhanes/VERSION

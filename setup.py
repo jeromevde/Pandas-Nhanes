@@ -9,10 +9,10 @@ setup(
     version=get_version(),
     packages=find_packages(),
     install_requires=[
-        "pandas>=2.0.0",
-        "requests",
-        "tqdm",
-        "itables"
+        "pandas>=2.2.3",
+        "requests>=2.32.3",
+        "tqdm>=4.66.4",
+        "itables>=2.3.0"
     ],
     author="Jerome",
     author_email="",
