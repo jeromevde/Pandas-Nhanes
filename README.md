@@ -40,7 +40,10 @@ explore()
 TST_L = get_dataset("TST_L")
 ```
 
-## Examples
+## Results
 
+### Cycle 2021-2023 Estradiol
 ![estradiol](Examples/estradiol.png)
+
+### Cycle 2021-2023 Testosterone
 ![testosterone](Examples/testosterone.png)
