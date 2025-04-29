@@ -16,7 +16,7 @@ bump_version() {
 }
 
 # Read current version and trim whitespace
-current_version=$(cat pyfooda/VERSION | tr -d ' \t\n\r')
+current_version=$(cat pandas_nhanes/VERSION | tr -d ' \t\n\r')
 echo "[BUMP] Current version: $current_version" >&2
 
 # Get latest version from PyPI
