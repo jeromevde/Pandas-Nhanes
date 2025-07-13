@@ -57,6 +57,9 @@ TST_L = get_dataset("TST_L")
 
 ## Results
 
+### Cholesterol Age
+![Cholesterol_Age](Examples/Cholesterol_Age.png)
+
 ### Estradiol Age Gender
 ![Estradiol_Age_Gender](Examples/Estradiol_Age_Gender.png)
 
