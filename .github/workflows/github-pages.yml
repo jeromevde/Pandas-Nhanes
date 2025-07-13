@@ -34,11 +34,10 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pandas>=2.2.3 requests>=2.32.3 itables>=2.3.0
-          
-      - name: Install package in development mode
-        run: |
+          # Install the package with all its dependencies
           pip install -e .
+          # Also explicitly install packaging for itables
+          pip install packaging
           
       - name: Generate HTML site
         run: |
