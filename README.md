@@ -35,6 +35,12 @@ variables = get_variables()
 # Explore the variables table in an interactive HTML table in browser
 explore()
 ```
+
+### Online Variables Explorer
+
+You can also explore the NHANES variables online at: https://jeromevde.github.io/Pandas-Nhanes
+
+
 ```python
 # Download a dataset as a pandas DataFrame
 TST_L = get_dataset("TST_L")
