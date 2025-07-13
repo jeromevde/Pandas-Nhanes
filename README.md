@@ -58,10 +58,10 @@ TST_L = get_dataset("TST_L")
 ## Results
 
 ### Estradiol Age Gender
-![estradiol_age_gender](Examples/estradiol_age_gender.png)
+![Estradiol_Age_Gender](Examples/Estradiol_Age_Gender.png)
 
 ### Testosterone Age Gender
-![testosterone_age_gender](Examples/testosterone_age_gender.png)
+![Testosterone_Age_Gender](Examples/Testosterone_Age_Gender.png)
 
 ### Testosterone Estrogen Ratio
 ![Testosterone_Estrogen_Ratio](Examples/Testosterone_Estrogen_Ratio.png)
