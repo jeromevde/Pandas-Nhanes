@@ -5,6 +5,9 @@ A Python package for accessing a cleaned subset of NHANES
 
 Caching is implemented to avoid re-downloading datasets.
 
+# Todo
+- include demographics data automatically in df
+
 ## Installation
 
 Install from PyPI:
@@ -36,6 +39,12 @@ variables = get_variables()
 explore()
 ```
 
+Rerun all examples in the examples folder:
+
+```bash 
+for script in Examples/*.py; do echo "Running $script..."; python "$script"; echo "Completed $script"; echo ""; done
+```     
+
 ### Online Variables Explorer
 
 You can also explore the NHANES variables online at: https://jeromevde.github.io/Pandas-Nhanes
@@ -48,8 +57,11 @@ TST_L = get_dataset("TST_L")
 
 ## Results
 
-### Cycle 2021-2023 Estradiol
-![estradiol](Examples/estradiol.png)
+### Estradiol Age Gender
+![estradiol_age_gender](Examples/estradiol_age_gender.png)
 
-### Cycle 2021-2023 Testosterone
-![testosterone](Examples/testosterone.png)
+### Testosterone Age Gender
+![testosterone_age_gender](Examples/testosterone_age_gender.png)
+
+### Testosterone Estrogen Ratio
+![Testosterone_Estrogen_Ratio](Examples/Testosterone_Estrogen_Ratio.png)
