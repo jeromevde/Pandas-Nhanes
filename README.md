@@ -57,15 +57,6 @@ TST_L = get_dataset("TST_L")
 
 ## Results
 
-### BMD Hybrid Complete
-![BMD_Hybrid_Complete](Examples/BMD_Hybrid_Complete.png)
-
-### BMD Age Gender Complete
-![BMD_Age_Gender_Complete](Examples/BMD_Age_Gender_Complete.png)
-
-### BMD Age Gender All Ages
-![BMD_Age_Gender_AllAges](Examples/BMD_Age_Gender_AllAges.png)
-
 ### BMD Age Gender
 ![BMD_Age_Gender](Examples/BMD_Age_Gender.png)
 
