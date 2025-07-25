@@ -34,9 +34,12 @@ def generate_site():
     print("Finding HTML examples...")
     examples_dir = os.path.join(os.path.dirname(__file__), '..', 'Examples')
     html_files = glob.glob(os.path.join(examples_dir, '*.html'))
+    json_files = glob.glob(os.path.join(examples_dir, '*.json'))
     
     # Create example entries with metadata
     examples = []
+    
+    # Copy all HTML files to site directory
     for html_file in html_files:
         filename = os.path.basename(html_file)
         name = filename.replace('_interactive.html', '').replace('_', ' ').title()
@@ -55,7 +58,21 @@ def generate_site():
             'path': filename
         })
     
-    print(f"Found {len(examples)} HTML examples")
+    # Copy all JSON files to site directory
+    json_count = 0
+    for json_file in json_files:
+        filename = os.path.basename(json_file)
+        
+        # Copy JSON file to site directory
+        with open(json_file, 'r', encoding='utf-8') as f:
+            content = f.read()
+        
+        output_path = os.path.join(site_dir, filename)
+        with open(output_path, 'w', encoding='utf-8') as f:
+            f.write(content)
+        json_count += 1
+    
+    print(f"Found {len(examples)} HTML examples and {json_count} JSON files")
     
     # Create the main index.html
     html_content = f'''
@@ -403,7 +420,7 @@ def generate_site():
     
     print(f"Site generated successfully at: {html_path}")
     print(f"Total file size: {os.path.getsize(html_path) / 1024:.1f} KB")
-    print(f"Included {len(examples)} example HTML files")
+    print(f"Included {len(examples)} HTML examples and {json_count} JSON files")
 
 if __name__ == "__main__":
     generate_site()
