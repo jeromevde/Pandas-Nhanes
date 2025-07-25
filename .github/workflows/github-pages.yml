@@ -36,8 +36,17 @@ jobs:
           python -m pip install --upgrade pip
           # Install the package with all its dependencies
           pip install -e .
-          # Also explicitly install packaging for itables
-          pip install packaging
+          # Install additional dependencies for interactive visualizations
+          pip install plotly packaging
+          
+      - name: Generate interactive examples
+        run: |
+          cd Examples
+          python BMD_Age_Gender.py
+          python Cholesterol_Age.py
+          python Testosterone_Age_Gender.py
+          python Estradiol_Age_Gender.py
+          python Testosterone_Estrogen_Ratio.py
           
       - name: Generate HTML site
         run: |
