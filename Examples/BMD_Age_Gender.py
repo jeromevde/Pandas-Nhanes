@@ -11,6 +11,9 @@ from scipy.stats import zscore
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+import plotly.express as px
 
 print("Loading comprehensive whole-body BMD data from NHANES 2011-2012...")
 print("Including: Head, Arms, Legs, Ribs, Spine, Pelvis, Trunk, and Total Body")
@@ -82,7 +85,9 @@ for col in bmd_cols:
 fig, axes = plt.subplots(4, 4, figsize=(24, 20))
 fig.suptitle("Comprehensive Whole-Body BMD Analysis - NHANES 2011-2012\nAll DEXA Measurement Sites", fontsize=24, y=0.98)
 
-# Hide the last subplot (we have 13 measurements, need 16 subplots)
+# Hide the empty subplots (we have 13 measurements, need 16 subplots)
+axes[3, 1].set_visible(False)
+axes[3, 2].set_visible(False)
 axes[3, 3].set_visible(False)
 
 # Increase font sizes globally
@@ -188,7 +193,7 @@ for idx, (col, title) in enumerate(measurements_ordered):
     
     # Set appropriate y-limits based on body part
     if "Head" in title:
-        ax.set_ylim(0.8, 2.5)
+        ax.set_ylim(1.0, 3.5)
     elif "Arm" in title:
         ax.set_ylim(0.4, 1.2)
     elif "Leg" in title:
