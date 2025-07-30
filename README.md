@@ -39,35 +39,29 @@ variables = get_variables()
 explore()
 ```
 
+```python
+# Download a dataset as a pandas DataFrame
+TST_L = get_dataset("TST_L")
+```
+
 Rerun all examples in the examples folder:
 
 ```bash 
 for script in Examples/*.py; do echo "Running $script..."; python "$script"; echo "Completed $script"; echo ""; done
 ```     
 
-### Online Variables Explorer
+### Variables Explorer
 
-You can also explore the NHANES variables online at: https://jeromevde.github.io/Pandas-Nhanes
+You can explore the NHANES variables online at: https://jeromevde.github.io/Pandas-Nhanes
 
+To run the variables explorer locally (interactive mode):
 
-```python
-# Download a dataset as a pandas DataFrame
-TST_L = get_dataset("TST_L")
+```bash
+# Run the local development server (generates the site and serves it)
+python run_local_site.py
 ```
 
-## Results
+This will automatically generate the site, start a local server, and open your browser to view it.
 
-### BMD Age Gender
-![BMD_Age_Gender](Examples/BMD_Age_Gender.png)
 
-### Cholesterol Age
-![Cholesterol_Age](Examples/Cholesterol_Age.png)
 
-### Estradiol Age Gender
-![Estradiol_Age_Gender](Examples/Estradiol_Age_Gender.png)
-
-### Testosterone Age Gender
-![Testosterone_Age_Gender](Examples/Testosterone_Age_Gender.png)
-
-### Testosterone Estrogen Ratio
-![Testosterone_Estrogen_Ratio](Examples/Testosterone_Estrogen_Ratio.png)
