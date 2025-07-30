@@ -3,6 +3,10 @@
 A Python package for accessing a cleaned subset of NHANES 
 *National Health and Nutrition Examination Survey* data for quick prototyping—no API key required.
 
+Access via https://jeromevde.github.io/Pandas-Nhanes 
+
+![](website.png)
+
 Caching is implemented to avoid re-downloading datasets.
 
 # Todo
@@ -43,6 +47,12 @@ explore()
 # Download a dataset as a pandas DataFrame
 TST_L = get_dataset("TST_L")
 ```
+
+## Examples
+
+### Analysis Examples
+
+The repository includes several examples of NHANES data analysis in the `Examples` folder. Each example demonstrates how to work with specific datasets and create visualizations.
 
 Rerun all examples in the examples folder:
 
