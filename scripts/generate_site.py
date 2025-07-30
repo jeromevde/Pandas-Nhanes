@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Script to generate the HTML site for GitHub Pages.
+Script to generate the HTML site for GitHub Pages with fullscreen examples.
 Creates a custom index.html that displays NHANES variables interactively
 and showcases all HTML examples from the Examples directory.
 """
@@ -81,7 +81,7 @@ def generate_site():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NHANES Data Explorer</title>
+    <title>NHANES Variables Explorer</title>
     <style>
         * {{
             margin: 0;
@@ -101,51 +101,6 @@ def generate_site():
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-        }}
-        
-        .header {{
-            text-align: center;
-            background: white;
-            border-radius: 15px;
-            padding: 40px;
-            margin-bottom: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }}
-        
-        .header h1 {{
-            font-size: 3em;
-            color: #4a5568;
-            margin-bottom: 10px;
-        }}
-        
-        .header p {{
-            font-size: 1.2em;
-            color: #718096;
-            margin-bottom: 20px;
-        }}
-        
-        .stats {{
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-top: 20px;
-        }}
-        
-        .stat {{
-            text-align: center;
-        }}
-        
-        .stat-number {{
-            font-size: 2em;
-            font-weight: bold;
-            color: #667eea;
-        }}
-        
-        .stat-label {{
-            font-size: 0.9em;
-            color: #718096;
-            text-transform: uppercase;
-            letter-spacing: 1px;
         }}
         
         .section {{
@@ -226,10 +181,10 @@ def generate_site():
             background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
             border-radius: 10px;
             padding: 20px;
-            text-decoration: none;
             color: inherit;
             transition: transform 0.3s, box-shadow 0.3s;
             border: 2px solid transparent;
+            cursor: pointer;
         }}
         
         .example-card:hover {{
@@ -270,29 +225,50 @@ def generate_site():
             color: #718096;
             font-style: italic;
         }}
+        
+        /* Modal Styles */
+        .modal {{
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }}
+        
+        .modal-content {{
+            position: relative;
+            width: 95%;
+            height: 95%;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+        }}
+        
+        .close-modal {{
+            position: absolute;
+            right: 15px;
+            top: 10px;
+            font-size: 30px;
+            font-weight: bold;
+            color: #333;
+            cursor: pointer;
+            z-index: 1001;
+        }}
+        
+        #example-iframe {{
+            width: 100%;
+            height: 100%;
+            border: none;
+        }}
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>NHANES Data Explorer</h1>
-            <p>Interactive exploration of National Health and Nutrition Examination Survey variables and analysis examples</p>
-            <div class="stats">
-                <div class="stat">
-                    <div class="stat-number" id="total-variables">{len(df):,}</div>
-                    <div class="stat-label">Variables</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">{df['dataset'].nunique():,}</div>
-                    <div class="stat-label">Datasets</div>
-                </div>
-                <div class="stat">
-                    <div class="stat-number">{len(examples)}</div>
-                    <div class="stat-label">Examples</div>
-                </div>
-            </div>
-        </div>
-        
         <div class="section">
             <h2>🔍 NHANES Variables Database</h2>
             <div class="search-container">
@@ -324,7 +300,7 @@ def generate_site():
             <div class="examples-grid">
 '''
 
-    # Add example cards
+    # Add example cards with data-src attribute for modal loading
     example_descriptions = {
         'BMD Age Gender': 'Comprehensive bone mineral density analysis across 13 body regions by age and gender',
         'Cholesterol Age': 'HDL, LDL, and total cholesterol levels distribution across age groups', 
@@ -336,14 +312,22 @@ def generate_site():
     for example in examples:
         description = example_descriptions.get(example['name'], 'Interactive visualization and statistical analysis')
         html_content += f'''
-                <a href="{example['path']}" class="example-card">
+                <div class="example-card" data-src="{example['path']}">
                     <h3>{example['name']}</h3>
                     <p>{description}</p>
-                </a>
+                </div>
 '''
     
     html_content += f'''
             </div>
+        </div>
+    </div>
+    
+    <!-- Modal for fullscreen examples -->
+    <div class="modal" id="example-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <iframe id="example-iframe" frameborder="0"></iframe>
         </div>
     </div>
     
@@ -353,6 +337,33 @@ def generate_site():
     </div>
     
     <script>
+        // Modal functionality
+        const modal = document.getElementById('example-modal');
+        const modalIframe = document.getElementById('example-iframe');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const exampleCards = document.querySelectorAll('.example-card');
+        
+        exampleCards.forEach(function(card) {{
+            card.addEventListener('click', function() {{
+                const src = card.getAttribute('data-src');
+                modalIframe.src = src;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }});
+        }});
+        
+        closeModalBtn.addEventListener('click', function() {{
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }});
+        
+        window.addEventListener('click', function(event) {{
+            if (event.target === modal) {{
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }}
+        }});
+        
         // NHANES variables data
         const variablesData = {df_json};
         
@@ -360,7 +371,6 @@ def generate_site():
         const searchInput = document.getElementById('search-input');
         const tableBody = document.getElementById('table-body');
         const rowCount = document.getElementById('row-count');
-        const totalVariables = document.getElementById('total-variables');
         
         // Current filtered data
         let filteredData = variablesData;
@@ -369,7 +379,7 @@ def generate_site():
         function renderTable(data) {{
             tableBody.innerHTML = '';
             
-            data.forEach(row => {{
+            data.forEach(function(row) {{
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td><strong>${{row.variable || ''}}</strong></td>
@@ -390,7 +400,7 @@ def generate_site():
                 filteredData = variablesData;
             }} else {{
                 const term = searchTerm.toLowerCase();
-                filteredData = variablesData.filter(row => {{
+                filteredData = variablesData.filter(function(row) {{
                     return (row.variable && row.variable.toLowerCase().includes(term)) ||
                            (row.description && row.description.toLowerCase().includes(term)) ||
                            (row.dataset && row.dataset.toLowerCase().includes(term)) ||
@@ -402,7 +412,7 @@ def generate_site():
         }}
         
         // Search input event listener
-        searchInput.addEventListener('input', (e) => {{
+        searchInput.addEventListener('input', function(e) {{
             filterData(e.target.value);
         }});
         
