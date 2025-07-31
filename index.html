@@ -20,43 +20,41 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 1em;
-            text-align: center;
+            padding: 0;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             position: relative;
-            margin-bottom: 0;
-            margin-right: 0;
-            transition: box-shadow 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
-        }
-        .mini-iframe-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 420px;
-            height: 320px;
-            overflow: hidden;
-            border-radius: 8px;
-            background: #fff;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             cursor: pointer;
-            margin-bottom: 0.5em;
-            position: relative;
-            z-index: 1;
+        }
+        .grid-item.expanding {
+            position: fixed !important;
+            left: 50% !important;
+            top: 50% !important;
+            width: 95vw !important;
+            height: 95vh !important;
+            transform: translate(-50%, -50%) !important;
+            z-index: 99999 !important;
+            border-radius: 16px !important;
+            box-shadow: 0 32px 64px rgba(0,0,0,0.25) !important;
         }
         .mini-iframe {
             border: none;
             background: #fff;
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%) scale(0.35);
-            transform-origin: top left;
+            border-radius: 8px;
             pointer-events: none;
-            transition: box-shadow 0.3s, transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), left 0.5s, top 0.5s, width 0.5s, height 0.5s, z-index 0.1s;
-            max-width: none;
-            max-height: none;
+            transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+            opacity: 1;
+            width: 100%;
+            height: 100%;
+        }
+        .mini-iframe.expanding {
+            pointer-events: auto !important;
+            border-radius: 16px !important;
+            opacity: 1 !important;
+        }
+        .mini-iframe.fading {
+            opacity: 0 !important;
+            transition: opacity 0.3s ease-in-out;
         }
         .mini-iframe.expanded {
             position: fixed !important;
@@ -70,6 +68,7 @@
             box-shadow: 0 32px 64px rgba(0,0,0,0.25);
             pointer-events: auto;
             margin: 0;
+            transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
         }
         .mini-iframe-close {
             display: none;
@@ -249,34 +248,19 @@
         
         <div class="grid-container">
             <div class="grid-item">
-                <div class="mini-iframe-container">
-                    <iframe class="mini-iframe" src="Examples/BMD_Age_Gender.html" width="880" height="560"></iframe>
-                </div>
-                <a href="Examples/BMD_Age_Gender.html">BMD vs. Age and Gender</a>
+                <iframe class="mini-iframe" src="Examples/BMD_Age_Gender.html" width="400" height="300"></iframe>
             </div>
             <div class="grid-item">
-                <div class="mini-iframe-container">
-                    <iframe class="mini-iframe" src="Examples/Cholesterol_Age.html" width="800" height="600"></iframe>
-                </div>
-                <a href="Examples/Cholesterol_Age.html">Cholesterol vs. Age</a>
+                <iframe class="mini-iframe" src="Examples/Cholesterol_Age.html" width="400" height="300"></iframe>
             </div>
             <div class="grid-item">
-                <div class="mini-iframe-container">
-                    <iframe class="mini-iframe" src="Examples/Estradiol_Age_Gender.html" width="700" height="900"></iframe>
-                </div>
-                <a href="Examples/Estradiol_Age_Gender.html">Estradiol vs. Age and Gender</a>
+                <iframe class="mini-iframe" src="Examples/Estradiol_Age_Gender.html" width="350" height="450"></iframe>
             </div>
             <div class="grid-item">
-                <div class="mini-iframe-container">
-                    <iframe class="mini-iframe" src="Examples/Testosterone_Age_Gender.html" width="900" height="500"></iframe>
-                </div>
-                <a href="Examples/Testosterone_Age_Gender.html">Testosterone vs. Age and Gender</a>
+                <iframe class="mini-iframe" src="Examples/Testosterone_Age_Gender.html" width="450" height="250"></iframe>
             </div>
             <div class="grid-item">
-                <div class="mini-iframe-container">
-                    <iframe class="mini-iframe" src="Examples/Testosterone_Estrogen_Ratio.html" width="600" height="800"></iframe>
-                </div>
-                <a href="Examples/Testosterone_Estrogen_Ratio.html">Testosterone/Estrogen Ratio in Men</a>
+                <iframe class="mini-iframe" src="Examples/Testosterone_Estrogen_Ratio.html" width="300" height="400"></iframe>
             </div>
         </div>
 
@@ -336,45 +320,46 @@
             const gridItems = document.querySelectorAll('.grid-item');
             function openModalFromTile(tile) {
                 const miniIframe = tile.querySelector('.mini-iframe');
-                const miniContainer = tile.querySelector('.mini-iframe-container');
-                // Lower z-index of all other iframes and containers
-                document.querySelectorAll('.mini-iframe').forEach(iframe => {
-                    if (iframe !== miniIframe) iframe.style.zIndex = 1;
-                });
-                document.querySelectorAll('.mini-iframe-container').forEach(container => {
-                    if (container !== miniContainer) container.style.zIndex = 1;
-                });
-                miniIframe.classList.add('expanded');
-                miniIframe.style.zIndex = 99999;
-                miniContainer.classList.add('expanded-container');
-                miniContainer.style.zIndex = 99998;
+                
+                // Step 1: Fade out the HTML content
+                miniIframe.classList.add('fading');
+                
+                // Step 2: After fade out, scale up container and iframe
+                setTimeout(() => {
+                    tile.classList.add('expanding');
+                    miniIframe.classList.add('expanding');
+                }, 300);
+                
+                // Step 3: After scaling is done, fade content back in
+                setTimeout(() => {
+                    miniIframe.classList.remove('fading');
+                }, 600);
+                
                 closeBtn.style.display = 'flex';
             }
             function closeModal() {
-                const expanded = document.querySelector('.mini-iframe.expanded');
-                if (!expanded) return;
-                const expandedContainer = expanded.parentElement;
-                expanded.classList.remove('expanded');
-                expanded.style.zIndex = 1;
-                expandedContainer.classList.remove('expanded-container');
-                expandedContainer.style.zIndex = 1;
-                // Restore all iframes' and containers' z-index
-                document.querySelectorAll('.mini-iframe').forEach(iframe => {
-                    iframe.style.zIndex = 1;
-                });
-                document.querySelectorAll('.mini-iframe-container').forEach(container => {
-                    container.style.zIndex = 1;
-                });
+                const expandedTile = document.querySelector('.grid-item.expanding');
+                const expandedIframe = document.querySelector('.mini-iframe.expanding');
+                if (!expandedTile || !expandedIframe) return;
+                
+                // Step 1: Fade out content
+                expandedIframe.classList.add('fading');
+                
+                // Step 2: Scale back down
+                setTimeout(() => {
+                    expandedTile.classList.remove('expanding');
+                    expandedIframe.classList.remove('expanding');
+                }, 300);
+                
+                // Step 3: Fade content back in at small scale
+                setTimeout(() => {
+                    expandedIframe.classList.remove('fading');
+                }, 600);
+                
                 closeBtn.style.display = 'none';
             }
             gridItems.forEach(item => {
-                const miniContainer = item.querySelector('.mini-iframe-container');
-                miniContainer.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    openModalFromTile(item);
-                });
-                const link = item.querySelector('a');
-                link.addEventListener('click', (e) => {
+                item.addEventListener('click', (e) => {
                     e.preventDefault();
                     openModalFromTile(item);
                 });
@@ -387,8 +372,8 @@
             });
             // Optional: clicking outside the expanded iframe closes it
             document.addEventListener('mousedown', function(e) {
-                const expanded = document.querySelector('.mini-iframe.expanded');
-                if (expanded && !expanded.contains(e.target) && e.target !== closeBtn) {
+                const expandedTile = document.querySelector('.grid-item.expanding');
+                if (expandedTile && !expandedTile.contains(e.target) && e.target !== closeBtn) {
                     closeModal();
                 }
             });
