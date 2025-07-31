@@ -10,58 +10,177 @@
         h1, h2 { text-align: center; color: #343a40; }
         .container { max-width: 1200px; margin: 0 auto; }
         .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2em;
+            position: relative;
+            width: 100%;
+            height: 400px;
+            overflow: hidden;
             margin-bottom: 3em;
-            justify-content: center;
-            max-width: 1400px;
-            margin-left: auto;
-            margin-right: auto;
+            background: #f8f9fa;
+            border-radius: 16px;
+            padding: 20px;
         }
+        
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            height: 100%;
+            align-items: center;
+            gap: 30px;
+        }
+        
         .grid-item {
             background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 0;
-            display: flex;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
             position: relative;
-            transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             cursor: pointer;
             overflow: hidden;
+            flex-shrink: 0;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            opacity: 0.7;
+            transform: scale(0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .grid-item.expanding {
-            position: fixed !important;
-            left: 50% !important;
-            top: 50% !important;
-            width: 95vw !important;
-            height: 95vh !important;
-            transform: translate(-50%, -50%) !important;
-            z-index: 99999 !important;
-            border-radius: 16px !important;
-            box-shadow: 0 32px 64px rgba(0,0,0,0.25) !important;
+        
+        .grid-item.active {
+            opacity: 1;
+            transform: scale(1);
+            box-shadow: 0 16px 48px rgba(0,0,0,0.25);
         }
-        .grid-item.expanding::after {
-            content: '×';
+        
+        .grid-item.side {
+            opacity: 0.5;
+            transform: scale(0.75);
+        }
+        
+        .carousel-nav {
             position: absolute;
-            top: 20px;
-            right: 30px;
-            font-size: 40px;
-            color: #666;
-            cursor: pointer;
-            z-index: 100000;
+            top: 50%;
+            transform: translateY(-50%);
             background: rgba(255,255,255,0.9);
+            border: none;
             border-radius: 50%;
             width: 50px;
             height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        }
-        .grid-item.expanding::after:hover {
-            background: rgba(255,255,255,1);
+            cursor: pointer;
+            font-size: 20px;
             color: #333;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .carousel-nav:hover {
+            background: rgba(255,255,255,1);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .carousel-nav.prev {
+            left: 15px;
+        }
+        
+        .carousel-nav.next {
+            right: 15px;
+        }
+        
+        .carousel-indicators {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        
+        .indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .indicator.active {
+            background: rgba(255,255,255,1);
+            transform: scale(1.2);
+        }
+
+        /* Full-screen modal styles */
+        .plot-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.8);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+        
+        .plot-modal.show {
+            display: flex;
+            opacity: 1;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .plot-modal-content {
+            background-color: #fff;
+            border-radius: 12px;
+            width: 95vw;
+            height: 95vh;
+            position: relative;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .plot-modal.show .plot-modal-content {
+            transform: scale(1);
+        }
+        
+        .plot-modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10001;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .plot-modal-close:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.1);
+        }
+        
+        .plot-modal iframe {
+            width: 90%;
+            height: 90%;
+            border: none;
+            border-radius: 8px;
+            transition: opacity 0.3s ease;
         }
         .mini-iframe {
             border: none;
@@ -70,10 +189,11 @@
             pointer-events: none;
             transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             opacity: 1;
-            transform-origin: top left;
+            transform-origin: center center;
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
         }
         .mini-iframe.expanding {
             pointer-events: auto !important;
@@ -281,7 +401,14 @@
         <h1>pandas-nhanes</h1>
         
         <div class="grid-container" id="grid-container">
-            <!-- Plot thumbnails will be automatically generated here -->
+            <button class="carousel-nav prev" id="prev-btn">‹</button>
+            <div class="carousel-wrapper" id="carousel-wrapper">
+                <!-- Plot thumbnails will be automatically generated here -->
+            </div>
+            <button class="carousel-nav next" id="next-btn">›</button>
+            <div class="carousel-indicators" id="carousel-indicators">
+                <!-- Indicators will be generated automatically -->
+            </div>
         </div>
 
         <div id="variable-explorer">
@@ -303,6 +430,14 @@
         </div>
     </div>
 
+    <!-- Full-screen plot modal -->
+    <div id="plot-modal" class="plot-modal">
+        <div class="plot-modal-content">
+            <button class="plot-modal-close" id="modal-close-btn">&times;</button>
+            <iframe id="modal-iframe" src=""></iframe>
+        </div>
+    </div>
+
     <script>
         // Plot dimensions extracted from Plotly configurations
         const plotDimensions = {
@@ -313,12 +448,16 @@
             'Testosterone_Estrogen_Ratio.html': { width: 1000, height: 600 }
         };
 
+        // Carousel state management
+        let currentIndex = 0;
+        let plotItems = [];
+        
         // Function to create thumbnails with proper aspect ratios and scaling
         function createPlotThumbnails() {
-            const gridContainer = document.getElementById('grid-container');
+            const carouselWrapper = document.getElementById('carousel-wrapper');
+            const indicatorsContainer = document.getElementById('carousel-indicators');
             const baseWidth = 300; // Base thumbnail width
-            
-            Object.entries(plotDimensions).forEach(([filename, dimensions]) => {
+            plotItems = Object.entries(plotDimensions).map(([filename, dimensions], index) => {
                 const aspectRatio = dimensions.width / dimensions.height;
                 const thumbnailWidth = baseWidth;
                 const thumbnailHeight = Math.round(baseWidth / aspectRatio);
@@ -328,6 +467,7 @@
                 gridItem.className = 'grid-item';
                 gridItem.style.width = `${thumbnailWidth}px`;
                 gridItem.style.height = `${thumbnailHeight}px`;
+                gridItem.dataset.index = index;
                 
                 // Create the iframe with proper scaling
                 const iframe = document.createElement('iframe');
@@ -341,24 +481,129 @@
                 const scaleY = thumbnailHeight / dimensions.height;
                 const scale = Math.min(scaleX, scaleY);
                 
-                iframe.style.transform = `scale(${scale})`;
-                iframe.style.transformOrigin = 'top left';
+                iframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
+                iframe.style.transformOrigin = 'center center';
                 iframe.style.width = `${dimensions.width}px`;
                 iframe.style.height = `${dimensions.height}px`;
                 
                 gridItem.appendChild(iframe);
-                gridContainer.appendChild(gridItem);
+                carouselWrapper.appendChild(gridItem);
                 
-                // Add click handler for modal expansion
-                gridItem.addEventListener('click', () => {
-                    openModal(filename);
-                });
+                // Create indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.dataset.index = index;
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+                
+                return { element: gridItem, filename, dimensions };
             });
+            
+            updateCarousel();
+        }
+        
+        function updateCarousel() {
+            const wrapper = document.getElementById('carousel-wrapper');
+            const itemWidth = 330; // 300px width + 30px gap
+            const containerWidth = wrapper.parentElement.clientWidth;
+            const centerOffset = (containerWidth - 300) / 2;
+            
+            // Calculate transform to center the current item
+            const translateX = centerOffset - (currentIndex * itemWidth);
+            wrapper.style.transform = `translateX(${translateX}px)`;
+            
+            // Update item states
+            plotItems.forEach((item, index) => {
+                const element = item.element;
+                element.classList.remove('active', 'side');
+                
+                if (index === currentIndex) {
+                    element.classList.add('active');
+                } else if (Math.abs(index - currentIndex) === 1) {
+                    element.classList.add('side');
+                }
+            });
+            
+            // Update indicators
+            document.querySelectorAll('.indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+            
+            // Update navigation button states
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextBtn.style.opacity = currentIndex === plotItems.length - 1 ? '0.5' : '1';
+        }
+        
+        function goToSlide(index) {
+            if (index >= 0 && index < plotItems.length) {
+                currentIndex = index;
+                updateCarousel();
+            }
+        }
+        
+        function nextSlide() {
+            if (currentIndex < plotItems.length - 1) {
+                goToSlide(currentIndex + 1);
+            }
+        }
+        
+        function prevSlide() {
+            if (currentIndex > 0) {
+                goToSlide(currentIndex - 1);
+            }
         }
 
         document.addEventListener("DOMContentLoaded", function() {
             // Generate plot thumbnails automatically
             createPlotThumbnails();
+            
+            // Add carousel navigation event listeners
+            document.getElementById('prev-btn').addEventListener('click', prevSlide);
+            document.getElementById('next-btn').addEventListener('click', nextSlide);
+            
+            // Add keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                } else if (e.key === 'ArrowRight') {
+                    nextSlide();
+                } else if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+            
+            // Add touch/swipe support for mobile
+            let startX = 0;
+            let startY = 0;
+            const carousel = document.getElementById('grid-container');
+            
+            carousel.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+                startY = e.touches[0].clientY;
+            });
+            
+            carousel.addEventListener('touchend', (e) => {
+                const endX = e.changedTouches[0].clientX;
+                const endY = e.changedTouches[0].clientY;
+                const diffX = startX - endX;
+                const diffY = startY - endY;
+                
+                // Only trigger swipe if horizontal movement is greater than vertical
+                if (Math.abs(diffX) > Math.abs(diffY) && Math.abs(diffX) > 50) {
+                    if (diffX > 0) {
+                        nextSlide(); // Swipe left = next
+                    } else {
+                        prevSlide(); // Swipe right = prev
+                    }
+                }
+            });
+            
+            // Auto-resize carousel on window resize
+            window.addEventListener('resize', () => {
+                updateCarousel();
+            });
             
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');
@@ -386,68 +631,67 @@
                     const text = row.textContent.toLowerCase();
                     row.style.display = text.includes(searchTerm) ? '' : 'none';
                 });
-            });
-
-            // Updated modal logic with proper scaling
+            });            
+            // Full-screen modal functionality
             function openModalFromTile(gridItem) {
-                const miniIframe = gridItem.querySelector('.mini-iframe');
-                if (!miniIframe) return;
+                const iframe = gridItem.querySelector('.mini-iframe');
+                if (!iframe) return;
                 
-                // Step 1: Fade out the HTML content
-                miniIframe.classList.add('fading');
+                const modal = document.getElementById('plot-modal');
+                const modalIframe = document.getElementById('modal-iframe');
                 
-                // Step 2: After fade out, scale up container and iframe
+                // Set the iframe source to the same as the clicked item
+                modalIframe.src = iframe.src;
+                
+                // Show the modal
+                modal.classList.add('show');
+                
+                // Simple timeout to ensure iframe is visible
                 setTimeout(() => {
-                    gridItem.classList.add('expanding');
-                    miniIframe.classList.add('expanding');
-                }, 300);
+                    modalIframe.style.opacity = '1';
+                }, 100);
                 
-                // Step 3: After scaling is done, fade content back in
-                setTimeout(() => {
-                    miniIframe.classList.remove('fading');
-                }, 600);
+                // Prevent body scrolling
+                document.body.style.overflow = 'hidden';
             }
             
             function closeModal() {
-                const expandedTile = document.querySelector('.grid-item.expanding');
-                const expandedIframe = document.querySelector('.mini-iframe.expanding');
-                if (!expandedTile || !expandedIframe) return;
+                const modal = document.getElementById('plot-modal');
+                const modalIframe = document.getElementById('modal-iframe');
                 
-                // Step 1: Fade out content
-                expandedIframe.classList.add('fading');
+                modal.classList.remove('show');
                 
-                // Step 2: Scale back down
+                // Clear iframe source after animation
                 setTimeout(() => {
-                    expandedTile.classList.remove('expanding');
-                    expandedIframe.classList.remove('expanding');
+                    modalIframe.src = '';
                 }, 300);
                 
-                // Step 3: Fade content back in at small scale
-                setTimeout(() => {
-                    expandedIframe.classList.remove('fading');
-                }, 600);
+                // Restore body scrolling
+                document.body.style.overflow = '';
             }
             
-            // Event listeners
+            // Add modal event listeners
+            document.getElementById('modal-close-btn').addEventListener('click', closeModal);
+            document.getElementById('plot-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+            
+            // Handle clicks outside expanded modal
+            document.addEventListener('mousedown', function(e) {
+                const modal = document.getElementById('plot-modal');
+                if (modal.classList.contains('show') && e.target === modal) {
+                    closeModal();
+                }
+            });
+            
+            // Add event delegation for grid item clicks
             document.addEventListener('click', function(e) {
                 const gridItem = e.target.closest('.grid-item');
-                if (gridItem) {
+                if (gridItem && !e.target.closest('.carousel-nav') && !e.target.closest('.indicator')) {
                     e.preventDefault();
                     openModalFromTile(gridItem);
-                }
-            });
-            
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    closeModal();
-                }
-            });
-            
-            // Optional: clicking outside the expanded iframe closes it
-            document.addEventListener('mousedown', function(e) {
-                const expandedTile = document.querySelector('.grid-item.expanding');
-                if (expandedTile && !expandedTile.contains(e.target)) {
-                    closeModal();
                 }
             });
         });
