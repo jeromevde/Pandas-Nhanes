@@ -183,7 +183,7 @@ def main():
 
     fig = create_plot(df_cleaned)
     fig.write_html("Cholesterol_Age.html")
-    #fig.write_image("Cholesterol_Age.png", scale=2)
+    fig.write_image("Cholesterol_Age.png", scale=2)
 
 if __name__ == "__main__":
     main()

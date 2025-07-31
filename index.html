@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>pandas-nhanes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; margin: 2em; background-color: #f8f9fa; color: #212529; }
+        h1, h2 { text-align: center; color: #343a40; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2em;
+            margin-bottom: 3em;
+            justify-content: center;
+        }
+        .grid-item {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 1em;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            margin-bottom: 0;
+            margin-right: 0;
+            transition: box-shadow 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .mini-iframe-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 420px;
+            height: 320px;
+            overflow: hidden;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            margin-bottom: 0.5em;
+            position: relative;
+            z-index: 1;
+        }
+        .mini-iframe {
+            border: none;
+            background: #fff;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) scale(0.35);
+            transform-origin: top left;
+            pointer-events: none;
+            transition: box-shadow 0.3s, transform 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), left 0.5s, top 0.5s, width 0.5s, height 0.5s, z-index 0.1s;
+            max-width: none;
+            max-height: none;
+        }
+        .mini-iframe.expanded {
+            position: fixed !important;
+            left: 50% !important;
+            top: 50% !important;
+            width: 90vw !important;
+            height: 90vh !important;
+            z-index: 99999 !important;
+            transform: translate(-50%, -50%) scale(1) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 32px 64px rgba(0,0,0,0.25);
+            pointer-events: auto;
+            margin: 0;
+        }
+        .mini-iframe-close {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 2vw;
+            right: 2vw;
+            background: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 2em;
+            color: #333;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+        }
+        .mini-iframe.expanded ~ .mini-iframe-close {
+            display: flex;
+        }
+        .grid-item a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: 500;
+            font-size: 1.1em;
+            margin-top: 0.5em;
+            display: inline-block;
+        }
+        .grid-item a:hover {
+            text-decoration: underline;
+        }
+        #variable-explorer {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2em;
+        }
+        #variable-explorer .table-scroll {
+            max-height: 400px;
+            overflow-y: auto;
+            overflow-x: auto;
+        }
+        #search-input {
+            width: 100%;
+            padding: 0.8em;
+            margin-bottom: 1.5em;
+            border: 1px solid #ced4da;
+            border-radius: 4px;
+            font-size: 1em;
+            box-sizing: border-box;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 0.8em;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #f1f3f5;
+        }
+        tbody tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+        }
+        .modal.show {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 85%;
+            height: 85%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transform: scale(0.95);
+            transition: transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .modal.show .modal-content {
+            transform: scale(1);
+        }
+        .modal-content iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .close-button {
+            color: #555;
+            align-self: flex-end;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: #000;
+        }
+        .expanding-iframe-overlay {
+            position: fixed;
+            z-index: 2000;
+            background: #fff;
+            box-shadow: 0 16px 32px rgba(0,0,0,0.18);
+            border-radius: 8px;
+            transition: all 0.5s cubic-bezier(0.4, 0.2, 0.2, 1), opacity 0.3s;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .expanding-iframe-overlay.fullscreen {
+            left: 0 !important;
+            top: 0 !important;
+            width: 100vw !important;
+            height: 100vh !important;
+            border-radius: 16px !important;
+            box-shadow: 0 32px 64px rgba(0,0,0,0.25);
+            opacity: 1;
+            transform: scale(1) !important;
+        }
+        .modal-bg {
+            display: none;
+            position: fixed;
+            z-index: 4000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+        .modal-bg.show {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .mini-iframe.expanded {
+            z-index: 5000 !important;
+        }
+        .container.modal-active {
+            pointer-events: none;
+            filter: blur(2px) grayscale(0.2);
+        }
+        .container.modal-active .mini-iframe.expanded {
+            pointer-events: auto;
+            filter: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>pandas-nhanes</h1>
+        
+        <div class="grid-container">
+            <div class="grid-item">
+                <div class="mini-iframe-container">
+                    <iframe class="mini-iframe" src="Examples/BMD_Age_Gender.html" width="880" height="560"></iframe>
+                </div>
+                <a href="Examples/BMD_Age_Gender.html">BMD vs. Age and Gender</a>
+            </div>
+            <div class="grid-item">
+                <div class="mini-iframe-container">
+                    <iframe class="mini-iframe" src="Examples/Cholesterol_Age.html" width="800" height="600"></iframe>
+                </div>
+                <a href="Examples/Cholesterol_Age.html">Cholesterol vs. Age</a>
+            </div>
+            <div class="grid-item">
+                <div class="mini-iframe-container">
+                    <iframe class="mini-iframe" src="Examples/Estradiol_Age_Gender.html" width="700" height="900"></iframe>
+                </div>
+                <a href="Examples/Estradiol_Age_Gender.html">Estradiol vs. Age and Gender</a>
+            </div>
+            <div class="grid-item">
+                <div class="mini-iframe-container">
+                    <iframe class="mini-iframe" src="Examples/Testosterone_Age_Gender.html" width="900" height="500"></iframe>
+                </div>
+                <a href="Examples/Testosterone_Age_Gender.html">Testosterone vs. Age and Gender</a>
+            </div>
+            <div class="grid-item">
+                <div class="mini-iframe-container">
+                    <iframe class="mini-iframe" src="Examples/Testosterone_Estrogen_Ratio.html" width="600" height="800"></iframe>
+                </div>
+                <a href="Examples/Testosterone_Estrogen_Ratio.html">Testosterone/Estrogen Ratio in Men</a>
+            </div>
+        </div>
+
+        <div id="variable-explorer">
+            <h2>NHANES Variable Explorer</h2>
+            <input type="text" id="search-input" placeholder="Search variables...">
+            <div class="table-scroll">
+                <table id="variables-table">
+                    <thead>
+                        <tr>
+                            <th>Variable Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <button class="mini-iframe-close" id="mini-iframe-close" title="Close">&times;</button>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInput = document.getElementById('search-input');
+            const tableBody = document.querySelector('#variables-table tbody');
+            let allRows = [];
+
+            Papa.parse('pandas_nhanes/nhanes_variables.csv', {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    const data = results.data;
+                    data.forEach(row => {
+                        if (row['variable name'] && row['variable explanation']) {
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `<td>${row['variable name']}</td><td>${row['variable explanation']}</td>`;
+                            tableBody.appendChild(tr);
+                            allRows.push(tr);
+                        }
+                    });
+                }
+            });
+
+            searchInput.addEventListener('keyup', function() {
+                const searchTerm = searchInput.value.toLowerCase();
+                allRows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm) ? '' : 'none';
+                });
+            });
+
+            // Modal logic
+            const closeBtn = document.getElementById('mini-iframe-close');
+            const gridItems = document.querySelectorAll('.grid-item');
+            function openModalFromTile(tile) {
+                const miniIframe = tile.querySelector('.mini-iframe');
+                const miniContainer = tile.querySelector('.mini-iframe-container');
+                // Lower z-index of all other iframes and containers
+                document.querySelectorAll('.mini-iframe').forEach(iframe => {
+                    if (iframe !== miniIframe) iframe.style.zIndex = 1;
+                });
+                document.querySelectorAll('.mini-iframe-container').forEach(container => {
+                    if (container !== miniContainer) container.style.zIndex = 1;
+                });
+                miniIframe.classList.add('expanded');
+                miniIframe.style.zIndex = 99999;
+                miniContainer.classList.add('expanded-container');
+                miniContainer.style.zIndex = 99998;
+                closeBtn.style.display = 'flex';
+            }
+            function closeModal() {
+                const expanded = document.querySelector('.mini-iframe.expanded');
+                if (!expanded) return;
+                const expandedContainer = expanded.parentElement;
+                expanded.classList.remove('expanded');
+                expanded.style.zIndex = 1;
+                expandedContainer.classList.remove('expanded-container');
+                expandedContainer.style.zIndex = 1;
+                // Restore all iframes' and containers' z-index
+                document.querySelectorAll('.mini-iframe').forEach(iframe => {
+                    iframe.style.zIndex = 1;
+                });
+                document.querySelectorAll('.mini-iframe-container').forEach(container => {
+                    container.style.zIndex = 1;
+                });
+                closeBtn.style.display = 'none';
+            }
+            gridItems.forEach(item => {
+                const miniContainer = item.querySelector('.mini-iframe-container');
+                miniContainer.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModalFromTile(item);
+                });
+                const link = item.querySelector('a');
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    openModalFromTile(item);
+                });
+            });
+            closeBtn.addEventListener('click', closeModal);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    closeModal();
+                }
+            });
+            // Optional: clicking outside the expanded iframe closes it
+            document.addEventListener('mousedown', function(e) {
+                const expanded = document.querySelector('.mini-iframe.expanded');
+                if (expanded && !expanded.contains(e.target) && e.target !== closeBtn) {
+                    closeModal();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

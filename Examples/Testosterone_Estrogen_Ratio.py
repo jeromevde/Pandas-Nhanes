@@ -115,7 +115,7 @@ def main():
     
     fig = create_plot(data)
     fig.write_html("Testosterone_Estrogen_Ratio.html")
-    #fig.write_image("Testosterone_Estrogen_Ratio.png", scale=2)
+    fig.write_image("Testosterone_Estrogen_Ratio.png", scale=2)
 
 if __name__ == "__main__":
     main()
