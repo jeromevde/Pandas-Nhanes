@@ -158,7 +158,7 @@ def main():
 
     fig = create_plot(df_cleaned)
     fig.write_html("Testosterone_Age_Gender.html")
-    #fig.write_image("Testosterone_Age_Gender.png", scale=2)
+    fig.write_image("Testosterone_Age_Gender.png", scale=2)
 
 if __name__ == "__main__":
     main()

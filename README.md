@@ -5,8 +5,6 @@ A Python package for accessing a cleaned subset of NHANES
 
 Access via https://jeromevde.github.io/Pandas-Nhanes 
 
-![](website.png)
-
 Caching is implemented to avoid re-downloading datasets.
 
 # Todo
@@ -31,7 +29,7 @@ pip install -e .
 ## Usage
 
 ```python
-from pandas_nhanes import get_variables, get_dataset, explore
+from pandas_nhanes import get_variables, get_dataset
 ```
 ```python
 # Get the full NHANES variable table
@@ -39,40 +37,45 @@ variables = get_variables()
 ```
 
 ```python
-# Explore the variables table in an interactive HTML table in browser
-explore()
-```
-
-```python
 # Download a dataset as a pandas DataFrame
 TST_L = get_dataset("TST_L")
 ```
 
-## Examples
+## Development
 
-### Analysis Examples
+To set up the development environment, you will need Node.js and npm.
+
+1.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+2.  **Run the development server:**
+    This command will build the site and start a live-reloading server.
+    ```bash
+    npm run dev
+    ```
+    You can view the site at `http://localhost:8080`.
+
+3.  **Build the site:**
+    This command will generate the static site in the root directory.
+    ```bash
+    npm run build
+    ```
+
+## Examples
 
 The repository includes several examples of NHANES data analysis in the `Examples` folder. Each example demonstrates how to work with specific datasets and create visualizations.
 
-Rerun all examples in the examples folder:
+To run all examples and regenerate the plots:
 
 ```bash 
-cd Examples
-for script in *.py; do echo "Running $script..."; python "$script"; echo "Completed $script"; echo ""; done
+(cd Examples && for script in *.py; do echo "Running $script..."; python "$script"; echo "Completed $script"; echo ""; done)
 ```
 
 ### Variables Explorer
 
-You can explore the NHANES variables online at: https://jeromevde.github.io/Pandas-Nhanes
-
-To run the variables explorer locally (interactive mode):
-
-```bash
-# Run the local development server (generates the site and serves it)
-python run_local_site.py
-```
-
-This will automatically generate the site, start a local server, and open your browser to view it.
+You can explore the NHANES variables on the main page of the website.
 
 
 
