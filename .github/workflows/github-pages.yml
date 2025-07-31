@@ -26,23 +26,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-          
-      - name: Install dependencies
+      - name: Prepare site files
         run: |
-          python -m pip install --upgrade pip
-          # Install the package with all its dependencies
-          pip install -e .
-          # Install additional dependencies for site generation
-          pip install packaging
-          
-      - name: Generate HTML site
-        run: |
-          python scripts/generate_site.py
-          
+          # Create a clean site directory with only the files needed for the website
+          mkdir -p site
+          cp index.html site/
+          cp -r Examples site/
+          cp -r pandas_nhanes site/
+          cp .nojekyll site/
+        
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
