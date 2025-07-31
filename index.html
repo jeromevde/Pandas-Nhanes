@@ -10,11 +10,14 @@
         h1, h2 { text-align: center; color: #343a40; }
         .container { max-width: 1200px; margin: 0 auto; }
         .grid-container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2em;
             margin-bottom: 3em;
             justify-content: center;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
         }
         .grid-item {
             background-color: #ffffff;
@@ -25,6 +28,7 @@
             position: relative;
             transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             cursor: pointer;
+            overflow: hidden;
         }
         .grid-item.expanding {
             position: fixed !important;
@@ -37,6 +41,28 @@
             border-radius: 16px !important;
             box-shadow: 0 32px 64px rgba(0,0,0,0.25) !important;
         }
+        .grid-item.expanding::after {
+            content: '×';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 40px;
+            color: #666;
+            cursor: pointer;
+            z-index: 100000;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+        .grid-item.expanding::after:hover {
+            background: rgba(255,255,255,1);
+            color: #333;
+        }
         .mini-iframe {
             border: none;
             background: #fff;
@@ -44,13 +70,21 @@
             pointer-events: none;
             transition: all 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
             opacity: 1;
-            width: 100%;
-            height: 100%;
+            transform-origin: top left;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
         .mini-iframe.expanding {
             pointer-events: auto !important;
             border-radius: 16px !important;
             opacity: 1 !important;
+            transform: scale(1) !important;
+            width: 100% !important;
+            height: 100% !important;
+            position: absolute !important;
+            top: 0 !important;
+            left: 0 !important;
         }
         .mini-iframe.fading {
             opacity: 0 !important;
@@ -246,22 +280,8 @@
     <div class="container">
         <h1>pandas-nhanes</h1>
         
-        <div class="grid-container">
-            <div class="grid-item">
-                <iframe class="mini-iframe" src="Examples/BMD_Age_Gender.html" width="400" height="300"></iframe>
-            </div>
-            <div class="grid-item">
-                <iframe class="mini-iframe" src="Examples/Cholesterol_Age.html" width="400" height="300"></iframe>
-            </div>
-            <div class="grid-item">
-                <iframe class="mini-iframe" src="Examples/Estradiol_Age_Gender.html" width="350" height="450"></iframe>
-            </div>
-            <div class="grid-item">
-                <iframe class="mini-iframe" src="Examples/Testosterone_Age_Gender.html" width="450" height="250"></iframe>
-            </div>
-            <div class="grid-item">
-                <iframe class="mini-iframe" src="Examples/Testosterone_Estrogen_Ratio.html" width="300" height="400"></iframe>
-            </div>
+        <div class="grid-container" id="grid-container">
+            <!-- Plot thumbnails will be automatically generated here -->
         </div>
 
         <div id="variable-explorer">
@@ -283,10 +303,63 @@
         </div>
     </div>
 
-    <button class="mini-iframe-close" id="mini-iframe-close" title="Close">&times;</button>
-
     <script>
+        // Plot dimensions extracted from Plotly configurations
+        const plotDimensions = {
+            'BMD_Age_Gender.html': { width: 1000, height: 2000 },
+            'Cholesterol_Age.html': { width: 800, height: 1200 },
+            'Estradiol_Age_Gender.html': { width: 1000, height: 600 },
+            'Testosterone_Age_Gender.html': { width: 1000, height: 600 },
+            'Testosterone_Estrogen_Ratio.html': { width: 1000, height: 600 }
+        };
+
+        // Function to create thumbnails with proper aspect ratios and scaling
+        function createPlotThumbnails() {
+            const gridContainer = document.getElementById('grid-container');
+            const baseWidth = 300; // Base thumbnail width
+            
+            Object.entries(plotDimensions).forEach(([filename, dimensions]) => {
+                const aspectRatio = dimensions.width / dimensions.height;
+                const thumbnailWidth = baseWidth;
+                const thumbnailHeight = Math.round(baseWidth / aspectRatio);
+                
+                // Create the grid item
+                const gridItem = document.createElement('div');
+                gridItem.className = 'grid-item';
+                gridItem.style.width = `${thumbnailWidth}px`;
+                gridItem.style.height = `${thumbnailHeight}px`;
+                
+                // Create the iframe with proper scaling
+                const iframe = document.createElement('iframe');
+                iframe.className = 'mini-iframe';
+                iframe.src = `Examples/${filename}`;
+                iframe.width = dimensions.width;
+                iframe.height = dimensions.height;
+                
+                // Calculate scale to fit the plot nicely in the thumbnail
+                const scaleX = thumbnailWidth / dimensions.width;
+                const scaleY = thumbnailHeight / dimensions.height;
+                const scale = Math.min(scaleX, scaleY);
+                
+                iframe.style.transform = `scale(${scale})`;
+                iframe.style.transformOrigin = 'top left';
+                iframe.style.width = `${dimensions.width}px`;
+                iframe.style.height = `${dimensions.height}px`;
+                
+                gridItem.appendChild(iframe);
+                gridContainer.appendChild(gridItem);
+                
+                // Add click handler for modal expansion
+                gridItem.addEventListener('click', () => {
+                    openModal(filename);
+                });
+            });
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
+            // Generate plot thumbnails automatically
+            createPlotThumbnails();
+            
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');
             let allRows = [];
@@ -315,18 +388,17 @@
                 });
             });
 
-            // Modal logic
-            const closeBtn = document.getElementById('mini-iframe-close');
-            const gridItems = document.querySelectorAll('.grid-item');
-            function openModalFromTile(tile) {
-                const miniIframe = tile.querySelector('.mini-iframe');
+            // Updated modal logic with proper scaling
+            function openModalFromTile(gridItem) {
+                const miniIframe = gridItem.querySelector('.mini-iframe');
+                if (!miniIframe) return;
                 
                 // Step 1: Fade out the HTML content
                 miniIframe.classList.add('fading');
                 
                 // Step 2: After fade out, scale up container and iframe
                 setTimeout(() => {
-                    tile.classList.add('expanding');
+                    gridItem.classList.add('expanding');
                     miniIframe.classList.add('expanding');
                 }, 300);
                 
@@ -334,9 +406,8 @@
                 setTimeout(() => {
                     miniIframe.classList.remove('fading');
                 }, 600);
-                
-                closeBtn.style.display = 'flex';
             }
+            
             function closeModal() {
                 const expandedTile = document.querySelector('.grid-item.expanding');
                 const expandedIframe = document.querySelector('.mini-iframe.expanding');
@@ -355,25 +426,27 @@
                 setTimeout(() => {
                     expandedIframe.classList.remove('fading');
                 }, 600);
-                
-                closeBtn.style.display = 'none';
             }
-            gridItems.forEach(item => {
-                item.addEventListener('click', (e) => {
+            
+            // Event listeners
+            document.addEventListener('click', function(e) {
+                const gridItem = e.target.closest('.grid-item');
+                if (gridItem) {
                     e.preventDefault();
-                    openModalFromTile(item);
-                });
+                    openModalFromTile(gridItem);
+                }
             });
-            closeBtn.addEventListener('click', closeModal);
+            
             window.addEventListener('keydown', (e) => {
                 if (e.key === 'Escape') {
                     closeModal();
                 }
             });
+            
             // Optional: clicking outside the expanded iframe closes it
             document.addEventListener('mousedown', function(e) {
                 const expandedTile = document.querySelector('.grid-item.expanding');
-                if (expandedTile && !expandedTile.contains(e.target) && e.target !== closeBtn) {
+                if (expandedTile && !expandedTile.contains(e.target)) {
                     closeModal();
                 }
             });
