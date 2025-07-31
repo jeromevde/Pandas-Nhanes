@@ -57,8 +57,9 @@ The repository includes several examples of NHANES data analysis in the `Example
 Rerun all examples in the examples folder:
 
 ```bash 
-for script in Examples/*.py; do echo "Running $script..."; python "$script"; echo "Completed $script"; echo ""; done
-```     
+cd Examples
+for script in *.py; do echo "Running $script..."; python "$script"; echo "Completed $script"; echo ""; done
+```
 
 ### Variables Explorer
 
