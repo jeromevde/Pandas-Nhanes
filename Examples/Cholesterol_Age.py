@@ -1,198 +1,189 @@
 #!/usr/bin/env python3
 """
-Cholesterol Analysis - NHANES Cycle 2017-2018
-Analyzes LDL, HDL, and Total cholesterol distribution by age (combined genders)
+Cholesterol Analysis using NHANES 2017-2018 data.
+
+This script analyzes the distribution of LDL, HDL, and Total Cholesterol by age,
+combining data for all genders. It visualizes the relationship between age and
+various cholesterol metrics.
 """
 
-from pandas_nhanes import get_dataset
 import pandas as pd
-from scipy.stats import zscore
-import seaborn as sns
 import numpy as np
-import matplotlib.pyplot as plt
+from scipy.stats import zscore
+from scipy.ndimage import gaussian_filter1d
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from pandas_nhanes import get_dataset
 
-# Load cholesterol datasets
-hdl_data = get_dataset("HDL_J")
-hdl_data = hdl_data[["SEQN", "LBDHDD"]]
-hdl_data = hdl_data.rename(columns={"LBDHDD": "HDL Cholesterol (mg/dL)"})
+# --- Constants ---
 
-total_chol_data = get_dataset("TCHOL_J")
-total_chol_data = total_chol_data[["SEQN", "LBXTC"]]
-total_chol_data = total_chol_data.rename(columns={"LBXTC": "Total Cholesterol (mg/dL)"})
+CHOLESTEROL_COLS = [
+    "HDL Cholesterol (mg/dL)",
+    "Total Cholesterol (mg/dL)",
+    "LDL Cholesterol (mg/dL)"
+]
 
-trigly_data = get_dataset("TRIGLY_J")
-trigly_data = trigly_data[["SEQN", "LBDLDL"]]
-trigly_data = trigly_data.rename(columns={"LBDLDL": "LDL Cholesterol (mg/dL)"})
+COLORS = {
+    "HDL Cholesterol (mg/dL)": "SeaGreen",
+    "Total Cholesterol (mg/dL)": "RoyalBlue",
+    "LDL Cholesterol (mg/dL)": "Crimson"
+}
 
-# Load demographics data
-demographics = get_dataset("DEMO_J")
-demographics = demographics[["SEQN", "RIDAGEYR"]]
-demographics = demographics.rename(columns={
-    "RIDAGEYR": "Age (years)"
-})
+# --- Data Loading and Preprocessing ---
 
-# Merge all datasets
-df = pd.merge(hdl_data, total_chol_data, on="SEQN", how="outer")
-df = pd.merge(df, trigly_data, on="SEQN", how="outer")
-df = pd.merge(df, demographics, on="SEQN")
+def load_and_merge_data():
+    """Loads and merges cholesterol and demographic data from NHANES."""
+    hdl_data = get_dataset("HDL_J")[["SEQN", "LBDHDD"]].rename(
+        columns={"LBDHDD": "HDL Cholesterol (mg/dL)"}
+    )
+    total_chol_data = get_dataset("TCHOL_J")[["SEQN", "LBXTC"]].rename(
+        columns={"LBXTC": "Total Cholesterol (mg/dL)"}
+    )
+    trigly_data = get_dataset("TRIGLY_J")[["SEQN", "LBDLDL"]].rename(
+        columns={"LBDLDL": "LDL Cholesterol (mg/dL)"}
+    )
+    demographics = get_dataset("DEMO_J")[["SEQN", "RIDAGEYR"]].rename(
+        columns={"RIDAGEYR": "Age (years)"}
+    )
 
-# Remove rows with all missing cholesterol data
-df = df.dropna(subset=["HDL Cholesterol (mg/dL)", "Total Cholesterol (mg/dL)", "LDL Cholesterol (mg/dL)"], how="all")
+    df = pd.merge(hdl_data, total_chol_data, on="SEQN", how="outer")
+    df = pd.merge(df, trigly_data, on="SEQN", how="outer")
+    df = pd.merge(df, demographics, on="SEQN")
+    return df
 
-# Define cholesterol columns
-cholesterol_cols = ["HDL Cholesterol (mg/dL)", "Total Cholesterol (mg/dL)", "LDL Cholesterol (mg/dL)"]
+def clean_data(df):
+    """Removes rows with missing data and outliers."""
+    df = df.dropna(subset=CHOLESTEROL_COLS, how="all").reset_index(drop=True)
 
-# Remove outliers using z-score (threshold=3) for any cholesterol measurement
-outlier_mask = np.zeros(len(df), dtype=bool)
-for col in cholesterol_cols:
-    col_outliers = np.abs(zscore(df[[col]], nan_policy='omit')) >= 3
-    outlier_mask |= col_outliers.iloc[:, 0]
+    # Remove outliers using Z-score method for each cholesterol column
+    outlier_mask = np.zeros(len(df), dtype=bool)
+    for col in CHOLESTEROL_COLS:
+        valid_mask = df[col].notna()
+        if valid_mask.sum() > 0:
+            z_scores = np.abs(zscore(df.loc[valid_mask, col]))
+            full_positions = np.where(valid_mask)[0]
+            col_outlier_positions = full_positions[z_scores >= 3]
+            outlier_mask[col_outlier_positions] = True
+    return df[~outlier_mask]
 
-df = df[~outlier_mask]
+# --- Data Analysis ---
 
-print(f"Total subjects with cholesterol data: {len(df)}")
-print(f"Age range: {df['Age (years)'].min():.0f}-{df['Age (years)'].max():.0f} years")
-
-# Check data availability for each cholesterol type
-for col in cholesterol_cols:
-    print(f"{col}: {df[col].notna().sum()} subjects")
-
-# Create a single plot with all three cholesterol types
-fig, ax = plt.subplots(1, 1, figsize=(14, 10))
-fig.suptitle("Cholesterol Levels vs Age - NHANES 2017-2018", fontsize=18, y=0.98)
-
-# Increase font sizes globally
-plt.rcParams.update({'font.size': 12})
-
-# Function to add fitted mean and standard deviation lines
-def add_fitted_lines(ax, x, y, color, label):
-    from scipy.ndimage import gaussian_filter1d
-    
-    # Remove NaN values
+def compute_fitted_data(x, y):
+    """
+    Computes smoothed mean and standard deviation curves for scatter plot data.
+    """
     mask = ~(np.isnan(x) | np.isnan(y))
     x_clean, y_clean = x[mask], y[mask]
-    
-    if len(x_clean) < 10:  # Need enough points for fitting
-        return
-    
-    # Sort by age for smooth curves
+
+    if len(x_clean) < 10:
+        return None, None, None, None
+
     sort_idx = np.argsort(x_clean)
-    x_sorted = x_clean[sort_idx]
-    y_sorted = y_clean[sort_idx]
-    
-    # Create age bins for local statistics
+    x_sorted, y_sorted = x_clean[sort_idx], y_clean[sort_idx]
+
     age_bins = np.linspace(x_sorted.min(), x_sorted.max(), 15)
-    bin_centers = []
-    bin_means = []
-    bin_stds = []
-    
-    for i in range(len(age_bins)-1):
-        mask = (x_sorted >= age_bins[i]) & (x_sorted < age_bins[i+1])
-        if np.sum(mask) > 5:  # Need enough points in bin
-            bin_centers.append((age_bins[i] + age_bins[i+1]) / 2)
+    bin_centers, bin_means, bin_stds = [], [], []
+
+    for i in range(len(age_bins) - 1):
+        mask = (x_sorted >= age_bins[i]) & (x_sorted < age_bins[i + 1])
+        if np.sum(mask) > 5:
+            bin_centers.append((age_bins[i] + age_bins[i + 1]) / 2)
             bin_values = y_sorted[mask]
             bin_means.append(np.mean(bin_values))
             bin_stds.append(np.std(bin_values))
-    
-    if len(bin_centers) > 3:  # Need enough bins for smoothing
-        bin_centers = np.array(bin_centers)
-        bin_means = np.array(bin_means)
-        bin_stds = np.array(bin_stds)
-        
-        # Apply gentle Gaussian smoothing to avoid wild oscillations
-        mean_smooth = gaussian_filter1d(bin_means, sigma=1.0)
-        std_smooth = gaussian_filter1d(bin_stds, sigma=1.0)
-        
-        # Ensure values never go negative
-        mean_smooth = np.maximum(mean_smooth, 0.1)
-        std_smooth = np.maximum(std_smooth, 0.1)
-        
-        # Plot mean line
-        ax.plot(bin_centers, mean_smooth, color=color, linewidth=3, label=f'{label} Mean', linestyle='-')
-        
-        # Plot 1 SD bands (ensure they don't go negative)
-        lower_1sd = np.maximum(mean_smooth - std_smooth, 0)
-        ax.fill_between(bin_centers, lower_1sd, mean_smooth + std_smooth,
-                       color=color, alpha=0.15, label=f'{label} ±1 SD')
 
-# Colors for each cholesterol type
-colors = {
-    "HDL Cholesterol (mg/dL)": "#2E8B57",    # Sea Green
-    "Total Cholesterol (mg/dL)": "#DC143C",   # Crimson
-    "LDL Cholesterol (mg/dL)": "#4169E1"     # Royal Blue
-}
+    if len(bin_centers) <= 3:
+        return None, None, None, None
 
-# Plot scatter points and fitted lines for each cholesterol type
-for col in cholesterol_cols:
-    # Only plot points where data is available
-    data_mask = df[col].notna()
-    if data_mask.sum() > 0:
-        label = col.replace(" (mg/dL)", "")
-        color = colors[col]
-        
-        # Plot scatter points
-        sns.scatterplot(data=df[data_mask], x="Age (years)", y=col, 
-                       color=color, alpha=0.3, s=20, ax=ax, label=f'{label} Data')
-        
-        # Add fitted lines
-        add_fitted_lines(ax, df[data_mask]["Age (years)"].values, df[data_mask][col].values, color, label)
+    bin_centers = np.array(bin_centers)
+    mean_smooth = np.maximum(gaussian_filter1d(np.array(bin_means), sigma=1.0), 0.1)
+    std_smooth = np.maximum(gaussian_filter1d(np.array(bin_stds), sigma=1.0), 0.1)
+    lower_1sd = np.maximum(mean_smooth - std_smooth, 0)
+    upper_1sd = mean_smooth + std_smooth
 
-# Customize the plot
-ax.set_xlabel("Age (years)", fontsize=14)
-ax.set_ylabel("Cholesterol Level (mg/dL)", fontsize=14)
-ax.set_title(f"Combined Analysis (n={len(df):,} subjects)", fontsize=14)
-ax.set_xlim(0, 85)
-ax.set_ylim(0, 300)
+    return bin_centers, mean_smooth, lower_1sd, upper_1sd
 
-# Set axis ticks
-ax.set_xticks(range(0, 91, 10))  # X-axis every 10 years
-ax.set_yticks(range(0, 301, 50))  # Y-axis every 50 mg/dL
+# --- Visualization ---
 
-# Add grid
-ax.grid(True, alpha=0.3)
-ax.grid(True, which='minor', alpha=0.1)
-ax.minorticks_on()
+def create_plot(df):
+    """Creates an interactive plot of Cholesterol vs. Age."""
+    fig = make_subplots(
+        rows=len(CHOLESTEROL_COLS),
+        cols=1,
+        subplot_titles=CHOLESTEROL_COLS,
+        vertical_spacing=0.1
+    )
 
-# Add legend
-ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
+    for i, col_name in enumerate(CHOLESTEROL_COLS):
+        row = i + 1
+        x_data = df["Age (years)"]
+        y_data = df[col_name]
 
-# Add clinical reference lines with better positioning
-ref_lines = [
-    (40, 'Low HDL (<40 mg/dL)', 'dimgray'),
-    (60, 'High HDL (≥60 mg/dL)', 'darkgreen'),
-    (100, 'Optimal LDL (<100 mg/dL)', 'dimgray'),
-    (130, 'Borderline High LDL (130-159 mg/dL)', 'orange'),
-    (160, 'High LDL (≥160 mg/dL)', 'red'),
-    (200, 'Borderline High Total (200-239 mg/dL)', 'orange'),
-    (240, 'High Total (≥240 mg/dL)', 'red')
-]
+        # Add scatter plot for raw data
+        fig.add_trace(
+            go.Scatter(
+                x=x_data,
+                y=y_data,
+                mode='markers',
+                marker=dict(color=COLORS[col_name], size=3, opacity=0.4),
+                name=col_name,
+                showlegend=False
+            ),
+            row=row,
+            col=1
+        )
 
-for y_pos, label, color in ref_lines:
-    if y_pos <= 300:  # Only show lines within our y-axis range
-        ax.axhline(y=y_pos, color=color, linestyle='--', alpha=0.6, linewidth=1)
+        # Add smoothed trend lines
+        x_fit, y_mean, y_lower, y_upper = compute_fitted_data(x_data.values, y_data.values)
+        if x_fit is not None:
+            fig.add_trace(
+                go.Scatter(
+                    x=x_fit, y=y_mean, mode='lines',
+                    line=dict(color='black', width=2),
+                    name="Mean",
+                    showlegend=False
+                ),
+                row=row, col=1
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=np.concatenate([x_fit, x_fit[::-1]]),
+                    y=np.concatenate([y_upper, y_lower[::-1]]),
+                    fill='toself',
+                    fillcolor='rgba(0,0,0,0.2)',
+                    line=dict(color='rgba(255,255,255,0)'),
+                    name="±1 SD",
+                    showlegend=False
+                ),
+                row=row, col=1
+            )
 
-# Add reference line labels positioned to avoid overlap
-ax.text(85, 42, 'Low HDL', fontsize=8, color='dimgray', alpha=0.8, rotation=0)
-ax.text(85, 62, 'High HDL', fontsize=8, color='darkgreen', alpha=0.8, rotation=0)
-ax.text(85, 102, 'Optimal LDL', fontsize=8, color='dimgray', alpha=0.8, rotation=0)
-ax.text(70, 132, 'Borderline High LDL', fontsize=8, color='orange', alpha=0.8, rotation=0)
-ax.text(75, 162, 'High LDL', fontsize=8, color='red', alpha=0.8, rotation=0)
-ax.text(60, 202, 'Borderline High Total', fontsize=8, color='orange', alpha=0.8, rotation=0)
-ax.text(70, 242, 'High Total', fontsize=8, color='red', alpha=0.8, rotation=0)
+        fig.update_xaxes(title_text="Age (years)", row=row, col=1)
+        fig.update_yaxes(title_text="Cholesterol (mg/dL)", row=row, col=1)
 
-plt.tight_layout()
-plt.savefig(__file__.replace(".py",".png"), dpi=300, bbox_inches='tight')
-plt.show()
+    fig.update_layout(
+        title_text="Cholesterol Levels vs. Age (NHANES 2017-2018)",
+        height=1200,
+        width=800,
+        template="plotly_white"
+    )
+    return fig
 
-# Print summary statistics
-print("\nSummary Statistics:")
-for col in cholesterol_cols:
-    data = df[col].dropna()
-    if len(data) > 0:
-        label = col.replace(" (mg/dL)", "")
-        print(f"{label}:")
-        print(f"  Mean: {data.mean():.1f} mg/dL")
-        print(f"  Median: {data.median():.1f} mg/dL")
-        print(f"  Range: {data.min():.1f}-{data.max():.1f} mg/dL")
-        print(f"  25th-75th percentile: {data.quantile(0.25):.1f}-{data.quantile(0.75):.1f} mg/dL")
-        print()
+# --- Main Execution ---
+
+def main():
+    """Main function to run the analysis and generate the plot."""
+    df = load_and_merge_data()
+    df_cleaned = clean_data(df)
+
+    print(f"Total subjects with cholesterol data: {len(df_cleaned)}")
+    print(f"Age range: {df_cleaned['Age (years)'].min():.0f}-{df_cleaned['Age (years)'].max():.0f} years")
+    for col in CHOLESTEROL_COLS:
+        print(f"{col}: {df_cleaned[col].notna().sum()} subjects")
+
+    fig = create_plot(df_cleaned)
+    fig.write_html("Cholesterol_Age.html")
+    #fig.write_image("Cholesterol_Age.png", scale=2)
+
+if __name__ == "__main__":
+    main()
