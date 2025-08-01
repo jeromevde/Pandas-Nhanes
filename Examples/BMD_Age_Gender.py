@@ -207,7 +207,7 @@ def main():
     df_cleaned = clean_data(df)
     fig = create_plot(df_cleaned)
     fig.write_html("BMD_Age_Gender.html")
-    fig.write_image("BMD_Age_Gender.png", scale=2)
+    #fig.write_image("BMD_Age_Gender.png", scale=2)
 
 if __name__ == "__main__":
     main()
