@@ -417,9 +417,8 @@
             <div class="table-scroll">
                 <table id="variables-table">
                     <thead>
-                        <tr>
-                            <th>Variable Name</th>
-                            <th>Description</th>
+                        <tr id="variables-table-header-row">
+                            <!-- Headers will be loaded here -->
                         </tr>
                     </thead>
                     <tbody>
@@ -656,16 +655,35 @@
             });
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');
+            const tableHeaderRow = document.getElementById('variables-table-header-row');
             let allRows = [];
             Papa.parse('pandas_nhanes/nhanes_variables.csv', {
                 download: true,
                 header: true,
                 complete: function(results) {
                     const data = results.data;
+                    const fields = results.meta.fields;
+                    // Render table headers
+                    tableHeaderRow.innerHTML = '';
+                    fields.forEach(field => {
+                        const th = document.createElement('th');
+                        th.textContent = field;
+                        tableHeaderRow.appendChild(th);
+                    });
+                    // Render table rows
                     data.forEach(row => {
-                        if (row['variable name'] && row['variable explanation']) {
+                        // Only add row if at least one field is non-empty
+                        if (fields.some(f => row[f] && row[f].trim() !== '')) {
                             const tr = document.createElement('tr');
-                            tr.innerHTML = `<td>${row['variable name']}</td><td>${row['variable explanation']}</td>`;
+                            tr.innerHTML = fields.map(f => {
+                                if (f === 'dataset link' && row[f]) {
+                                    return `<td><a href="${row[f]}" target="_blank" rel="noopener">data</a></td>`;
+                                } else if (f === 'dataset documentation link' && row[f]) {
+                                    return `<td><a href="${row[f]}" target="_blank" rel="noopener">doc</a></td>`;
+                                } else {
+                                    return `<td>${row[f] || ''}</td>`;
+                                }
+                            }).join('');
                             tableBody.appendChild(tr);
                             allRows.push(tr);
                         }
