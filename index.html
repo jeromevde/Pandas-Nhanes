@@ -33,14 +33,12 @@
         .grid-item {
             background-color: #ffffff;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            /* box-shadow removed for no shadow animation */
             position: relative;
             cursor: pointer;
             overflow: hidden;
             flex-shrink: 0;
-            /* Removed transition for smoother initial load */
             opacity: 0.7;
-            /* Removed transform: scale(0.85); */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -48,13 +46,12 @@
 
         .grid-item.active {
             opacity: 1;
-            /* Removed transform: scale(1); */
-            /* Removed box-shadow for in-focus effect */
+            /* No box-shadow, no transform */
         }
 
         .grid-item.side {
             opacity: 0.5;
-            /* Removed transform: scale(0.75); */
+            /* No transform */
         }
         
         .carousel-nav {
@@ -452,80 +449,111 @@
         let currentIndex = 0;
         let plotItems = [];
 
-        function preloadImagesAsync(plotExamples, baseWidth = 300) {
-            // Returns a Promise that resolves to an array of {img, width, height, base}
-            return Promise.all(plotExamples.map(plot => {
-                return new Promise(resolve => {
-                    const img = new window.Image();
-                    img.src = `Examples/${plot.base}.png`;
-                    img.alt = plot.base;
-                    img.onload = function() {
-                        const aspectRatio = img.naturalWidth / img.naturalHeight;
-                        const thumbnailWidth = baseWidth;
-                        const thumbnailHeight = Math.round(baseWidth / aspectRatio);
-                        resolve({ img, width: thumbnailWidth, height: thumbnailHeight, base: plot.base });
-                    };
-                    img.onerror = function() {
-                        // fallback: still resolve, but with default size
-                        resolve({ img, width: baseWidth, height: baseWidth, base: plot.base });
-                    };
-                });
-            }));
-        }
-
-        function createPlotThumbnails() {
-            const carouselWrapper = document.getElementById('carousel-wrapper');
-            const indicatorsContainer = document.getElementById('carousel-indicators');
-            const baseWidth = 300;
-            // Hide carousel while loading
-            carouselWrapper.style.visibility = 'hidden';
-            // Remove any existing children (for reloads)
-            carouselWrapper.innerHTML = '';
-            indicatorsContainer.innerHTML = '';
-            preloadImagesAsync(plotExamples, baseWidth).then(images => {
-                plotItems = images.map((imgObj, index) => {
-                    const gridItem = document.createElement('div');
-                    gridItem.className = 'grid-item';
-                    gridItem.dataset.index = index;
-                    gridItem.style.width = `${imgObj.width}px`;
-                    gridItem.style.height = `${imgObj.height}px`;
-                    imgObj.img.style.maxWidth = '100%';
-                    imgObj.img.style.maxHeight = '100%';
-                    imgObj.img.style.objectFit = 'contain';
-                    imgObj.img.style.display = 'block';
-                    imgObj.img.style.margin = '0 auto';
-                    gridItem.appendChild(imgObj.img);
-                    // Make the gridItem clickable to open modal
-                    gridItem.addEventListener('click', function(e) {
-                        if (!e.target.closest('.indicator') && !e.target.closest('.carousel-nav')) {
-                            e.preventDefault();
-                            openModalFromTile(gridItem);
-                        }
-                    });
-                    carouselWrapper.appendChild(gridItem);
-                    const indicator = document.createElement('div');
-                    indicator.className = 'indicator';
-                    indicator.dataset.index = index;
-                    indicator.addEventListener('click', () => goToSlide(index));
-                    indicatorsContainer.appendChild(indicator);
-                    return { element: gridItem, base: imgObj.base };
-                });
-                // Enable horizontal scrolling with snap
-                carouselWrapper.style.overflowX = 'auto';
-                carouselWrapper.style.scrollSnapType = 'x mandatory';
-                carouselWrapper.style.scrollBehavior = 'smooth';
-                carouselWrapper.childNodes.forEach(node => {
-                    if (node.nodeType === 1) node.style.scrollSnapAlign = 'center';
-                });
-                // Show carousel only after all images are loaded and DOM is ready
+// Add images to carousel as they load, show carousel after first image
+function loadImagesIndividually(plotExamples, baseWidth = 300) {
+    const carouselWrapper = document.getElementById('carousel-wrapper');
+    const indicatorsContainer = document.getElementById('carousel-indicators');
+    let imagesLoaded = 0;
+    let firstImageShown = false;
+    plotItems = [];
+    plotExamples.forEach((plot, index) => {
+        const img = new window.Image();
+        img.src = `Examples/${plot.base}.png`;
+        img.alt = plot.base;
+        img.onload = function() {
+            const aspectRatio = img.naturalWidth / img.naturalHeight;
+            const thumbnailWidth = baseWidth;
+            const thumbnailHeight = Math.round(baseWidth / aspectRatio);
+            const gridItem = document.createElement('div');
+            gridItem.className = 'grid-item';
+            gridItem.dataset.index = index;
+            gridItem.style.width = `${thumbnailWidth}px`;
+            gridItem.style.height = `${thumbnailHeight}px`;
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
+            img.style.objectFit = 'contain';
+            img.style.display = 'block';
+            img.style.margin = '0 auto';
+            gridItem.appendChild(img);
+            gridItem.addEventListener('click', function(e) {
+                if (!e.target.closest('.indicator') && !e.target.closest('.carousel-nav')) {
+                    e.preventDefault();
+                    openModalFromTile(gridItem);
+                }
+            });
+            // Insert in correct order
+            if (carouselWrapper.children.length > index) {
+                carouselWrapper.insertBefore(gridItem, carouselWrapper.children[index]);
+            } else {
+                carouselWrapper.appendChild(gridItem);
+            }
+            // Add indicator if not already present
+            if (!indicatorsContainer.querySelector(`[data-index="${index}"]`)) {
+                const indicator = document.createElement('div');
+                indicator.className = 'indicator';
+                indicator.dataset.index = index;
+                indicator.addEventListener('click', () => goToSlide(index));
+                indicatorsContainer.appendChild(indicator);
+            }
+            plotItems[index] = { element: gridItem, base: plot.base };
+            imagesLoaded++;
+            // Enable horizontal scrolling with snap
+            carouselWrapper.style.overflowX = 'auto';
+            carouselWrapper.style.scrollSnapType = 'x mandatory';
+            carouselWrapper.style.scrollBehavior = 'smooth';
+            carouselWrapper.childNodes.forEach(node => {
+                if (node.nodeType === 1) node.style.scrollSnapAlign = 'center';
+            });
+            if (!firstImageShown) {
                 carouselWrapper.style.visibility = 'visible';
                 setTimeout(updateCarousel, 0);
-            });
-        }
+                firstImageShown = true;
+            } else {
+                updateCarousel();
+            }
+        };
+        img.onerror = function() {
+            // fallback: still add a blank grid item
+            const gridItem = document.createElement('div');
+            gridItem.className = 'grid-item';
+            gridItem.dataset.index = index;
+            gridItem.style.width = `${baseWidth}px`;
+            gridItem.style.height = `${baseWidth}px`;
+            gridItem.textContent = 'Image failed';
+            if (carouselWrapper.children.length > index) {
+                carouselWrapper.insertBefore(gridItem, carouselWrapper.children[index]);
+            } else {
+                carouselWrapper.appendChild(gridItem);
+            }
+            plotItems[index] = { element: gridItem, base: plot.base };
+            imagesLoaded++;
+            if (!firstImageShown) {
+                carouselWrapper.style.visibility = 'visible';
+                setTimeout(updateCarousel, 0);
+                firstImageShown = true;
+            } else {
+                updateCarousel();
+            }
+        };
+    });
+}
+
+function createPlotThumbnails() {
+    const carouselWrapper = document.getElementById('carousel-wrapper');
+    const indicatorsContainer = document.getElementById('carousel-indicators');
+    const baseWidth = 300;
+    // Hide carousel while loading
+    carouselWrapper.style.visibility = 'hidden';
+    // Remove any existing children (for reloads)
+    carouselWrapper.innerHTML = '';
+    indicatorsContainer.innerHTML = '';
+    loadImagesIndividually(plotExamples, baseWidth);
+}
 
         function updateCarousel() {
             const wrapper = document.getElementById('carousel-wrapper');
             plotItems.forEach((item, index) => {
+                if (!item || !item.element) return;
                 const element = item.element;
                 element.classList.remove('active', 'side');
                 if (index === currentIndex) {
@@ -537,10 +565,9 @@
             document.querySelectorAll('.indicator').forEach((indicator, index) => {
                 indicator.classList.toggle('active', index === currentIndex);
             });
-            // Removed prevBtn/nextBtn code since buttons are gone
             // Scroll to the active item if not user scrolling
             if (!wrapper.classList.contains('user-scrolling')) {
-                const activeItem = plotItems[currentIndex].element;
+                const activeItem = plotItems[currentIndex] && plotItems[currentIndex].element;
                 if (activeItem) {
                     activeItem.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
                 }
