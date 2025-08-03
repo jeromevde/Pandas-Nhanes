@@ -22,11 +22,12 @@
         
         .carousel-wrapper {
             display: flex;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            /* Removed transition for smoother initial load */
             height: 100%;
             align-items: center;
             gap: 30px;
             overflow-y: hidden;
+            visibility: hidden;
         }
         
         .grid-item {
@@ -37,7 +38,7 @@
             cursor: pointer;
             overflow: hidden;
             flex-shrink: 0;
-            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            /* Removed transition for smoother initial load */
             opacity: 0.7;
             /* Removed transform: scale(0.85); */
             display: flex;
@@ -455,6 +456,8 @@
             const carouselWrapper = document.getElementById('carousel-wrapper');
             const indicatorsContainer = document.getElementById('carousel-indicators');
             const baseWidth = 300;
+            let imagesLoaded = 0;
+            const totalImages = plotExamples.length;
             plotItems = plotExamples.map((plot, index) => {
                 const gridItem = document.createElement('div');
                 gridItem.className = 'grid-item';
@@ -474,6 +477,11 @@
                     const thumbnailHeight = Math.round(baseWidth / aspectRatio);
                     gridItem.style.width = `${thumbnailWidth}px`;
                     gridItem.style.height = `${thumbnailHeight}px`;
+                    imagesLoaded++;
+                    if (imagesLoaded === totalImages) {
+                        carouselWrapper.style.visibility = 'visible';
+                        setTimeout(updateCarousel, 0);
+                    }
                 };
                 gridItem.appendChild(img);
                 // Make the gridItem clickable to open modal
@@ -499,7 +507,7 @@
             carouselWrapper.childNodes.forEach(node => {
                 if (node.nodeType === 1) node.style.scrollSnapAlign = 'center';
             });
-            setTimeout(updateCarousel, 0);
+            // Only show carousel after all images loaded (handled in onload)
         }
 
         function updateCarousel() {
