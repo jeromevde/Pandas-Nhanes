@@ -401,11 +401,11 @@
         <h1>pandas-nhanes</h1>
         
         <div class="grid-container" id="grid-container">
-            <button class="carousel-nav prev" id="prev-btn">‹</button>
+            
             <div class="carousel-wrapper" id="carousel-wrapper">
                 <!-- Plot thumbnails will be automatically generated here -->
             </div>
-            <button class="carousel-nav next" id="next-btn">›</button>
+            
             <div class="carousel-indicators" id="carousel-indicators">
                 <!-- Indicators will be generated automatically -->
             </div>
@@ -476,6 +476,14 @@
                     gridItem.style.height = `${thumbnailHeight}px`;
                 };
                 gridItem.appendChild(img);
+                // Make the gridItem clickable to open modal
+                gridItem.addEventListener('click', function(e) {
+                    // Prevent click if indicator or nav button is clicked
+                    if (!e.target.closest('.indicator') && !e.target.closest('.carousel-nav')) {
+                        e.preventDefault();
+                        openModalFromTile(gridItem);
+                    }
+                });
                 carouselWrapper.appendChild(gridItem);
                 const indicator = document.createElement('div');
                 indicator.className = 'indicator';
@@ -508,10 +516,7 @@
             document.querySelectorAll('.indicator').forEach((indicator, index) => {
                 indicator.classList.toggle('active', index === currentIndex);
             });
-            const prevBtn = document.getElementById('prev-btn');
-            const nextBtn = document.getElementById('next-btn');
-            prevBtn.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextBtn.style.opacity = currentIndex === plotItems.length - 1 ? '0.5' : '1';
+            // Removed prevBtn/nextBtn code since buttons are gone
             // Scroll to the active item if not user scrolling
             if (!wrapper.classList.contains('user-scrolling')) {
                 const activeItem = plotItems[currentIndex].element;
@@ -538,10 +543,42 @@
             }
         }
 
+        // --- Modal logic: show HTML in iframe for expanded view ---
+        function openModalFromTile(gridItem) {
+            const index = parseInt(gridItem.dataset.index);
+            const plot = plotExamples[index];
+            if (!plot) return;
+            const modal = document.getElementById('plot-modal');
+            let modalImg = document.getElementById('modal-img');
+            if (modalImg) modalImg.remove();
+            const modalContent = document.querySelector('.plot-modal-content');
+            const modalIframe = document.getElementById('modal-iframe');
+            if (modalIframe) {
+                modalIframe.src = `Examples/${plot.base}.html`;
+                modalIframe.style.display = '';
+            }
+            modal.classList.add('show');
+            setTimeout(() => {
+                if (modalIframe) modalIframe.style.opacity = '1';
+            }, 100);
+            document.body.style.overflow = 'hidden';
+        }
+        function closeModal() {
+            const modal = document.getElementById('plot-modal');
+            const modalImg = document.getElementById('modal-img');
+            const modalIframe = document.getElementById('modal-iframe');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                if (modalImg) modalImg.remove();
+                if (modalIframe) modalIframe.src = '';
+                if (modalIframe) modalIframe.style.display = '';
+            }, 300);
+            document.body.style.overflow = '';
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             createPlotThumbnails();
-            document.getElementById('prev-btn').addEventListener('click', prevSlide);
-            document.getElementById('next-btn').addEventListener('click', nextSlide);
+            // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') {
                     prevSlide();
@@ -642,38 +679,6 @@
                     row.style.display = text.includes(searchTerm) ? '' : 'none';
                 });
             });
-            // Modal logic: show HTML in iframe for expanded view
-            function openModalFromTile(gridItem) {
-                const index = parseInt(gridItem.dataset.index);
-                const plot = plotExamples[index];
-                if (!plot) return;
-                const modal = document.getElementById('plot-modal');
-                let modalImg = document.getElementById('modal-img');
-                if (modalImg) modalImg.remove();
-                const modalContent = document.querySelector('.plot-modal-content');
-                const modalIframe = document.getElementById('modal-iframe');
-                if (modalIframe) {
-                    modalIframe.src = `Examples/${plot.base}.html`;
-                    modalIframe.style.display = '';
-                }
-                modal.classList.add('show');
-                setTimeout(() => {
-                    if (modalIframe) modalIframe.style.opacity = '1';
-                }, 100);
-                document.body.style.overflow = 'hidden';
-            }
-            function closeModal() {
-                const modal = document.getElementById('plot-modal');
-                const modalImg = document.getElementById('modal-img');
-                const modalIframe = document.getElementById('modal-iframe');
-                modal.classList.remove('show');
-                setTimeout(() => {
-                    if (modalImg) modalImg.remove();
-                    if (modalIframe) modalIframe.src = '';
-                    if (modalIframe) modalIframe.style.display = '';
-                }, 300);
-                document.body.style.overflow = '';
-            }
             document.getElementById('modal-close-btn').addEventListener('click', closeModal);
             document.getElementById('plot-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
@@ -686,13 +691,7 @@
                     closeModal();
                 }
             });
-            document.addEventListener('click', function(e) {
-                const gridItem = e.target.closest('.grid-item');
-                if (gridItem && !e.target.closest('.carousel-nav') && !e.target.closest('.indicator')) {
-                    e.preventDefault();
-                    openModalFromTile(gridItem);
-                }
-            });
+            // (Removed document-level click handler for grid-item)
         });
     </script>
 </body>
