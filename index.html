@@ -22,12 +22,11 @@
         
         .carousel-wrapper {
             display: flex;
-            /* Removed transition for smoother initial load */
             height: 100%;
             align-items: center;
             gap: 30px;
             overflow-y: hidden;
-            visibility: hidden;
+            /* Always visible for instant interaction */
         }
         
         .grid-item {
@@ -38,10 +37,11 @@
             cursor: pointer;
             overflow: hidden;
             flex-shrink: 0;
-            opacity: 0.7;
+            opacity: 0.0;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: opacity 0.5s cubic-bezier(0.4, 0.2, 0.2, 1);
         }
 
         .grid-item.active {
@@ -453,8 +453,6 @@
 function loadImagesIndividually(plotExamples, baseWidth = 300) {
     const carouselWrapper = document.getElementById('carousel-wrapper');
     const indicatorsContainer = document.getElementById('carousel-indicators');
-    let imagesLoaded = 0;
-    let firstImageShown = false;
     plotItems = [];
     plotExamples.forEach((plot, index) => {
         const img = new window.Image();
@@ -496,7 +494,6 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 indicatorsContainer.appendChild(indicator);
             }
             plotItems[index] = { element: gridItem, base: plot.base };
-            imagesLoaded++;
             // Enable horizontal scrolling with snap
             carouselWrapper.style.overflowX = 'auto';
             carouselWrapper.style.scrollSnapType = 'x mandatory';
@@ -504,13 +501,12 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             carouselWrapper.childNodes.forEach(node => {
                 if (node.nodeType === 1) node.style.scrollSnapAlign = 'center';
             });
-            if (!firstImageShown) {
-                carouselWrapper.style.visibility = 'visible';
-                setTimeout(updateCarousel, 0);
-                firstImageShown = true;
-            } else {
-                updateCarousel();
-            }
+            // Fade in the grid item
+            setTimeout(() => {
+                gridItem.style.opacity = '0.7';
+                if (index === currentIndex) gridItem.classList.add('active');
+            }, 10);
+            updateCarousel();
         };
         img.onerror = function() {
             // fallback: still add a blank grid item
@@ -526,14 +522,11 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 carouselWrapper.appendChild(gridItem);
             }
             plotItems[index] = { element: gridItem, base: plot.base };
-            imagesLoaded++;
-            if (!firstImageShown) {
-                carouselWrapper.style.visibility = 'visible';
-                setTimeout(updateCarousel, 0);
-                firstImageShown = true;
-            } else {
-                updateCarousel();
-            }
+            setTimeout(() => {
+                gridItem.style.opacity = '0.7';
+                if (index === currentIndex) gridItem.classList.add('active');
+            }, 10);
+            updateCarousel();
         };
     });
 }
@@ -542,8 +535,6 @@ function createPlotThumbnails() {
     const carouselWrapper = document.getElementById('carousel-wrapper');
     const indicatorsContainer = document.getElementById('carousel-indicators');
     const baseWidth = 300;
-    // Hide carousel while loading
-    carouselWrapper.style.visibility = 'hidden';
     // Remove any existing children (for reloads)
     carouselWrapper.innerHTML = '';
     indicatorsContainer.innerHTML = '';
