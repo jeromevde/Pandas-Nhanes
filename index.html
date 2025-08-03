@@ -26,6 +26,7 @@
             height: 100%;
             align-items: center;
             gap: 30px;
+            overflow-y: hidden;
         }
         
         .grid-item {
@@ -36,23 +37,23 @@
             cursor: pointer;
             overflow: hidden;
             flex-shrink: 0;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transition: opacity 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
             opacity: 0.7;
-            transform: scale(0.85);
+            /* Removed transform: scale(0.85); */
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        
+
         .grid-item.active {
             opacity: 1;
-            transform: scale(1);
-            box-shadow: 0 16px 48px rgba(0,0,0,0.25);
+            /* Removed transform: scale(1); */
+            /* Removed box-shadow for in-focus effect */
         }
-        
+
         .grid-item.side {
             opacity: 0.5;
-            transform: scale(0.75);
+            /* Removed transform: scale(0.75); */
         }
         
         .carousel-nav {
