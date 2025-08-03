@@ -452,62 +452,75 @@
         let currentIndex = 0;
         let plotItems = [];
 
+        function preloadImagesAsync(plotExamples, baseWidth = 300) {
+            // Returns a Promise that resolves to an array of {img, width, height, base}
+            return Promise.all(plotExamples.map(plot => {
+                return new Promise(resolve => {
+                    const img = new window.Image();
+                    img.src = `Examples/${plot.base}.png`;
+                    img.alt = plot.base;
+                    img.onload = function() {
+                        const aspectRatio = img.naturalWidth / img.naturalHeight;
+                        const thumbnailWidth = baseWidth;
+                        const thumbnailHeight = Math.round(baseWidth / aspectRatio);
+                        resolve({ img, width: thumbnailWidth, height: thumbnailHeight, base: plot.base });
+                    };
+                    img.onerror = function() {
+                        // fallback: still resolve, but with default size
+                        resolve({ img, width: baseWidth, height: baseWidth, base: plot.base });
+                    };
+                });
+            }));
+        }
+
         function createPlotThumbnails() {
             const carouselWrapper = document.getElementById('carousel-wrapper');
             const indicatorsContainer = document.getElementById('carousel-indicators');
             const baseWidth = 300;
-            let imagesLoaded = 0;
-            const totalImages = plotExamples.length;
-            plotItems = plotExamples.map((plot, index) => {
-                const gridItem = document.createElement('div');
-                gridItem.className = 'grid-item';
-                gridItem.dataset.index = index;
-                const img = document.createElement('img');
-                img.src = `Examples/${plot.base}.png`;
-                img.alt = plot.base;
-                img.style.maxWidth = '100%';
-                img.style.maxHeight = '100%';
-                img.style.objectFit = 'contain';
-                img.style.display = 'block';
-                img.style.margin = '0 auto';
-                // Dynamically size thumbnail after image loads
-                img.onload = function() {
-                    const aspectRatio = img.naturalWidth / img.naturalHeight;
-                    const thumbnailWidth = baseWidth;
-                    const thumbnailHeight = Math.round(baseWidth / aspectRatio);
-                    gridItem.style.width = `${thumbnailWidth}px`;
-                    gridItem.style.height = `${thumbnailHeight}px`;
-                    imagesLoaded++;
-                    if (imagesLoaded === totalImages) {
-                        carouselWrapper.style.visibility = 'visible';
-                        setTimeout(updateCarousel, 0);
-                    }
-                };
-                gridItem.appendChild(img);
-                // Make the gridItem clickable to open modal
-                gridItem.addEventListener('click', function(e) {
-                    // Prevent click if indicator or nav button is clicked
-                    if (!e.target.closest('.indicator') && !e.target.closest('.carousel-nav')) {
-                        e.preventDefault();
-                        openModalFromTile(gridItem);
-                    }
+            // Hide carousel while loading
+            carouselWrapper.style.visibility = 'hidden';
+            // Remove any existing children (for reloads)
+            carouselWrapper.innerHTML = '';
+            indicatorsContainer.innerHTML = '';
+            preloadImagesAsync(plotExamples, baseWidth).then(images => {
+                plotItems = images.map((imgObj, index) => {
+                    const gridItem = document.createElement('div');
+                    gridItem.className = 'grid-item';
+                    gridItem.dataset.index = index;
+                    gridItem.style.width = `${imgObj.width}px`;
+                    gridItem.style.height = `${imgObj.height}px`;
+                    imgObj.img.style.maxWidth = '100%';
+                    imgObj.img.style.maxHeight = '100%';
+                    imgObj.img.style.objectFit = 'contain';
+                    imgObj.img.style.display = 'block';
+                    imgObj.img.style.margin = '0 auto';
+                    gridItem.appendChild(imgObj.img);
+                    // Make the gridItem clickable to open modal
+                    gridItem.addEventListener('click', function(e) {
+                        if (!e.target.closest('.indicator') && !e.target.closest('.carousel-nav')) {
+                            e.preventDefault();
+                            openModalFromTile(gridItem);
+                        }
+                    });
+                    carouselWrapper.appendChild(gridItem);
+                    const indicator = document.createElement('div');
+                    indicator.className = 'indicator';
+                    indicator.dataset.index = index;
+                    indicator.addEventListener('click', () => goToSlide(index));
+                    indicatorsContainer.appendChild(indicator);
+                    return { element: gridItem, base: imgObj.base };
                 });
-                carouselWrapper.appendChild(gridItem);
-                const indicator = document.createElement('div');
-                indicator.className = 'indicator';
-                indicator.dataset.index = index;
-                indicator.addEventListener('click', () => goToSlide(index));
-                indicatorsContainer.appendChild(indicator);
-                return { element: gridItem, base: plot.base };
+                // Enable horizontal scrolling with snap
+                carouselWrapper.style.overflowX = 'auto';
+                carouselWrapper.style.scrollSnapType = 'x mandatory';
+                carouselWrapper.style.scrollBehavior = 'smooth';
+                carouselWrapper.childNodes.forEach(node => {
+                    if (node.nodeType === 1) node.style.scrollSnapAlign = 'center';
+                });
+                // Show carousel only after all images are loaded and DOM is ready
+                carouselWrapper.style.visibility = 'visible';
+                setTimeout(updateCarousel, 0);
             });
-            // Enable horizontal scrolling with snap
-            carouselWrapper.style.overflowX = 'auto';
-            carouselWrapper.style.scrollSnapType = 'x mandatory';
-            carouselWrapper.style.scrollBehavior = 'smooth';
-            carouselWrapper.childNodes.forEach(node => {
-                if (node.nodeType === 1) node.style.scrollSnapAlign = 'center';
-            });
-            // Only show carousel after all images loaded (handled in onload)
         }
 
         function updateCarousel() {
