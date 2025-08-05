@@ -26,12 +26,13 @@ pip install pandas_nhanes
 
 ## Usage
 
+
 ```python
-from pandas_nhanes import get_variables, get_dataset
+from pandas_nhanes import get_variables, get_cycle_variables
 # Get the full NHANES variable table
 variables = get_variables()
-# Download a dataset as a pandas DataFrame
-TST_L = get_dataset("TST_L")
+# Download and merge variables from a specific cycle, logging merge stats
+df = get_cycle_variables("2011-2012", "LBXTST", "RIDAGEYR", "RIAGENDR")
 ```
 
 ## Development
