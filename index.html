@@ -456,7 +456,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
     plotItems = [];
     plotExamples.forEach((plot, index) => {
         const img = new window.Image();
-        img.src = `Examples/${plot.base}.png`;
+        img.src = `Examples/${plot.base}/${plot.base}.png`;
         img.alt = plot.base;
         img.onload = function() {
             const aspectRatio = img.naturalWidth / img.naturalHeight;
@@ -593,7 +593,7 @@ function createPlotThumbnails() {
             const modalContent = document.querySelector('.plot-modal-content');
             const modalIframe = document.getElementById('modal-iframe');
             if (modalIframe) {
-                modalIframe.src = `Examples/${plot.base}.html`;
+                modalIframe.src = `Examples/${plot.base}/${plot.base}.html`;
                 modalIframe.style.display = '';
             }
             modal.classList.add('show');

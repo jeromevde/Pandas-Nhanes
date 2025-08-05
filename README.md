@@ -1,10 +1,7 @@
 # Pandas-Nhanes
 
 A Python package for accessing a cleaned subset of NHANES 
-*National Health and Nutrition Examination Survey* data for quick prototyping—no API key required.
-
-Access via https://jeromevde.github.io/Pandas-Nhanes 
-
+*National Health and Nutrition Examination Survey* data for quick prototyping—no API key required. https://jeromevde.github.io/Pandas-Nhanes 
 
 
 
@@ -13,11 +10,9 @@ Access via https://jeromevde.github.io/Pandas-Nhanes
 
 The repository includes several examples of NHANES data analysis in the `Examples` folder. Each example demonstrates how to work with specific datasets and create visualizations.
 
-<span style="font-size:2em;vertical-align:middle;">‼️</span>   
+<span style="font-size:2em;vertical-align:middle;">❗</span> Feel free to open a PR with your own ideas in the `Examples` folder 
 
-Open a PR with your own example in the `Examples` folder :)
 
-<span style="font-size:2em;vertical-align:middle;">‼️</span> 
 
 
 ## Installation
