@@ -1,3 +1,4 @@
+import pandas as pd
 
 def get_cycle_variables(cycle, *vars):
     """
@@ -102,6 +103,3 @@ def explore():
 
     # Open in browser
     webbrowser.open('file://' + os.path.abspath(html_path))
-
-
-def get_dataset(dataset_or_link):
