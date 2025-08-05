@@ -3,10 +3,22 @@ name: Publish to PyPI
 permissions:
   contents: write
 
+
 on:
   push:
     branches:
       - main
+    # Only run if commit message contains [pypi]
+    # This uses a workflow filter
+    # See: https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#using-filters
+    # and https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#example-using-commit-message
+    # This requires at least GitHub Actions v2.28.0
+    # The following filter is supported:
+    #   if: contains(github.event.head_commit.message, '[pypi]')
+
+jobs:
+  publish:
+    if: contains(github.event.head_commit.message, '[pypi]')
 
 jobs:
   publish:
