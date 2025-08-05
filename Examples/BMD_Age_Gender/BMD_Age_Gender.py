@@ -13,7 +13,7 @@ from scipy.stats import zscore
 from scipy.ndimage import gaussian_filter1d
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from pandas_nhanes import get_dataset
+from pandas_nhanes import get_cycle_variables
 
 # --- Constants ---
 
@@ -57,18 +57,18 @@ SUBPLOT_COLS = 2
 
 def load_and_merge_data():
     """Loads and merges BMD and demographic data from NHANES."""
-    bmd_data = get_dataset("DXX_G")
-    demographics = get_dataset("DEMO_G")
-
-    bmd_columns = ["SEQN"] + list(BMD_COLS_DICT.keys())
-    bmd_data = bmd_data[bmd_columns].rename(columns=BMD_COLS_DICT)
-
-    demographics = demographics[["SEQN", "RIDAGEYR", "RIAGENDR"]].rename(
-        columns={"RIDAGEYR": "Age (years)", "RIAGENDR": "Gender"}
-    )
-    demographics["Gender"] = demographics["Gender"].map({1: "Male", 2: "Female"})
-
-    return pd.merge(bmd_data, demographics, on="SEQN")
+    # Use get_cycle_variables to get all BMD and demographic variables at once
+    all_vars = list(BMD_COLS_DICT.keys()) + ["RIDAGEYR", "RIAGENDR"]
+    df = get_cycle_variables("2011-2012", *all_vars)
+    # Rename columns for clarity
+    bmd_rename = {k: v for k, v in BMD_COLS_DICT.items() if k in df.columns}
+    df = df.rename(columns=bmd_rename)
+    if "RIDAGEYR" in df.columns:
+        df = df.rename(columns={"RIDAGEYR": "Age (years)"})
+    if "RIAGENDR" in df.columns:
+        df = df.rename(columns={"RIAGENDR": "Gender"})
+        df["Gender"] = df["Gender"].map({1: "Male", 2: "Female"})
+    return df
 
 def clean_data(df):
     """Removes rows with missing data and outliers."""
@@ -207,7 +207,7 @@ def main():
     df_cleaned = clean_data(df)
     fig = create_plot(df_cleaned)
     fig.write_html("BMD_Age_Gender.html")
-    #fig.write_image("BMD_Age_Gender.png", scale=2)
+    # fig.write_image("BMD_Age_Gender.png", scale=2)
 
 if __name__ == "__main__":
     main()

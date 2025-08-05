@@ -10,39 +10,31 @@ import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from pandas_nhanes import get_dataset
+
+from pandas_nhanes import get_cycle_variables
 
 # --- Data Loading and Preprocessing ---
 
 def load_and_clean_data():
     """Loads and cleans hormone and demographic data from NHANES 2015-2016."""
-    tst_data = get_dataset("TST_I")[['SEQN', 'LBXTST', 'LBXEST']]
-    demo_data = get_dataset("DEMO_I")[['SEQN', 'RIAGENDR', 'RIDAGEYR']]
-
-    merged_data = pd.merge(tst_data, demo_data, on='SEQN', how='inner')
-    merged_data = merged_data.dropna(subset=['LBXTST', 'LBXEST', 'RIAGENDR', 'RIDAGEYR'])
-
+    df = get_cycle_variables("2015-2016", "LBXTST", "LBXEST", "RIAGENDR", "RIDAGEYR")
+    df = df.dropna(subset=['LBXTST', 'LBXEST', 'RIAGENDR', 'RIDAGEYR'])
     # Filter for men over 16
-    men_data = merged_data[(merged_data['RIAGENDR'] == 1) & (merged_data['RIDAGEYR'] > 16)].copy()
-    
+    men_data = df[(df['RIAGENDR'] == 1) & (df['RIDAGEYR'] > 16)].copy()
     # Calculate T/E2 ratio
     men_data['T_E2_ratio'] = men_data['LBXTST'] / men_data['LBXEST']
-
     # Remove extreme outliers
     q1 = men_data['T_E2_ratio'].quantile(0.25)
     q3 = men_data['T_E2_ratio'].quantile(0.75)
     iqr = q3 - q1
     upper_bound = q3 + 2.0 * iqr
-    
     men_data_clean = men_data[men_data['T_E2_ratio'] <= upper_bound].copy()
-    
     # Create age groups
     men_data_clean['age_group'] = pd.cut(
         men_data_clean['RIDAGEYR'],
         bins=[16, 20, 30, 40, 50, 60, 70, 120],
         labels=['17-20', '21-30', '31-40', '41-50', '51-60', '61-70', '70+']
     )
-    
     return men_data_clean
 
 # --- Visualization ---
@@ -115,7 +107,7 @@ def main():
     
     fig = create_plot(data)
     fig.write_html("Testosterone_Estrogen_Ratio.html")
-    fig.write_image("Testosterone_Estrogen_Ratio.png", scale=2)
+    # fig.write_image("Testosterone_Estrogen_Ratio.png", scale=2)
 
 if __name__ == "__main__":
     main()

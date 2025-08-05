@@ -13,7 +13,7 @@ from scipy.stats import zscore
 from scipy.ndimage import gaussian_filter1d
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from pandas_nhanes import get_dataset
+from pandas_nhanes import get_cycle_variables
 
 # --- Constants ---
 
@@ -33,22 +33,13 @@ COLORS = {
 
 def load_and_merge_data():
     """Loads and merges cholesterol and demographic data from NHANES."""
-    hdl_data = get_dataset("HDL_J")[["SEQN", "LBDHDD"]].rename(
-        columns={"LBDHDD": "HDL Cholesterol (mg/dL)"}
-    )
-    total_chol_data = get_dataset("TCHOL_J")[["SEQN", "LBXTC"]].rename(
-        columns={"LBXTC": "Total Cholesterol (mg/dL)"}
-    )
-    trigly_data = get_dataset("TRIGLY_J")[["SEQN", "LBDLDL"]].rename(
-        columns={"LBDLDL": "LDL Cholesterol (mg/dL)"}
-    )
-    demographics = get_dataset("DEMO_J")[["SEQN", "RIDAGEYR"]].rename(
-        columns={"RIDAGEYR": "Age (years)"}
-    )
-
-    df = pd.merge(hdl_data, total_chol_data, on="SEQN", how="outer")
-    df = pd.merge(df, trigly_data, on="SEQN", how="outer")
-    df = pd.merge(df, demographics, on="SEQN")
+    df = get_cycle_variables("2017-2018", "LBDHDD", "LBXTC", "LBDLDL", "RIDAGEYR")
+    df = df.rename(columns={
+        "LBDHDD": "HDL Cholesterol (mg/dL)",
+        "LBXTC": "Total Cholesterol (mg/dL)",
+        "LBDLDL": "LDL Cholesterol (mg/dL)",
+        "RIDAGEYR": "Age (years)"
+    })
     return df
 
 def clean_data(df):
@@ -183,7 +174,7 @@ def main():
 
     fig = create_plot(df_cleaned)
     fig.write_html("Cholesterol_Age.html")
-    fig.write_image("Cholesterol_Age.png", scale=2)
+    # fig.write_image("Cholesterol_Age.png", scale=2)
 
 if __name__ == "__main__":
     main()

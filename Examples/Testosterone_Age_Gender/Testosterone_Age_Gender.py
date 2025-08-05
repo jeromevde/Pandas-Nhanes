@@ -12,7 +12,7 @@ from scipy.stats import zscore
 from scipy.ndimage import gaussian_filter1d
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from pandas_nhanes import get_dataset
+from pandas_nhanes import get_cycle_variables
 
 # --- Constants ---
 
@@ -22,14 +22,8 @@ COLORS = {"Men": "#1f77b4", "Women": "#ff7f0e"}
 
 def load_and_merge_data():
     """Loads and merges testosterone and demographic data from NHANES."""
-    steroid_panel = get_dataset("TST_L")[["SEQN", "LBXTST"]].rename(
-        columns={"LBXTST": "Testosterone (ng/dL)"}
-    )
-    demographics = get_dataset("DEMO_L")[["SEQN", "RIAGENDR", "RIDAGEYR"]].rename(
-        columns={"RIAGENDR": "Gender", "RIDAGEYR": "Age (years)"}
-    )
-
-    df = pd.merge(steroid_panel, demographics, on="SEQN")
+    df = get_cycle_variables("2011-2012", "LBXTST", "RIAGENDR", "RIDAGEYR")
+    df = df.rename(columns={"LBXTST": "Testosterone (ng/dL)", "RIAGENDR": "Gender", "RIDAGEYR": "Age (years)"})
     df = df.dropna().reset_index(drop=True)
     df['Gender'] = df['Gender'].map({1: 'Men', 2: 'Women'})
     return df
@@ -158,7 +152,7 @@ def main():
 
     fig = create_plot(df_cleaned)
     fig.write_html("Testosterone_Age_Gender.html")
-    fig.write_image("Testosterone_Age_Gender.png", scale=2)
+    # fig.write_image("Testosterone_Age_Gender.png", scale=2)
 
 if __name__ == "__main__":
     main()
