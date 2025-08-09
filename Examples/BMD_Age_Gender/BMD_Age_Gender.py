@@ -9,11 +9,18 @@ the relationship between age, gender, and BMD for each body part.
 
 import pandas as pd
 import numpy as np
-from scipy.stats import zscore
-from scipy.ndimage import gaussian_filter1d
+try:
+    from scipy.stats import zscore as _scipy_zscore  # type: ignore
+except Exception:  # SciPy optional
+    _scipy_zscore = None
+try:
+    from scipy.ndimage import gaussian_filter1d as _scipy_gaussian_filter1d  # type: ignore
+except Exception:  # SciPy optional
+    _scipy_gaussian_filter1d = None
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 from pandas_nhanes import get_cycle_variables
+from pathlib import Path
 
 # --- Constants ---
 
@@ -49,11 +56,49 @@ MEASUREMENTS_ORDERED = [
     ("Total Body BMD (g/cm²)", "Total Body")
 ]
 
-COLORS = {"Male": "#1f77b4", "Female": "#ff7f0e"}
+COLORS = {"Male": "#ff7f0e", "Female": "#1f77b4"}
 SUBPLOT_ROWS = 7
 SUBPLOT_COLS = 2
 
 # --- Data Loading and Preprocessing ---
+
+# --- Helpers (SciPy fallbacks and utilities) ---
+
+def _safe_zscore(x: np.ndarray) -> np.ndarray:
+    """Return z-score; use SciPy if available, else NumPy fallback.
+    x: 1D float array.
+    """
+    if _scipy_zscore is not None:
+        try:
+            return _scipy_zscore(x, nan_policy='omit')
+        except TypeError:
+            # Older SciPy without nan_policy
+            m = np.nanmean(x)
+            s = np.nanstd(x)
+            return (x - m) / (s if s > 0 else 1.0)
+    m = np.nanmean(x)
+    s = np.nanstd(x)
+    return (x - m) / (s if s > 0 else 1.0)
+
+def _gaussian1d(arr: np.ndarray, sigma: float) -> np.ndarray:
+    """Gaussian smooth 1D array; use SciPy if available, else NumPy kernel."""
+    if _scipy_gaussian_filter1d is not None:
+        return _scipy_gaussian_filter1d(arr, sigma=sigma, mode='nearest')
+    # Build a simple Gaussian kernel
+    radius = max(1, int(3 * sigma))
+    x = np.arange(-radius, radius + 1)
+    kernel = np.exp(-(x ** 2) / (2 * sigma ** 2))
+    kernel /= kernel.sum()
+    # Pad with edge values and convolve
+    pad_left = arr[0]
+    pad_right = arr[-1]
+    padded = np.concatenate([np.full(radius, pad_left), arr, np.full(radius, pad_right)])
+    smoothed = np.convolve(padded, kernel, mode='valid')
+    return smoothed
+
+def _hex_to_rgb(hex_color: str):
+    hex_color = hex_color.lstrip('#')
+    return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
 
 def load_and_merge_data():
     """Loads and merges BMD and demographic data from NHANES."""
@@ -68,19 +113,33 @@ def load_and_merge_data():
     if "RIAGENDR" in df.columns:
         df = df.rename(columns={"RIAGENDR": "Gender"})
         df["Gender"] = df["Gender"].map({1: "Male", 2: "Female"})
+    # Ensure Gender column exists to prevent KeyErrors in plotting
+    if "Gender" not in df.columns:
+        df["Gender"] = np.nan
+    # Validate Age column presence
+    if "Age (years)" not in df.columns:
+        raise ValueError("Required column 'Age (years)' is missing. Could not load RIDAGEYR for the selected cycle.")
     return df
 
 def clean_data(df):
     """Removes rows with missing data and outliers."""
-    bmd_cols = list(BMD_COLS_DICT.values())
-    df = df.dropna(subset=bmd_cols, how="all").reset_index(drop=True)
+    # Only use BMD columns that actually exist
+    bmd_cols = [c for c in BMD_COLS_DICT.values() if c in df.columns]
+    # Drop rows without Age
+    if "Age (years)" in df.columns:
+        df = df[df["Age (years)"].notna()].reset_index(drop=True)
+    if bmd_cols:
+        df = df.dropna(subset=bmd_cols, how="all").reset_index(drop=True)
+    else:
+        # Nothing to clean with; return as-is
+        return df.reset_index(drop=True)
 
     # Remove outliers using Z-score method for each BMD column
     outlier_mask = np.zeros(len(df), dtype=bool)
     for col in bmd_cols:
         valid_mask = df[col].notna()
         if valid_mask.sum() > 0:
-            z_scores = np.abs(zscore(df.loc[valid_mask, col]))
+            z_scores = np.abs(_safe_zscore(df.loc[valid_mask, col].to_numpy(dtype=float)))
             full_positions = np.where(valid_mask)[0]
             col_outlier_positions = full_positions[z_scores >= 3]
             outlier_mask[col_outlier_positions] = True
@@ -117,10 +176,10 @@ def compute_fitted_data(x, y):
     if len(bin_centers) <= 3:
         return None, None, None, None
 
-    # Smooth the curves using a Gaussian filter
+    # Smooth the curves using a Gaussian filter (fallback if SciPy missing)
     bin_centers = np.array(bin_centers)
-    mean_smooth = np.maximum(gaussian_filter1d(np.array(bin_means), sigma=0.8), 0.1)
-    std_smooth = np.maximum(gaussian_filter1d(np.array(bin_stds), sigma=0.8), 0.1)
+    mean_smooth = np.maximum(_gaussian1d(np.array(bin_means), sigma=0.8), 0.1)
+    std_smooth = np.maximum(_gaussian1d(np.array(bin_stds), sigma=0.8), 0.1)
     lower_1sd = np.maximum(mean_smooth - std_smooth, 0)
     upper_1sd = mean_smooth + std_smooth
 
@@ -138,12 +197,24 @@ def create_plot(df):
         horizontal_spacing=0.04
     )
 
+    # Determine available groups (fallback to 'All' if Gender missing)
+    available_genders = sorted([g for g in df.get("Gender", pd.Series(dtype=object)).dropna().unique()])
+    if len(available_genders) == 0:
+        available_genders = ["All"]
+
     for i, (bmd_col, title) in enumerate(MEASUREMENTS_ORDERED):
+        if bmd_col not in df.columns:
+            continue  # skip missing columns gracefully
         row = (i // SUBPLOT_COLS) + 1
         col = (i % SUBPLOT_COLS) + 1
 
-        for gender in ["Male", "Female"]:
-            gender_df = df[df["Gender"] == gender]
+        for gender in available_genders:
+            if gender == "All":
+                gender_df = df
+                color = "#6c757d"
+            else:
+                gender_df = df[df["Gender"] == gender]
+                color = COLORS.get(gender, "#6c757d")
             x_data = gender_df["Age (years)"]
             y_data = gender_df[bmd_col]
 
@@ -153,7 +224,7 @@ def create_plot(df):
                     x=x_data,
                     y=y_data,
                     mode='markers',
-                    marker=dict(color=COLORS[gender], size=3, opacity=0.4),
+                    marker=dict(color=color, size=3, opacity=0.4),
                     name=gender,
                     legendgroup=gender,
                     showlegend=(i == 0)
@@ -168,18 +239,19 @@ def create_plot(df):
                 fig.add_trace(
                     go.Scatter(
                         x=x_fit, y=y_mean, mode='lines',
-                        line=dict(color=COLORS[gender], width=2),
+                        line=dict(color=color, width=2),
                         name=f"{gender} Mean",
                         showlegend=False
                     ),
                     row=row, col=col
                 )
+                r, g, b = _hex_to_rgb(color)
                 fig.add_trace(
                     go.Scatter(
                         x=np.concatenate([x_fit, x_fit[::-1]]),
                         y=np.concatenate([y_upper, y_lower[::-1]]),
                         fill='toself',
-                        fillcolor=f"rgba({int(COLORS[gender][1:3], 16)}, {int(COLORS[gender][3:5], 16)}, {int(COLORS[gender][5:7], 16)}, 0.2)",
+                        fillcolor=f"rgba({r}, {g}, {b}, 0.2)",
                         line=dict(color='rgba(255,255,255,0)'),
                         name=f"{gender} ±1 SD",
                         showlegend=False
@@ -206,7 +278,9 @@ def main():
     df = load_and_merge_data()
     df_cleaned = clean_data(df)
     fig = create_plot(df_cleaned)
-    fig.write_html("BMD_Age_Gender.html")
+    out_dir = Path(__file__).parent
+    out_dir.mkdir(parents=True, exist_ok=True)
+    fig.write_html(out_dir / "BMD_Age_Gender.html")
     # fig.write_image("BMD_Age_Gender.png", scale=2)
 
 if __name__ == "__main__":
