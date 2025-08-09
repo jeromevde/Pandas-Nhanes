@@ -513,7 +513,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 indicator.addEventListener('click', () => goToSlide(index));
                 indicatorsContainer.appendChild(indicator);
             }
-            plotItems[index] = { element: gridItem, base: plot.base };
+            plotItems[index] = { element: gridItem, base: plot.base, width: img.naturalWidth, height: img.naturalHeight };
             // Enable horizontal scrolling with snap
             carouselWrapper.style.overflowX = 'auto';
             carouselWrapper.style.scrollSnapType = 'x mandatory';
@@ -648,9 +648,21 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 modalIframe.style.background = 'transparent';
                 modalIframe.style.opacity = '0';
                 modalIframe.style.transition = 'opacity 0.5s';
+                // Size to the image dimensions and scale to fit container
+                const dims = plotItems[index] || {};
+                if (dims.width && dims.height) {
+                    modalIframe.dataset.contentWidth = String(dims.width);
+                    modalIframe.dataset.contentHeight = String(dims.height);
+                } else {
+                    // Fallback defaults
+                    modalIframe.dataset.contentWidth = '1200';
+                    modalIframe.dataset.contentHeight = '800';
+                }
+                fitModalIframe();
                 // Fade in iframe when loaded, hide PNG
                 modalIframe.onload = function() {
                     setTimeout(() => {
+                        fitModalIframe();
                         modalIframe.style.opacity = '1';
                         if (modalImg) {
                             modalImg.style.transition = 'opacity 0.5s';
@@ -662,6 +674,29 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     }, 50);
                 };
             }
+        }
+
+        // Compute a scale so the iframe (using PNG dims) fits within modal content, center it
+        function fitModalIframe() {
+            const modal = document.getElementById('plot-modal');
+            if (!modal || !modal.classList.contains('show')) return;
+            const modalIframe = document.getElementById('modal-iframe');
+            const modalContent = document.querySelector('.plot-modal-content');
+            if (!modalIframe || !modalContent) return;
+            const contentW = parseFloat(modalIframe.dataset.contentWidth || '1200');
+            const contentH = parseFloat(modalIframe.dataset.contentHeight || '800');
+            const rect = modalContent.getBoundingClientRect();
+            const maxW = rect.width * 0.98;
+            const maxH = rect.height * 0.98;
+            const scale = Math.min(maxW / contentW, maxH / contentH, 1);
+            modalIframe.style.position = 'absolute';
+            modalIframe.style.top = '50%';
+            modalIframe.style.left = '50%';
+            modalIframe.style.width = contentW + 'px';
+            modalIframe.style.height = contentH + 'px';
+            modalIframe.style.transformOrigin = 'center center';
+            modalIframe.style.transform = `translate(-50%, -50%) scale(${scale})`;
+            modalIframe.style.willChange = 'transform';
         }
         function closeModal() {
             const modal = document.getElementById('plot-modal');
@@ -753,6 +788,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             }, { passive: true });
             window.addEventListener('resize', () => {
                 updateCarousel();
+                fitModalIframe();
             });
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');

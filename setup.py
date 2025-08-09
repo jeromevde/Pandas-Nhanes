@@ -1,12 +1,8 @@
 from setuptools import setup, find_packages
 
-def get_version():
-    with open('pandas_nhanes/VERSION') as f:
-        return f.read().strip()
-
 setup(
     name="pandas_nhanes",
-    version=get_version(),
+    version="0.1.8",
     packages=find_packages(),
     install_requires=[
         "pandas>=2.2.3",
