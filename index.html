@@ -181,6 +181,15 @@
             border-radius: 8px;
             transition: opacity 0.3s ease;
         }
+        /* Centered modal iframe with max bounds to avoid taking all space */
+        .plot-modal iframe.centered {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(95vw, 1200px);
+            height: min(90vh, 850px);
+        }
         .mini-iframe {
             border: none;
             background: #fff;
@@ -289,6 +298,17 @@
         }
         tbody tr:hover {
             background-color: #f8f9fa;
+        }
+        /* Table status/loading */
+        #table-status { font-size: 0.95em; color: #6c757d; margin: 0.5em 0 1em; }
+
+        /* Responsive tweaks */
+        @media (max-width: 768px) {
+            body { margin: 1em; }
+            .grid-container { height: 260px; padding: 12px; }
+            .carousel-wrapper { gap: 16px; }
+            .plot-modal-content { width: 100vw; height: 100vh; border-radius: 0; }
+            .plot-modal iframe.centered { width: min(100vw, 100%); height: min(100vh, 100%); }
         }
 
         /* Modal styles */
@@ -531,10 +551,11 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
     });
 }
 
-function createPlotThumbnails() {
+        function createPlotThumbnails() {
     const carouselWrapper = document.getElementById('carousel-wrapper');
     const indicatorsContainer = document.getElementById('carousel-indicators');
-    const baseWidth = 300;
+            // Responsive thumbnail width
+            const baseWidth = Math.min(300, Math.max(160, Math.floor(window.innerWidth * 0.7)));
     // Remove any existing children (for reloads)
     carouselWrapper.innerHTML = '';
     indicatorsContainer.innerHTML = '';
@@ -622,12 +643,7 @@ function createPlotThumbnails() {
             if (modalIframe) {
                 modalIframe.src = `Examples/${plot.base}/${plot.base}.html`;
                 modalIframe.style.display = 'block';
-                modalIframe.style.position = 'absolute';
-                modalIframe.style.top = '50%';
-                modalIframe.style.left = '50%';
-                modalIframe.style.transform = 'translate(-50%, -50%)';
-                modalIframe.style.width = '90%';
-                modalIframe.style.height = '90%';
+                modalIframe.classList.add('centered');
                 modalIframe.style.zIndex = '2';
                 modalIframe.style.background = 'transparent';
                 modalIframe.style.opacity = '0';
@@ -687,7 +703,7 @@ function createPlotThumbnails() {
                     startX = e.touches[0].clientX;
                     startY = e.touches[0].clientY;
                 }
-            });
+            }, { passive: true });
             carousel.addEventListener('touchend', (e) => {
                 let endX, endY;
                 if (touchCount === 2 && e.changedTouches.length >= 2) {
@@ -707,7 +723,7 @@ function createPlotThumbnails() {
                     }
                 }
                 touchCount = 0;
-            });
+            }, { passive: true });
             // Enable mouse/touchpad horizontal scroll for carousel
             const carouselWrapper = document.getElementById('carousel-wrapper');
             let scrollTimeout;
@@ -734,54 +750,174 @@ function createPlotThumbnails() {
                     }
                     carouselWrapper.classList.remove('user-scrolling');
                 }, 120);
-            });
+            }, { passive: true });
             window.addEventListener('resize', () => {
                 updateCarousel();
             });
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');
             const tableHeaderRow = document.getElementById('variables-table-header-row');
-            let allRows = [];
-            Papa.parse('pandas_nhanes/nhanes_variables.csv', {
+            let allData = []; // raw objects
+            let fields = [];
+            let allRowEls = []; // tr elements for current render
+            // Status element
+            const statusEl = document.createElement('div');
+            statusEl.id = 'table-status';
+            statusEl.textContent = 'Loading variables...';
+            const explorer = document.getElementById('variable-explorer');
+            explorer.insertBefore(statusEl, explorer.querySelector('.table-scroll'));
+
+            // Helper: render header once
+            function renderHeader(cols) {
+                if (!cols || !cols.length) return;
+                tableHeaderRow.innerHTML = '';
+                cols.forEach(field => {
+                    const th = document.createElement('th');
+                    th.textContent = field;
+                    tableHeaderRow.appendChild(th);
+                });
+            }
+            // Helper: build a row element from data
+            function buildRow(row) {
+                const tr = document.createElement('tr');
+                tr.innerHTML = fields.map(f => {
+                    const v = row[f];
+                    if (f === 'dataset link' && v) {
+                        return `<td><a href="${v}" target="_blank" rel="noopener">data</a></td>`;
+                    } else if (f === 'dataset documentation link' && v) {
+                        return `<td><a href="${v}" target="_blank" rel="noopener">doc</a></td>`;
+                    } else {
+                        return `<td>${v || ''}</td>`;
+                    }
+                }).join('');
+                return tr;
+            }
+            // Incremental append in batches to avoid layout thrash
+            function appendBatch(batch) {
+                const frag = document.createDocumentFragment();
+                batch.forEach(row => {
+                    const tr = buildRow(row);
+                    frag.appendChild(tr);
+                    allRowEls.push(tr);
+                });
+                tableBody.appendChild(frag);
+            }
+            // Append queue processed on idle frames
+            const appendQueue = [];
+            const buffer = [];
+            let appendScheduled = false;
+            function scheduleAppend() {
+                if (appendScheduled) return;
+                appendScheduled = true;
+                (window.requestIdleCallback || window.requestAnimationFrame)(function() {
+                    appendScheduled = false;
+                    const batch = appendQueue.shift();
+                    if (batch) {
+                        appendBatch(batch);
+                        if (appendQueue.length) scheduleAppend();
+                    }
+                });
+            }
+            // Stream parse using worker
+            const csvUrl = new URL('./pandas_nhanes/nhanes_variables.csv', window.location.href).toString();
+            Papa.parse(csvUrl, {
                 download: true,
                 header: true,
-                complete: function(results) {
-                    const data = results.data;
-                    const fields = results.meta.fields;
-                    // Render table headers
-                    tableHeaderRow.innerHTML = '';
-                    fields.forEach(field => {
-                        const th = document.createElement('th');
-                        th.textContent = field;
-                        tableHeaderRow.appendChild(th);
-                    });
-                    // Render table rows
-                    data.forEach(row => {
-                        // Only add row if at least one field is non-empty
-                        if (fields.some(f => row[f] && row[f].trim() !== '')) {
-                            const tr = document.createElement('tr');
-                            tr.innerHTML = fields.map(f => {
-                                if (f === 'dataset link' && row[f]) {
-                                    return `<td><a href="${row[f]}" target="_blank" rel="noopener">data</a></td>`;
-                                } else if (f === 'dataset documentation link' && row[f]) {
-                                    return `<td><a href="${row[f]}" target="_blank" rel="noopener">doc</a></td>`;
-                                } else {
-                                    return `<td>${row[f] || ''}</td>`;
-                                }
-                            }).join('');
-                            tableBody.appendChild(tr);
-                            allRows.push(tr);
+                worker: true,
+                step: function(results, parser) {
+                    const row = results.data;
+                    if (fields.length === 0 && results.meta && results.meta.fields) {
+                        fields = results.meta.fields.slice();
+                        renderHeader(fields);
+                    }
+                    // Only keep non-empty rows
+                    if (fields.some(f => row[f] && String(row[f]).trim() !== '')) {
+                        allData.push(row);
+                        // Buffer rows then append in chunks
+                        buffer.push(row);
+                        if (buffer.length >= 100) {
+                            const batch = buffer.splice(0, buffer.length);
+                            appendQueue.push(batch);
+                            scheduleAppend();
                         }
-                    });
+                    }
+                },
+                complete: function() {
+                    if (buffer.length) {
+                        appendQueue.push(buffer.splice(0, buffer.length));
+                        scheduleAppend();
+                    }
+                    statusEl.textContent = `Loaded ${allData.length.toLocaleString()} variables.`;
+                },
+                error: function(err) {
+                    statusEl.textContent = `Failed to load variables: ${err}`;
                 }
             });
-            searchInput.addEventListener('keyup', function() {
-                const searchTerm = searchInput.value.toLowerCase();
-                allRows.forEach(row => {
-                    const text = row.textContent.toLowerCase();
-                    row.style.display = text.includes(searchTerm) ? '' : 'none';
-                });
-            });
+
+            // Debounced, async search over allData with chunked DOM updates
+            let searchEpoch = 0;
+            function applySearch(term) {
+                const myEpoch = ++searchEpoch;
+                // Reset table quickly
+                tableBody.innerHTML = '';
+                allRowEls = [];
+                if (!term) {
+                    // Render first N quickly, then stream rest for idle loading
+                    const initial = allData.slice(0, 300);
+                    appendBatch(initial);
+                    let idx = 300;
+                    function streamRest() {
+                        if (myEpoch !== searchEpoch) return; // canceled
+                        if (idx >= allData.length) return;
+                        const next = allData.slice(idx, idx + 300);
+                        idx += 300;
+                        appendBatch(next);
+                        (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
+                    }
+                    (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
+                    statusEl.textContent = `Showing ${Math.min(300, allData.length).toLocaleString()} of ${allData.length.toLocaleString()} rows (idle streaming...)`;
+                    return;
+                }
+                const lower = term.toLowerCase();
+                let i = 0;
+                let shown = 0;
+                function processChunk() {
+                    if (myEpoch !== searchEpoch) return; // canceled
+                    const end = Math.min(i + 400, allData.length);
+                    const batch = [];
+                    for (; i < end; i++) {
+                        const row = allData[i];
+                        // Fast stringify and match
+                        for (let k = 0; k < fields.length; k++) {
+                            const v = row[fields[k]];
+                            if (v && String(v).toLowerCase().includes(lower)) {
+                                batch.push(row);
+                                break;
+                            }
+                        }
+                    }
+                    if (batch.length) {
+                        appendBatch(batch);
+                        shown += batch.length;
+                        statusEl.textContent = `Found ${shown.toLocaleString()} (scanning...)`;
+                    }
+                    if (i < allData.length) {
+                        setTimeout(processChunk, 0);
+                    } else {
+                        statusEl.textContent = `Found ${shown.toLocaleString()} matches.`;
+                    }
+                }
+                processChunk();
+            }
+            function debounce(fn, delay) {
+                let t;
+                return (...args) => {
+                    clearTimeout(t);
+                    t = setTimeout(() => fn.apply(null, args), delay);
+                };
+            }
+            const onSearch = debounce(() => applySearch(searchInput.value.trim()), 150);
+            searchInput.addEventListener('input', onSearch);
             document.getElementById('modal-close-btn').addEventListener('click', closeModal);
             document.getElementById('plot-modal').addEventListener('click', function(e) {
                 if (e.target === this) {
