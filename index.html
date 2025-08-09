@@ -588,19 +588,64 @@ function createPlotThumbnails() {
             const plot = plotExamples[index];
             if (!plot) return;
             const modal = document.getElementById('plot-modal');
-            let modalImg = document.getElementById('modal-img');
-            if (modalImg) modalImg.remove();
             const modalContent = document.querySelector('.plot-modal-content');
-            const modalIframe = document.getElementById('modal-iframe');
+            let modalImg = document.getElementById('modal-img');
+            let modalIframe = document.getElementById('modal-iframe');
+            // Remove any previous modalImg
+            if (modalImg) modalImg.remove();
+            // Hide iframe and reset src
+            if (modalIframe) {
+                modalIframe.style.opacity = '0';
+                modalIframe.style.display = 'none';
+                modalIframe.src = '';
+            }
+            // Add PNG image as background
+            modalImg = document.createElement('img');
+            modalImg.id = 'modal-img';
+            modalImg.src = `Examples/${plot.base}/${plot.base}.png`;
+            modalImg.alt = plot.base;
+            modalImg.style.position = 'absolute';
+            modalImg.style.top = '0';
+            modalImg.style.left = '0';
+            modalImg.style.width = '100%';
+            modalImg.style.height = '100%';
+            modalImg.style.objectFit = 'contain';
+            modalImg.style.zIndex = '1';
+            modalImg.style.transition = 'opacity 0.3s';
+            modalImg.style.opacity = '1';
+            // Insert image as first child of modalContent
+            modalContent.insertBefore(modalImg, modalContent.firstChild);
+            // Show modal
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            // Now load the HTML in the iframe, fade in when loaded
             if (modalIframe) {
                 modalIframe.src = `Examples/${plot.base}/${plot.base}.html`;
-                modalIframe.style.display = '';
+                modalIframe.style.display = 'block';
+                modalIframe.style.position = 'absolute';
+                modalIframe.style.top = '50%';
+                modalIframe.style.left = '50%';
+                modalIframe.style.transform = 'translate(-50%, -50%)';
+                modalIframe.style.width = '90%';
+                modalIframe.style.height = '90%';
+                modalIframe.style.zIndex = '2';
+                modalIframe.style.background = 'transparent';
+                modalIframe.style.opacity = '0';
+                modalIframe.style.transition = 'opacity 0.5s';
+                // Fade in iframe when loaded, hide PNG
+                modalIframe.onload = function() {
+                    setTimeout(() => {
+                        modalIframe.style.opacity = '1';
+                        if (modalImg) {
+                            modalImg.style.transition = 'opacity 0.5s';
+                            modalImg.style.opacity = '0';
+                            setTimeout(() => {
+                                if (modalImg && modalImg.parentNode) modalImg.parentNode.removeChild(modalImg);
+                            }, 500);
+                        }
+                    }, 50);
+                };
             }
-            modal.classList.add('show');
-            setTimeout(() => {
-                if (modalIframe) modalIframe.style.opacity = '1';
-            }, 100);
-            document.body.style.overflow = 'hidden';
         }
         function closeModal() {
             const modal = document.getElementById('plot-modal');
