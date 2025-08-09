@@ -102,24 +102,55 @@ def _hex_to_rgb(hex_color: str):
 
 def load_and_merge_data():
     """Loads and merges BMD and demographic data from NHANES."""
-    # Use get_cycle_variables to get all BMD and demographic variables at once
-    all_vars = list(BMD_COLS_DICT.keys()) + ["RIDAGEYR", "RIAGENDR"]
-    df = get_cycle_variables("2011-2012", *all_vars)
-    # Rename columns for clarity
-    bmd_rename = {k: v for k, v in BMD_COLS_DICT.items() if k in df.columns}
-    df = df.rename(columns=bmd_rename)
-    if "RIDAGEYR" in df.columns:
-        df = df.rename(columns={"RIDAGEYR": "Age (years)"})
-    if "RIAGENDR" in df.columns:
-        df = df.rename(columns={"RIAGENDR": "Gender"})
-        df["Gender"] = df["Gender"].map({1: "Male", 2: "Female"})
-    # Ensure Gender column exists to prevent KeyErrors in plotting
+    # 1) Load all BMD variables via the API (no API changes)
+    bmd_vars = list(BMD_COLS_DICT.keys())
+    bmd_df = get_cycle_variables("2011-2012", *bmd_vars)
+    # Rename BMD columns
+    bmd_rename = {k: v for k, v in BMD_COLS_DICT.items() if k in bmd_df.columns}
+    bmd_df = bmd_df.rename(columns=bmd_rename)
+    # 2) Load demographics (RIDAGEYR, RIAGENDR) directly from DEMO_G using variables table
+    demo_df = _load_demographics_from_demo("2011-2012")
+    # 3) Inner-merge to keep consistent cohort with SEQN
+    df = bmd_df.merge(demo_df, on="SEQN", how="inner")
+    # Validate presence
+    if "Age (years)" not in df.columns:
+        raise ValueError("Required column 'Age (years)' is missing after merge.")
     if "Gender" not in df.columns:
         df["Gender"] = np.nan
-    # Validate Age column presence
-    if "Age (years)" not in df.columns:
-        raise ValueError("Required column 'Age (years)' is missing. Could not load RIDAGEYR for the selected cycle.")
     return df
+
+def _load_demographics_from_demo(cycle: str) -> pd.DataFrame:
+    """Fetch DEMO_G XPT using the variables table and return SEQN, Age (years), Gender.
+    Does not modify the pandas_nhanes API.
+    """
+    import importlib.resources
+    import io
+    import requests
+    # Read variables table shipped with the package
+    with importlib.resources.path("pandas_nhanes", "nhanes_variables.csv") as csv_path:
+        vars_df = pd.read_csv(csv_path)
+    # Prefer DEMO_G for the given cycle
+    demo_rows = vars_df[(vars_df["cycle name"] == cycle) & (vars_df["dataset"] == "DEMO_G")]
+    if demo_rows.empty:
+        # Fallback to the variable RIDAGEYR in the cycle
+        demo_rows = vars_df[(vars_df["cycle name"] == cycle) & (vars_df["variable name"] == "RIDAGEYR")]
+        if demo_rows.empty:
+            raise RuntimeError("Could not locate DEMO_G or RIDAGEYR in variables table for demographics.")
+    dataset_link = demo_rows.iloc[0]["dataset link"]
+    # Download and read XPT
+    resp = requests.get(dataset_link)
+    resp.raise_for_status()
+    demo = pd.read_sas(io.BytesIO(resp.content), format="xport", encoding="utf-8")
+    keep = [c for c in ["SEQN", "RIDAGEYR", "RIAGENDR"] if c in demo.columns]
+    if "SEQN" not in keep:
+        raise RuntimeError("Demographics dataset missing SEQN.")
+    demo = demo[keep].drop_duplicates(subset=["SEQN"]).copy()
+    if "RIDAGEYR" in demo.columns:
+        demo = demo.rename(columns={"RIDAGEYR": "Age (years)"})
+    if "RIAGENDR" in demo.columns:
+        demo = demo.rename(columns={"RIAGENDR": "Gender"})
+        demo["Gender"] = demo["Gender"].map({1: "Male", 2: "Female"})
+    return demo
 
 def clean_data(df):
     """Removes rows with missing data and outliers."""
