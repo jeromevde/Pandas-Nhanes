@@ -278,6 +278,8 @@ def generate_complete_html(df, cohort_name, output_file):
 def main():
     """Main function to generate correlation matrices for all NHANES cohorts."""
     
+    output_dir = os.path.dirname(os.path.abspath(__file__))
+    
     print("=" * 60)
     print("NHANES Correlation Matrix Generator")
     print("=" * 60)
@@ -296,7 +298,8 @@ def main():
             continue
         
         # Generate HTML (output to same directory as script)
-        output_file = f'correlation_matrix_{cohort.replace("-", "_")}.html'
+        output_dir = os.path.dirname(os.path.abspath(__file__))
+        output_file = os.path.join(output_dir, f'correlation_matrix_{cohort.replace("-", "_")}.html')
         generate_complete_html(df, cohort, output_file)
     
     print(f"\n{'='*60}")
