@@ -457,28 +457,24 @@
     </div>
 
     <script>
-        // PNG/HTML pairs for carousel and modal
-        // Dynamically loaded from Examples/plots.txt
-        let plotExamples = [];
+        // PNG/HTML pairs for carousel and modal - hardcoded
+        const plotExamples = [
+            { base: 'BMD_Age_Gender', png: 'Examples/BMD_Age_Gender/BMD_Age_Gender.png', html: 'Examples/BMD_Age_Gender/BMD_Age_Gender.html' },
+            { base: 'Cholesterol_Age', png: 'Examples/Cholesterol_Age/Cholesterol_Age.png', html: 'Examples/Cholesterol_Age/Cholesterol_Age.html' },
+            { base: 'Correlation_Matrix_2009_2010', png: 'Examples/Correlation_Matrix/Correlation_Matrix_2009_2010.png', html: 'Examples/Correlation_Matrix/correlation_matrix_2009_2010.html' },
+            { base: 'Correlation_Matrix_2011_2012', png: 'Examples/Correlation_Matrix/Correlation_Matrix_2011_2012.png', html: 'Examples/Correlation_Matrix/correlation_matrix_2011_2012.html' },
+            { base: 'Correlation_Matrix_2013_2014', png: 'Examples/Correlation_Matrix/Correlation_Matrix_2013_2014.png', html: 'Examples/Correlation_Matrix/correlation_matrix_2013_2014.html' },
+            { base: 'Correlation_Matrix_2015_2016', png: 'Examples/Correlation_Matrix/Correlation_Matrix_2015_2016.png', html: 'Examples/Correlation_Matrix/correlation_matrix_2015_2016.html' },
+            { base: 'Correlation_Matrix_2017_2018', png: 'Examples/Correlation_Matrix/Correlation_Matrix_2017_2018.png', html: 'Examples/Correlation_Matrix/correlation_matrix_2017_2018.html' },
+            { base: 'Estradiol_Age_Gender', png: 'Examples/Estradiol_Age_Gender/Estradiol_Age_Gender.png', html: 'Examples/Estradiol_Age_Gender/Estradiol_Age_Gender.html' },
+            { base: 'Sleep_Depression', png: 'Examples/Sleep_Depression/Sleep_Depression.png', html: 'Examples/Sleep_Depression/Sleep_Depression.html' },
+            { base: 'Testosterone_Age_Gender', png: 'Examples/Testosterone_Age_Gender/Testosterone_Age_Gender.png', html: 'Examples/Testosterone_Age_Gender/Testosterone_Age_Gender.html' },
+            { base: 'Testosterone_Estrogen_Ratio', png: 'Examples/Testosterone_Estrogen_Ratio/Testosterone_Estrogen_Ratio.png', html: 'Examples/Testosterone_Estrogen_Ratio/Testosterone_Estrogen_Ratio.html' }
+        ];
         let currentIndex = 0;
         let plotItems = [];
         
-        // Load plot list from simple text file (one folder name per line)
-        async function loadPlotList() {
-            try {
-                const response = await fetch('Examples/plots.txt');
-                const text = await response.text();
-                const names = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
-                return names.map(base => ({
-                    base,
-                    png: `Examples/${base}/${base}.png`,
-                    html: `Examples/${base}/${base}.html`
-                }));
-            } catch (e) {
-                console.error('Failed to load plots.txt:', e);
-                return [];
-            }
-        }
+        // No longer loading from plots.txt
 
 // Add images to carousel as they load, show carousel after first image
 function loadImagesIndividually(plotExamples, baseWidth = 300) {
@@ -723,8 +719,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         }
 
         document.addEventListener("DOMContentLoaded", async function() {
-            // Load plots dynamically from Examples/plots.txt
-            plotExamples = await loadPlotList();
+            // Use hardcoded plotExamples array directly
             createPlotThumbnails();
             // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
