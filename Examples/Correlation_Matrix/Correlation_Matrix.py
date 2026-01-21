@@ -1,360 +1,679 @@
 #!/usr/bin/env python3
 """
-NHANES Correlation Matrix Generator
-Loads ALL variables from cached XPT files for a cohort and creates an interactive correlation matrix.
-- Labels show real variable names (or code if not available)
-- Hover shows variable code
-- Click on cell shows X-Y scatter plot
+NHANES Unified Correlation Matrix
+──────────────────────────────────
+Generates a SINGLE self-contained HTML with:
+  • Year-toggle between all available cached cohorts
+  • Lower-triangle only (symmetric matrix)
+  • Pearson r + p-value per pair  (scipy.stats)
+  • Pairs with < MIN_SHARED shared observations masked out
+  • Only statistically significant pairs (p < P_THRESHOLD) are clickable
+  • Scatter plot with swap-axes button, regression line
+  • Variable labels link directly to the NHANES documentation page
 """
 
-import pandas as pd
-import json
-import base64
-import os
+import os, sys, glob, json, base64
 import numpy as np
-import glob
+import pandas as pd
+from scipy import stats
 
-# Configuration
-COHORT = '2017-2018'  # 2017-2018 uses _J suffix
-MIN_VALID = 100  # Minimum valid values required
-MAX_VARS = 100  # Maximum variables to include
+# ─── Configuration ────────────────────────────────────────────────────────────
+COHORTS = {                 # cycle label → XPT file suffix
+    "2009-2010": "F",
+    "2011-2012": "G",
+    "2013-2014": "H",
+    "2015-2016": "I",
+    "2017-2018": "J",
+}
 
-def load_cached_tables(cohort_suffix):
-    """Load all cached XPT files for a cohort suffix."""
-    cache_dir = os.path.expanduser("~/.cache/pandas_nhanes")
-    
-    # Find all XPT files for this cohort
-    pattern = os.path.join(cache_dir, f"*_{cohort_suffix}.xpt")
-    files = glob.glob(pattern)
-    
-    print(f"📂 Found {len(files)} cached tables for suffix '_{cohort_suffix}'")
-    
+MIN_VALID_COL   = 100    # rows with non-null values required to include a column
+MIN_SHARED      = 50     # shared non-null rows required to compute a pair's r
+P_THRESHOLD     = 0.05   # significance cutoff
+MAX_VARS        = 200    # cap columns per cohort (sorted by n_valid desc)
+MAX_SCATTER_PAIRS = 1500 # pre-compute scatter data for this many top significant pairs
+SCATTER_SAMPLES = 200    # max data points embedded per scatter plot
+
+OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "Correlation_Matrix.html")
+CACHE_DIR   = os.path.expanduser("~/.cache/pandas_nhanes")
+
+
+# ─── Data loading ─────────────────────────────────────────────────────────────
+
+def load_merged(suffix: str):
+    pattern = os.path.join(CACHE_DIR, f"*_{suffix}.xpt")
+    files   = glob.glob(pattern)
+    if not files:
+        return None
+    print(f"  {len(files)} XPT files found for suffix _{suffix}")
+
     dfs = {}
     for f in files:
-        table_name = os.path.basename(f).replace(f"_{cohort_suffix}.xpt", "")
+        tbl = os.path.basename(f).replace(f"_{suffix}.xpt", "")
         try:
             df = pd.read_sas(f)
-            # Only include tables that have SEQN column
-            if 'SEQN' not in df.columns:
-                print(f"   ⊘ {table_name}: No SEQN column, skipping")
+            if "SEQN" not in df.columns:
                 continue
-            dfs[table_name] = df
-            print(f"   ✓ {table_name}: {len(df)} rows, {len(df.columns)} cols")
+            dfs[tbl] = df
         except Exception as e:
-            print(f"   ✗ {table_name}: {e}")
-    
-    # Merge all tables on SEQN
+            print(f"    ✗ {tbl}: {e}")
+
     if not dfs:
-        print("❌ No tables loaded")
         return None
-    
-    # Start with the largest table
-    main_df = None
-    for name, df in sorted(dfs.items(), key=lambda x: len(x[1]), reverse=True):
-        if main_df is None:
-            main_df = df.copy()
+
+    merged = None
+    for _, df in sorted(dfs.items(), key=lambda x: -len(x[1])):
+        if merged is None:
+            merged = df.copy()
         else:
-            # Merge on SEQN (respondent sequence number)
-            main_df = main_df.merge(df, on='SEQN', how='outer', suffixes=('', '_dup'))
-            # Remove duplicate columns
-            dup_cols = [c for c in main_df.columns if c.endswith('_dup')]
-            if dup_cols:
-                main_df = main_df.drop(columns=dup_cols)
-    
-    print(f"\n📊 Merged: {len(main_df)} rows, {len(main_df.columns)} columns")
-    return main_df
+            merged = merged.merge(df, on="SEQN", how="outer", suffixes=("", "_dup"))
+            dup = [c for c in merged.columns if c.endswith("_dup")]
+            if dup:
+                merged.drop(columns=dup, inplace=True)
 
-def filter_numeric_vars(df, min_valid=100):
-    """Filter to numeric columns with enough valid data."""
-    numeric_cols = df.select_dtypes(include=[np.float64, np.int64, np.float32, np.int32]).columns.tolist()
-    numeric_cols = [c for c in numeric_cols if c != 'SEQN']  # Exclude ID
-    
-    valid_cols = []
-    for col in numeric_cols:
-        try:
-            n_valid = df[col].notna().sum()
-            if n_valid >= min_valid and df[col].std() > 0:
-                valid_cols.append((col, n_valid))
-        except:
-            continue
-    
-    # Sort by number of valid values, take top MAX_VARS
-    valid_cols.sort(key=lambda x: x[1], reverse=True)
-    valid_cols = [c[0] for c in valid_cols[:MAX_VARS]]
-    
-    return valid_cols
+    print(f"  Merged → {len(merged):,} rows × {len(merged.columns):,} columns")
+    return merged
 
-def get_variable_descriptions(valid_cols):
-    """Get descriptions for variables from pandas_nhanes."""
-    from pandas_nhanes.api import get_variables
-    
+
+def select_columns(df):
+    num = df.select_dtypes(include=[np.number]).columns.tolist()
+    num = [c for c in num if c != "SEQN"]
+    valid = [(c, int(df[c].notna().sum()))
+             for c in num
+             if df[c].notna().sum() >= MIN_VALID_COL and df[c].std() > 0]
+    valid.sort(key=lambda x: -x[1])
+    return [c for c, _ in valid[:MAX_VARS]]
+
+
+# ─── Metadata (descriptions + NHANES links) ───────────────────────────────────
+
+def get_metadata(cols, cycle):
     try:
-        vars_df = get_variables()
-        # Get descriptions for valid columns
-        desc = {}
-        for col in valid_cols:
-            match = vars_df[vars_df['variable name'] == col]
-            if not match.empty:
-                desc[col] = match['variable explanation'].iloc[0]
-            else:
-                desc[col] = col
-        return desc
+        sys.path.insert(0, os.path.join(os.path.dirname(__file__), "..", ".."))
+        from pandas_nhanes.api import get_variables
+        vdf = get_variables()
+        cyc = vdf[vdf["cycle name"] == cycle]
     except Exception as e:
-        print(f"   Warning: Could not get descriptions: {e}")
-        return {c: c for c in valid_cols}
+        print(f"  Warning: could not load variable descriptions – {e}")
+        cyc = pd.DataFrame()
 
-def generate_html(df, valid_cols, var_desc, cohort, output_file):
-    """Generate interactive HTML correlation matrix."""
-    
-    print(f"\n📊 Computing correlations for {len(valid_cols)} variables...")
-    
-    # Calculate correlation matrix
-    corr_matrix = df[valid_cols].corr()
-    
-    # Create scatter data for top pairs
-    MAX_SCATTER_SAMPLES = 200
-    strong_corrs = []
-    for i, y_col in enumerate(valid_cols):
-        for j, x_col in enumerate(valid_cols):
-            if i < j:
-                try:
-                    corr_val = corr_matrix.loc[y_col, x_col]
-                    if not np.isnan(corr_val):
-                        strong_corrs.append((x_col, y_col, abs(corr_val), corr_val))
-                except:
-                    continue
-    
-    strong_corrs.sort(key=lambda x: x[2], reverse=True)
-    top_pairs = strong_corrs[:400]
-    
-    scatter_data = {}
-    for x_col, y_col, _, corr_val in top_pairs:
-        key = f"{x_col}|{y_col}"
-        plot_df = df[[x_col, y_col]].dropna()
-        if len(plot_df) >= 5:
-            if len(plot_df) > MAX_SCATTER_SAMPLES:
-                plot_df = plot_df.sample(n=MAX_SCATTER_SAMPLES, random_state=42)
-            scatter_data[key] = {
-                'x': plot_df[x_col].tolist(),
-                'y': plot_df[y_col].tolist(),
-                'correlation': round(corr_val, 3),
-                'n': len(df[[x_col, y_col]].dropna())
-            }
-    
-    print(f"   Generated {len(scatter_data)} scatter plots")
-    
-    # Encode data
-    scatter_json = json.dumps(scatter_data)
-    scatter_b64 = base64.b64encode(scatter_json.encode()).decode()
-    corr_json = corr_matrix.to_json()
-    corr_b64 = base64.b64encode(corr_json.encode()).decode()
-    desc_json = json.dumps(var_desc)
-    desc_b64 = base64.b64encode(desc_json.encode()).decode()
-    
-    matrix_size = min(1200, max(600, len(valid_cols) * 14))
-    
-    html_content = f'''<!DOCTYPE html>
+    meta = {}
+    for col in cols:
+        row = cyc[cyc["variable name"] == col] if not cyc.empty else pd.DataFrame()
+        if not row.empty:
+            r = row.iloc[0]
+            desc = str(r.get("variable explanation", col))
+            doc  = str(r.get("dataset documentation link", ""))
+            link = f"{doc}#{col}" if doc else \
+                   f"https://wwwn.cdc.gov/nchs/nhanes/search/variablelist.aspx?SearchTerms={col}"
+        else:
+            desc = col
+            link = f"https://wwwn.cdc.gov/nchs/nhanes/search/variablelist.aspx?SearchTerms={col}"
+        meta[col] = {"desc": desc, "link": link}
+    return meta
+
+
+# ─── Correlation + significance ───────────────────────────────────────────────
+
+def compute_lower_triangle(df, cols):
+    """Return corr[n,n], pval[n,n], nshared[n,n]  – upper tri filled with NaN."""
+    n   = len(cols)
+    arr = df[cols].to_numpy(dtype=float)
+    corr   = np.full((n, n), np.nan)
+    pval   = np.full((n, n), np.nan)
+    nshare = np.zeros((n, n), dtype=np.int32)
+
+    total = n * (n - 1) // 2
+    done  = 0
+    step  = max(1, total // 20)
+
+    for i in range(n):
+        for j in range(i):          # lower triangle only
+            mask = ~(np.isnan(arr[:, i]) | np.isnan(arr[:, j]))
+            ns   = int(mask.sum())
+            nshare[i, j] = ns
+            if ns >= MIN_SHARED:
+                x, y = arr[mask, i], arr[mask, j]
+                if x.std() > 0 and y.std() > 0:
+                    r, p = stats.pearsonr(x, y)
+                    corr[i, j] = round(float(r), 4)
+                    pval[i, j] = float(p)
+            done += 1
+            if done % step == 0:
+                pct = done * 100 // total
+                print(f"    [{pct:3d}%] {done}/{total} pairs computed", end="\r")
+
+    print()
+    return corr, pval, nshare
+
+
+# ─── Scatter data ─────────────────────────────────────────────────────────────
+
+def build_scatter(df, cols, corr, pval):
+    n = len(cols)
+    # collect significant pairs sorted by |r| desc
+    candidates = []
+    for i in range(n):
+        for j in range(i):
+            r = corr[i, j]
+            p = pval[i, j]
+            if not np.isnan(r) and not np.isnan(p) and p < P_THRESHOLD:
+                candidates.append((i, j, abs(r)))
+    candidates.sort(key=lambda x: -x[2])
+    top = candidates[:MAX_SCATTER_PAIRS]
+
+    scatter = {}
+    for i, j, _ in top:
+        ci, cj = cols[i], cols[j]
+        sub = df[[ci, cj]].dropna()
+        n_total = len(sub)
+        if n_total > SCATTER_SAMPLES:
+            sub = sub.sample(n=SCATTER_SAMPLES, random_state=42)
+        scatter[f"{i}|{j}"] = {
+            "xi": [round(v, 4) for v in sub[cj].tolist()],   # j → x axis
+            "yi": [round(v, 4) for v in sub[ci].tolist()],   # i → y axis
+            "n":  n_total,
+        }
+    print(f"  Scatter plots pre-computed: {len(scatter)}")
+    return scatter
+
+
+# ─── Per-cohort pipeline ──────────────────────────────────────────────────────
+
+def process_cohort(cycle, suffix):
+    print(f"\n{'━'*56}")
+    print(f"  Cohort {cycle}  (suffix _{suffix})")
+    print(f"{'━'*56}")
+
+    df = load_merged(suffix)
+    if df is None:
+        print("  No cached data – skipping.")
+        return None
+
+    cols = select_columns(df)
+    print(f"  Variables selected: {len(cols)}")
+    if len(cols) < 2:
+        return None
+
+    meta = get_metadata(cols, cycle)
+
+    print(f"  Computing correlations for {len(cols)} vars …")
+    corr, pval, nshare = compute_lower_triangle(df, cols)
+
+    n_sig = int(np.nansum(pval < P_THRESHOLD))
+    print(f"  Significant pairs: {n_sig:,}")
+
+    scatter = build_scatter(df, cols, corr, pval)
+
+    # Convert NaN → None for JSON serialisation
+    def _clean(arr):
+        return [[None if (isinstance(v, float) and np.isnan(v)) else v
+                 for v in row]
+                for row in arr.tolist()]
+
+    return {
+        "cycle":   cycle,
+        "cols":    cols,
+        "meta":    meta,
+        "corr":    _clean(corr),
+        "pval":    _clean(pval),
+        "nshare":  nshare.tolist(),
+        "scatter": scatter,
+        "n_rows":  int(len(df)),
+        "n_sig":   n_sig,
+    }
+
+
+# ─── HTML generation ──────────────────────────────────────────────────────────
+
+def b64json(obj):
+    return base64.b64encode(json.dumps(obj, separators=(",", ":")).encode()).decode()
+
+
+def generate_html(cohort_data, output):
+    years_json  = json.dumps(list(cohort_data.keys()))
+    payload_b64 = {yr: b64json(d) for yr, d in cohort_data.items()}
+    payload_js  = "{\n" + ",\n".join(
+        f'  {json.dumps(yr)}: {json.dumps(b64)}' for yr, b64 in payload_b64.items()
+    ) + "\n}"
+
+    min_shared_js = MIN_SHARED
+    p_thresh_js   = P_THRESHOLD
+
+    html = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NHANES Correlation Matrix - {cohort}</title>
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
-    <style>
-        body {{ font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }}
-        .container {{ max-width: 1600px; margin: 0 auto; }}
-        h1 {{ color: #333; text-align: center; margin-bottom: 5px; }}
-        h2 {{ color: #666; text-align: center; font-weight: normal; margin-top: 0; }}
-        .stats {{ text-align: center; color: #555; font-size: 13px; margin-bottom: 15px; }}
-        .instructions {{ text-align: center; color: #444; margin-bottom: 20px; padding: 15px; background: #e8f4f8; border-radius: 5px; border-left: 4px solid #2196F3; }}
-        #matrix-container {{ width: 100%; display: flex; justify-content: center; }}
-        #correlation-matrix {{ width: 100%; }}
-        #scatter-plot {{ width: 100%; height: 550px; border: 1px solid #ddd; border-radius: 5px; background: white; display: none; margin-top: 20px; }}
-        #scatter-plot.visible {{ display: block; }}
-        .loading {{ text-align: center; padding: 20px; color: #666; }}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NHANES Correlation Matrix</title>
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<style>
+  *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+  body {{ font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+          background: #f4f6f9; color: #2d3748; min-height: 100vh; }}
+
+  /* ── top bar ── */
+  #topbar {{ background: #1a365d; color: #fff; padding: 14px 24px; display: flex;
+             align-items: center; gap: 20px; flex-wrap: wrap; }}
+  #topbar h1 {{ font-size: 1.25rem; font-weight: 700; letter-spacing: .5px; }}
+  #year-btns {{ display: flex; gap: 8px; flex-wrap: wrap; }}
+  .yr-btn {{ background: #2c5282; border: none; color: #bee3f8; padding: 6px 14px;
+             border-radius: 20px; cursor: pointer; font-size: .85rem; transition: all .15s; }}
+  .yr-btn:hover {{ background: #3182ce; color: #fff; }}
+  .yr-btn.active {{ background: #63b3ed; color: #1a365d; font-weight: 700; }}
+  #stats {{ font-size: .8rem; color: #a0aec0; margin-left: auto; white-space: nowrap; }}
+
+  /* ── main layout ── */
+  #main {{ display: flex; flex-direction: column; align-items: center;
+           padding: 20px; gap: 20px; }}
+
+  /* ── legend ── */
+  #legend {{ display: flex; align-items: center; gap: 10px; font-size: .8rem;
+             color: #555; flex-wrap: wrap; justify-content: center; }}
+  #grad-bar {{ width: 160px; height: 14px; border-radius: 3px;
+               background: linear-gradient(to right, #2166ac, #f7f7f7, #d6604d); }}
+  .leg-item {{ display: flex; align-items: center; gap: 5px; }}
+  .leg-sw {{ width: 14px; height: 14px; border-radius: 2px; flex-shrink: 0; }}
+
+  /* ── matrix scroll container ── */
+  #matrix-scroll {{ overflow: auto; max-width: 98vw; background: #fff;
+                    border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12);
+                    padding: 6px; }}
+
+  /* ── tooltip ── */
+  #tip {{ position: fixed; pointer-events: none; background: rgba(26,54,93,.93);
+          color: #fff; padding: 9px 13px; border-radius: 6px; font-size: .78rem;
+          line-height: 1.6; z-index: 9999; display: none; max-width: 300px;
+          box-shadow: 0 4px 14px rgba(0,0,0,.3); }}
+
+  /* ── scatter panel ── */
+  #scatter-panel {{ width: 100%; max-width: 860px; background: #fff;
+                   border-radius: 8px; box-shadow: 0 2px 12px rgba(0,0,0,.12);
+                   padding: 20px; display: none; }}
+  #scatter-panel h3 {{ font-size: 1rem; color: #2d3748; margin-bottom: 6px; }}
+  #scatter-meta {{ font-size: .8rem; color: #718096; margin-bottom: 12px;
+                   line-height: 1.7; }}
+  #scatter-meta a {{ color: #3182ce; text-decoration: none; }}
+  #scatter-meta a:hover {{ text-decoration: underline; }}
+  #swap-btn {{ background: #ebf8ff; border: 1px solid #90cdf4; color: #2b6cb0;
+               padding: 5px 16px; border-radius: 4px; cursor: pointer;
+               font-size: .82rem; margin-bottom: 14px; }}
+  #swap-btn:hover {{ background: #bee3f8; }}
+  #scatter-plot {{ width: 100%; height: 440px; }}
+
+  #instructions {{ font-size: .81rem; color: #718096; text-align: center;
+                   max-width: 700px; }}
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>NHANES Correlation Matrix</h1>
-        <h2>Cohort: {cohort}</h2>
-        <div class="stats">Variables: {len(valid_cols)} | Sample size: {len(df)} | Top pairs preloaded: {len(scatter_data)}</div>
-        <div class="instructions">
-            <strong>👆 Click on any cell</strong> in the matrix to see the X-Y scatter plot!<br>
-            <small>Hover over cells to see correlation values. Hover over axis labels to see variable codes.</small>
-        </div>
-        <div id="matrix-container">
-            <div id="correlation-matrix"></div>
-        </div>
-        <div id="scatter-plot">
-            <div class="loading">Click on a cell to view scatter plot...</div>
-        </div>
-    </div>
 
-    <script>
-        const corrData = JSON.parse(atob('{corr_b64}'));
-        const scatterData = JSON.parse(atob('{scatter_b64}'));
-        const varDesc = JSON.parse(atob('{desc_b64}'));
-        const validCols = {json.dumps(valid_cols)};
-        
-        // Display labels: show description, but fallback to code
-        const displayLabels = validCols.map(c => varDesc[c] || c);
-        
-        // Build correlation matrix
-        const zValues = [];
-        const textValues = [];
-        for (let i = 0; i < validCols.length; i++) {{
-            const row = [], textRow = [];
-            for (let j = 0; j < validCols.length; j++) {{
-                const corr = corrData[validCols[i]][validCols[j]];
-                row.push(corr);
-                textRow.push(corr !== null ? corr.toFixed(2) : '-');
-            }}
-            zValues.push(row);
-            textValues.push(textRow);
-        }}
-        
-        // Create heatmap
-        const data = [{{
-            z: zValues,
-            x: displayLabels,
-            y: displayLabels,
-            text: textValues,
-            texttemplate: "%{{text}}",
-            textfont: {{size: 8}},
-            type: 'heatmap',
-            colorscale: 'RdBu_r',
-            zmin: -1,
-            zmax: 1,
-            hoverongaps: false,
-            hovertemplate: '<b>%{{x}}</b> vs <b>%{{y}}</b><br>r: %{{z:.3f}}<extra></extra>'
-        }}];
-        
-        const layout = {{
-            title: '{{Click on a cell to view scatter plot}}',
-            xaxis: {{
-                title: 'Variables (hover for code)',
-                tickangle: 45,
-                tickfont: {{size: 8}},
-                automargin: true
-            }},
-            yaxis: {{
-                title: 'Variables (hover for code)',
-                tickfont: {{size: 8}},
-                automargin: true
-            }},
-            width: {matrix_size},
-            height: {matrix_size},
-            clickmode: 'event+select',
-            hovermode: 'closest'
-        }};
-        
-        Plotly.newPlot('correlation-matrix', data, layout);
-        
-        // Handle click
-        document.getElementById('correlation-matrix').on('plotly_click', function(data) {{
-            if (!data.points || !data.points[0]) return;
-            
-            const pt = data.points[0];
-            const xLabel = pt.x;
-            const yLabel = pt.y;
-            
-            // Find original column names
-            const xCol = validCols.find(c => varDesc[c] === xLabel) || xLabel;
-            const yCol = validCols.find(c => varDesc[c] === yLabel) || yLabel;
-            
-            if (xCol === yCol) return;
-            
-            showScatterPlot(xCol, yCol, xLabel, yLabel);
-        }});
-        
-        function showScatterPlot(xCol, yCol, xLabel, yLabel) {{
-            const plotDiv = document.getElementById('scatter-plot');
-            
-            let key = xCol + '|' + yCol;
-            let reverse = false;
-            if (!scatterData[key]) {{
-                key = yCol + '|' + xCol;
-                reverse = true;
-            }}
-            
-            if (scatterData[key]) {{
-                const d = scatterData[key];
-                const xData = reverse ? d.y : d.x;
-                const yData = reverse ? d.x : d.y;
-                const r = reverse ? -d.correlation : d.correlation;
-                
-                Plotly.newPlot('scatter-plot', [{{
-                    x: xData,
-                    y: yData,
-                    mode: 'markers',
-                    type: 'scatter',
-                    marker: {{ size: 6, opacity: 0.5, color: 'steelblue' }},
-                    hovertemplate: '<b>' + xCol + ':</b> %{{x:.2f}}<br><b>' + yCol + ':</b> %{{y:.2f}}<extra></extra>'
-                }}], {{
-                    title: {{
-                        text: xLabel + ' vs ' + yLabel + '<br><sub>Code: ' + xCol + ' vs ' + yCol + ' | r = ' + r.toFixed(3) + ', n = ' + d.n + '</sub>',
-                        font: {{size: 14}}
-                    }},
-                    xaxis: {{title: xLabel + ' (' + xCol + ')'}},
-                    yaxis: {{title: yLabel + ' (' + yCol + ')'}},
-                    hovermode: 'closest'
-                }});
-                plotDiv.classList.add('visible');
-                plotDiv.scrollIntoView({{behavior: 'smooth', block: 'start'}});
-            }} else {{
-                plotDiv.innerHTML = '<div class="loading"><p>Scatter plot not available.</p><p>Only top 400 correlation pairs are preloaded.</p></div>';
-                plotDiv.classList.add('visible');
-            }}
-        }}
-    </script>
+<div id="topbar">
+  <h1>NHANES Correlation Matrix</h1>
+  <div id="year-btns"></div>
+  <div id="stats"></div>
+</div>
+
+<div id="main">
+  <div id="legend">
+    <span style="font-weight:600">Correlation:</span>
+    <span>−1</span>
+    <div id="grad-bar"></div>
+    <span>+1</span>
+    &nbsp;
+    <div class="leg-item"><div class="leg-sw" style="background:#d0d0d0"></div>
+      <span>Not significant (p ≥ 0.05)</span></div>
+    <div class="leg-item"><div class="leg-sw" style="background:#f0f0f0;border:1px solid #ccc"></div>
+      <span>Insufficient shared data</span></div>
+  </div>
+
+  <p id="instructions">
+    Hover any cell for details &nbsp;·&nbsp;
+    <strong>Click a coloured cell</strong> to view scatter plot &nbsp;·&nbsp;
+    Variable names are <span style="color:#3182ce;text-decoration:underline">links</span>
+    to NHANES documentation
+  </p>
+
+  <div id="matrix-scroll">
+    <svg id="matrix-svg" style="display:block"></svg>
+  </div>
+
+  <div id="scatter-panel">
+    <h3 id="scatter-title"></h3>
+    <div id="scatter-meta"></div>
+    <button id="swap-btn" onclick="swapAxes()">⇄ Swap Axes</button>
+    <div id="scatter-plot"></div>
+  </div>
+</div>
+
+<div id="tip"></div>
+
+<script>
+// ── Embedded payload ────────────────────────────────────────────────────────
+const YEARS   = {years_json};
+const PAYLOAD = {payload_js};
+
+// ── Constants ───────────────────────────────────────────────────────────────
+const MIN_SHARED  = {min_shared_js};
+const P_THRESHOLD = {p_thresh_js};
+
+// ── Color scale (RdBu diverging) ────────────────────────────────────────────
+const STOPS = [
+  [-1.0, [33,  102, 172]],
+  [-0.5, [103, 169, 207]],
+  [ 0.0, [247, 247, 247]],
+  [ 0.5, [239, 138,  98]],
+  [ 1.0, [214,  96,  77]],
+];
+function corrColor(r) {{
+  r = Math.max(-1, Math.min(1, r));
+  for (let k = 0; k < STOPS.length - 1; k++) {{
+    const [r0, c0] = STOPS[k], [r1, c1] = STOPS[k + 1];
+    if (r >= r0 && r <= r1) {{
+      const t  = (r - r0) / (r1 - r0);
+      const ch = c0.map((v, i) => Math.round(v + t * (c1[i] - v)));
+      return `rgb(${{ch[0]}},${{ch[1]}},${{ch[2]}})`;
+    }}
+  }}
+  return '#f7f7f7';
+}}
+
+// ── State ───────────────────────────────────────────────────────────────────
+let active = null;   // decoded cohort object
+let activeYear = null;
+let scatterState = null;  // {{ i, j, swapped }}
+
+// ── Year buttons ────────────────────────────────────────────────────────────
+const yearBtnsEl = document.getElementById('year-btns');
+YEARS.forEach(yr => {{
+  const btn = document.createElement('button');
+  btn.className   = 'yr-btn';
+  btn.textContent = yr;
+  btn.onclick     = () => loadYear(yr);
+  yearBtnsEl.appendChild(btn);
+}});
+
+function loadYear(yr) {{
+  if (yr === activeYear) return;
+  activeYear = yr;
+  document.querySelectorAll('.yr-btn')
+    .forEach(b => b.classList.toggle('active', b.textContent === yr));
+  active = JSON.parse(atob(PAYLOAD[yr]));
+  renderMatrix();
+  document.getElementById('scatter-panel').style.display = 'none';
+}}
+
+// ── Matrix ──────────────────────────────────────────────────────────────────
+const LABEL_PAD = 140;   // px for axis labels
+
+function renderMatrix() {{
+  const {{ cols, meta, corr, pval, nshare, n_rows, n_sig }} = active;
+  const n      = cols.length;
+  const cellPx = Math.max(4, Math.min(13, Math.floor(880 / n)));
+  const matPx  = n * cellPx;
+  const svgW   = matPx + LABEL_PAD;
+  const svgH   = matPx + LABEL_PAD;
+
+  const svg = document.getElementById('matrix-svg');
+  svg.setAttribute('width',  svgW);
+  svg.setAttribute('height', svgH);
+  svg.setAttribute('viewBox', `0 0 ${{svgW}} ${{svgH}}`);
+  while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+  const NS = 'http://www.w3.org/2000/svg';
+  const mk = (tag, attrs, parent) => {{
+    const el = document.createElementNS(NS, tag);
+    Object.entries(attrs).forEach(([k, v]) => el.setAttribute(k, v));
+    if (parent) parent.appendChild(el);
+    return el;
+  }};
+
+  // White background
+  mk('rect', {{ x: 0, y: 0, width: svgW, height: svgH, fill: '#fff' }}, svg);
+
+  // ── cells ──
+  const g = mk('g', {{ transform: `translate(${{LABEL_PAD}},0)` }}, svg);
+
+  for (let i = 0; i < n; i++) {{
+    for (let j = 0; j < i; j++) {{   // lower triangle only
+      const r  = corr[i][j];
+      const p  = pval[i][j];
+      const ns = nshare[i][j];
+
+      let fill, clickable;
+      if (r === null || ns < MIN_SHARED) {{
+        fill = '#f0f0f0';
+        clickable = false;
+      }} else if (p === null || p >= P_THRESHOLD) {{
+        fill = '#d0d0d0';
+        clickable = false;
+      }} else {{
+        fill = corrColor(r);
+        clickable = true;
+      }}
+
+      const rect = mk('rect', {{
+        x: j * cellPx,  y: i * cellPx,
+        width:  cellPx, height: cellPx,
+        fill,
+        stroke: '#fff', 'stroke-width': cellPx > 5 ? '0.4' : '0',
+        style: clickable ? 'cursor:pointer' : 'cursor:default',
+      }}, g);
+
+      rect.addEventListener('mouseenter', e => showTip(e, i, j));
+      rect.addEventListener('mouseleave', hideTip);
+      if (clickable) rect.addEventListener('click', () => doScatter(i, j));
+    }}
+  }}
+
+  // ── Y-labels (left) ──
+  for (let i = 0; i < n; i++) {{
+    const cy   = i * cellPx + cellPx / 2;
+    const a    = mk('a', {{ href: meta[cols[i]].link, target: '_blank' }}, svg);
+    const txt  = mk('text', {{
+      x: LABEL_PAD - 6, y: cy,
+      'text-anchor': 'end', 'dominant-baseline': 'middle',
+      'font-size': Math.max(6, Math.min(10, cellPx - 1)),
+      fill: '#3182ce', style: 'text-decoration:underline;cursor:pointer',
+    }}, a);
+    txt.textContent = trunc(meta[cols[i]].desc, 26);
+    txt.addEventListener('mouseenter', e => labelTip(e, cols[i], meta[cols[i]].desc));
+    txt.addEventListener('mouseleave', hideTip);
+  }}
+
+  // ── X-labels (bottom) ──
+  const gx = mk('g', {{ transform: `translate(${{LABEL_PAD}},0)` }}, svg);
+  for (let j = 0; j < n; j++) {{
+    const cx  = j * cellPx + cellPx / 2;
+    const a   = mk('a', {{ href: meta[cols[j]].link, target: '_blank' }}, gx);
+    const txt = mk('text', {{
+      x: cx, y: matPx + 5,
+      'text-anchor': 'start', 'dominant-baseline': 'auto',
+      'font-size': Math.max(6, Math.min(10, cellPx - 1)),
+      fill: '#3182ce',
+      transform: `rotate(45,${{cx}},${{matPx + 5}})`,
+      style: 'text-decoration:underline;cursor:pointer',
+    }}, a);
+    txt.textContent = trunc(meta[cols[j]].desc, 26);
+    txt.addEventListener('mouseenter', e => labelTip(e, cols[j], meta[cols[j]].desc));
+    txt.addEventListener('mouseleave', hideTip);
+  }}
+
+  document.getElementById('stats').textContent =
+    `${{n}} variables · ${{n_rows.toLocaleString()}} respondents · ${{n_sig.toLocaleString()}} significant pairs`;
+}}
+
+// ── Tooltip ─────────────────────────────────────────────────────────────────
+const tipEl = document.getElementById('tip');
+
+function showTip(e, i, j) {{
+  const {{ cols, meta, corr, pval, nshare }} = active;
+  const r  = corr[i][j];
+  const p  = pval[i][j];
+  const ns = nshare[i][j];
+  const ci = cols[i], cj = cols[j];
+
+  let body = `<b>${{meta[cj].desc}}</b> <span style="color:#90cdf4">(${{cj}})</span><br>` +
+             `<b>vs ${{meta[ci].desc}}</b> <span style="color:#90cdf4">(${{ci}})</span><br>`;
+
+  if (r === null || ns < MIN_SHARED) {{
+    body += `<em>Insufficient shared data (n=${{ns}})</em>`;
+  }} else {{
+    const sig = (p !== null && p < P_THRESHOLD)
+                ? '<span style="color:#68d391">✔ significant</span>'
+                : '<span style="color:#fc8181">✘ not significant</span>';
+    body += `r = ${{r != null ? r.toFixed(3) : '–'}}<br>` +
+            `p = ${{p != null ? p.toExponential(2) : '–'}}<br>` +
+            `n = ${{ns.toLocaleString()}} &nbsp; ${{sig}}`;
+  }}
+  tipEl.innerHTML = body;
+  posTip(e);
+  tipEl.style.display = 'block';
+}}
+
+function labelTip(e, code, desc) {{
+  tipEl.innerHTML = `<b>${{code}}</b><br>${{desc}}<br><em style="color:#90cdf4">Opens NHANES docs ↗</em>`;
+  posTip(e);
+  tipEl.style.display = 'block';
+}}
+
+function hideTip() {{ tipEl.style.display = 'none'; }}
+
+function posTip(e) {{
+  const x = e.clientX + 14, y = e.clientY + 14;
+  tipEl.style.left = Math.min(x, window.innerWidth  - 320) + 'px';
+  tipEl.style.top  = Math.min(y, window.innerHeight - 160) + 'px';
+}}
+
+document.addEventListener('mousemove', e => {{
+  if (tipEl.style.display === 'block') posTip(e);
+}});
+
+// ── Scatter ──────────────────────────────────────────────────────────────────
+function doScatter(i, j) {{
+  scatterState = {{ i, j, swapped: false }};
+  drawScatter();
+  const panel = document.getElementById('scatter-panel');
+  panel.style.display = 'block';
+  setTimeout(() => panel.scrollIntoView({{ behavior: 'smooth', block: 'start' }}), 30);
+}}
+
+function swapAxes() {{
+  if (!scatterState) return;
+  scatterState.swapped = !scatterState.swapped;
+  drawScatter();
+}}
+
+function drawScatter() {{
+  const {{ i, j, swapped }} = scatterState;
+  const {{ cols, meta, corr, pval, nshare, scatter }} = active;
+  const ci = cols[i], cj = cols[j];
+  const di = meta[ci].desc, dj = meta[cj].desc;
+  const r  = corr[i][j];
+  const p  = pval[i][j];
+  const ns = nshare[i][j];
+
+  const sd  = scatter[`${{i}}|${{j}}`];
+
+  // Determine axis assignment
+  const xDesc = swapped ? di : dj;
+  const yDesc = swapped ? dj : di;
+  const xCode = swapped ? ci : cj;
+  const yCode = swapped ? cj : ci;
+
+  document.getElementById('scatter-title').textContent =
+    `${{xDesc}} × ${{yDesc}}`;
+
+  document.getElementById('scatter-meta').innerHTML =
+    `<b>X-axis:</b> ${{xDesc}}
+     (<a href="${{meta[xCode].link}}" target="_blank">${{xCode}}</a>) &nbsp;|&nbsp; ` +
+    `<b>Y-axis:</b> ${{yDesc}}
+     (<a href="${{meta[yCode].link}}" target="_blank">${{yCode}}</a>)<br>` +
+    `Pearson r = <b>${{r != null ? r.toFixed(4) : '–'}}</b> &nbsp;|&nbsp; ` +
+    `p = <b>${{p != null ? p.toExponential(3) : '–'}}</b> &nbsp;|&nbsp; ` +
+    `n = <b>${{ns != null ? ns.toLocaleString() : '–'}}</b> shared observations`;
+
+  if (!sd) {{
+    document.getElementById('scatter-plot').innerHTML =
+      '<p style="padding:60px;text-align:center;color:#718096">' +
+      'Scatter data not pre-computed for this pair.<br>' +
+      `(Only the top ${{Object.keys(scatter).length.toLocaleString()}} significant pairs by |r| are included.)</p>`;
+    return;
+  }}
+
+  const xdata = swapped ? sd.yi : sd.xi;
+  const ydata = swapped ? sd.xi : sd.yi;
+
+  // Regression line
+  const nn   = xdata.length;
+  const mx   = xdata.reduce((a, v) => a + v, 0) / nn;
+  const my   = ydata.reduce((a, v) => a + v, 0) / nn;
+  const num  = xdata.reduce((a, v, k) => a + (v - mx) * (ydata[k] - my), 0);
+  const den  = xdata.reduce((a, v) => a + (v - mx) ** 2, 0);
+  const m    = den ? num / den : 0;
+  const b    = my - m * mx;
+  const xmin = Math.min(...xdata), xmax = Math.max(...xdata);
+
+  Plotly.react('scatter-plot', [
+    {{
+      x: xdata, y: ydata,
+      mode: 'markers', type: 'scatter',
+      name: 'Observations',
+      marker: {{ size: 6, opacity: .55, color: '#3182ce' }},
+      hovertemplate: `${{xCode}}: %{{x:.3g}}<br>${{yCode}}: %{{y:.3g}}<extra></extra>`,
+    }},
+    {{
+      x: [xmin, xmax], y: [m * xmin + b, m * xmax + b],
+      mode: 'lines', type: 'scatter',
+      name: 'Regression',
+      line: {{ color: '#e53e3e', width: 2 }},
+      hoverinfo: 'skip',
+    }},
+  ], {{
+    xaxis: {{ title: {{ text: `${{xDesc}}` }}, automargin: true }},
+    yaxis: {{ title: {{ text: `${{yDesc}}` }}, automargin: true }},
+    showlegend: false,
+    margin: {{ t: 10, r: 20, b: 90, l: 90 }},
+    hovermode: 'closest',
+  }}, {{ responsive: true }});
+}}
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function trunc(s, n) {{
+  return s && s.length > n ? s.slice(0, n - 1) + '…' : (s || '');
+}}
+
+// ── Boot ─────────────────────────────────────────────────────────────────────
+loadYear(YEARS[YEARS.length - 1]);   // default: most recent available year
+</script>
 </body>
-</html>'''
-    
-    with open(output_file, 'w') as f:
-        f.write(html_content)
-    
-    size_mb = os.path.getsize(output_file) / 1024 / 1024
-    print(f"✅ Generated: {output_file} ({size_mb:.1f} MB)")
-    return output_file
+</html>"""
+
+    with open(output, "w", encoding="utf-8") as f:
+        f.write(html)
+
+    size_mb = os.path.getsize(output) / 1024 / 1024
+    print(f"\n✅  Written → {output}  ({size_mb:.1f} MB)")
+
+
+# ─── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
-    import argparse
-    
-    parser = argparse.ArgumentParser(description='Generate NHANES correlation matrix')
-    parser.add_argument('--cohort', '-c', default='2017-2018', help='NHANES cycle (e.g., 2017-2018)')
-    parser.add_argument('--output', '-o', default=None, help='Output HTML file')
-    parser.add_argument('--min-valid', '-m', type=int, default=MIN_VALID, help='Min valid values per variable')
-    parser.add_argument('--max-vars', '-n', type=int, default=MAX_VARS, help='Max variables')
-    args = parser.parse_args()
-    
-    # Map cohort to suffix
-    suffix_map = {'2009-2010': 'F', '2011-2012': 'G', '2013-2014': 'H', '2015-2016': 'I', '2017-2018': 'J'}
-    suffix = suffix_map.get(args.cohort, 'J')
-    
-    print("=" * 60)
-    print(f"NHANES Correlation Matrix: {args.cohort}")
-    print(f"Max variables: {args.max_vars}, Min valid: {args.min_valid}")
-    print("=" * 60)
-    
-    # Load cached data
-    df = load_cached_tables(suffix)
-    
-    if df is None:
-        return
-    
-    # Filter to valid numeric columns
-    valid_cols = filter_numeric_vars(df, args.min_valid)
-    print(f"\n✅ Selected {len(valid_cols)} valid numeric variables")
-    
-    # Get descriptions
-    var_desc = get_variable_descriptions(valid_cols)
-    
-    # Generate HTML
-    output_file = args.output or f'correlation_matrix_{args.cohort.replace("-", "_")}.html'
-    generate_html(df, valid_cols, var_desc, args.cohort, output_file)
-    
-    print(f"\n🎉 Done! Open {output_file} in your browser")
+    all_data = {}
+    for cycle, suffix in COHORTS.items():
+        result = process_cohort(cycle, suffix)
+        if result:
+            all_data[cycle] = result
 
-if __name__ == '__main__':
+    if not all_data:
+        print(
+            "\n❌  No cohort data found in cache.\n"
+            "    Run pandas_nhanes.get_cycle_variables() first to populate ~/.cache/pandas_nhanes/"
+        )
+        sys.exit(1)
+
+    print(f"\n📊  Generating unified HTML for {len(all_data)} cohort(s)…")
+    generate_html(all_data, OUTPUT_FILE)
+    print("🎉  Done!")
+
+
+if __name__ == "__main__":
     main()
