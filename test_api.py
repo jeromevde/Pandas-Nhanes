@@ -35,16 +35,25 @@ def test_list_cycles():
     assert isinstance(cycles, list), "list_cycles should return a list"
     assert len(cycles) > 0, "list_cycles returned empty list"
     
-    # Check for expected cycles
-    expected = ["1999-2000", "2001-2002", "2011-2012", "2017-2020", "2021-2023"]
-    for cycle in expected:
-        assert cycle in cycles, f"Expected cycle {cycle} not found"
+    # Check for all expected continuous cycles
+    expected_continuous = [
+        "1999-2000", "2001-2002", "2003-2004", "2005-2006", "2007-2008",
+        "2009-2010", "2011-2012", "2013-2014", "2015-2016", "2017-2018"
+    ]
+    for cycle in expected_continuous:
+        assert cycle in cycles, f"Expected continuous cycle {cycle} not found"
+    
+    # Check for special cycles
+    expected_special = ["2017-2020", "2021-2023"]
+    for cycle in expected_special:
+        assert cycle in cycles, f"Expected special cycle {cycle} not found"
     
     # Check that cycles are sorted
     assert cycles == sorted(cycles), "Cycles should be sorted"
     
     print(f"  ✓ Found {len(cycles)} cycles")
-    print(f"  ✓ All expected cycles present")
+    print(f"  ✓ All {len(expected_continuous)} continuous cycles present")
+    print(f"  ✓ All {len(expected_special)} special cycles present")
 
 
 def test_check_dataset_coverage():

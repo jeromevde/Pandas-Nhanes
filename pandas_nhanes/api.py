@@ -161,7 +161,7 @@ def check_dataset_coverage(verbose=True):
     special_present = [c for c in expected_special if c in current_cycles]
     missing = [c for c in expected_continuous + expected_special if c not in current_cycles]
     
-    coverage_percent = int(100 * len(continuous_present) / len(expected_continuous))
+    coverage_percent = round(100 * len(continuous_present) / len(expected_continuous))
     
     result = {
         'continuous_cycles': continuous_present,

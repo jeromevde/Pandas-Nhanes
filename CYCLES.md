@@ -53,7 +53,7 @@ Some NHANES datasets span multiple cycles for longitudinal studies or combined a
 - ✅ **Complete coverage**: All available standard NHANES cycles from 1999-2018
 - ✅ **COVID-19 adapted**: Includes both pre-pandemic (2017-2020) and pandemic (2021-2023) data
 - ⚠️ **Note**: The 2019-2020 standalone cycle does not exist; use the 2017-2020 cycle for this period
-- 📊 **Total**: 16 different cycle periods with 53,000+ variables
+- 📊 **Total**: 16 different cycle periods covering the full NHANES continuous survey era
 
 ## How to Use This Data
 
