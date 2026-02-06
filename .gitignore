@@ -74,3 +74,6 @@ ENV/
 
 # Ignore NHANES data downloads (if any)
 nhanes_data/
+
+# Node modules
+node_modules/
