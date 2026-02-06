@@ -15,6 +15,10 @@ from pandas_nhanes import get_cycle_variables, get_variables
 import warnings
 warnings.filterwarnings('ignore')
 
+# Constants
+MIN_DATA_POINTS_FOR_TRANSFORMATION = 10
+MIN_SAMPLE_SIZE = 30
+
 def select_numeric_variables(n=10, cycle="2015-2016"):
     """
     Select n random numeric variables from NHANES data
@@ -73,7 +77,7 @@ def apply_transformations(series):
     # Only apply transformations to positive values
     positive_mask = series > 0
     
-    if positive_mask.sum() > 10:  # Need enough data points
+    if positive_mask.sum() > MIN_DATA_POINTS_FOR_TRANSFORMATION:  # Need enough data points
         # Log transform
         log_series = series.copy()
         log_series[positive_mask] = np.log(series[positive_mask])
@@ -89,7 +93,7 @@ def apply_transformations(series):
         
         # Inverse (for non-zero values)
         nonzero_mask = series != 0
-        if nonzero_mask.sum() > 10:
+        if nonzero_mask.sum() > MIN_DATA_POINTS_FOR_TRANSFORMATION:
             inv_series = series.copy()
             inv_series[nonzero_mask] = 1 / series[nonzero_mask]
             transformations['inverse'] = inv_series
@@ -115,7 +119,7 @@ def compute_correlation_matrix(df, variables):
             # Get clean data
             subset = df[[var1, var2]].dropna()
             
-            if len(subset) < 30:  # Need minimum sample size
+            if len(subset) < MIN_SAMPLE_SIZE:  # Need minimum sample size
                 continue
             
             # Apply transformations
@@ -130,7 +134,7 @@ def compute_correlation_matrix(df, variables):
                         valid_mask = ~(pd.isna(t1_data) | pd.isna(t2_data) | 
                                       np.isinf(t1_data) | np.isinf(t2_data))
                         
-                        if valid_mask.sum() < 30:
+                        if valid_mask.sum() < MIN_SAMPLE_SIZE:
                             continue
                         
                         corr = np.corrcoef(t1_data[valid_mask], t2_data[valid_mask])[0, 1]
