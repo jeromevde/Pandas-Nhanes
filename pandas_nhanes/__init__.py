@@ -10,5 +10,5 @@ Public API functions can now be imported directly from the top-level package, e.
 """
 
 from .api import (
-     get_variables, get_cycle_variables, explore
+     get_variables, get_cycle_variables, explore, list_cycles, check_dataset_coverage
 )

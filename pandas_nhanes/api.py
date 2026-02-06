@@ -103,3 +103,84 @@ def explore():
 
     # Open in browser
     webbrowser.open('file://' + os.path.abspath(html_path))
+
+
+def list_cycles():
+    """
+    List all available NHANES cycles in the dataset.
+    
+    Returns:
+        list: Sorted list of cycle names (e.g., ['1999-2000', '2001-2002', ...])
+    
+    Example:
+        >>> from pandas_nhanes import list_cycles
+        >>> cycles = list_cycles()
+        >>> print(cycles)
+        ['1999-2000', '2001-2002', '2003-2004', ...]
+    """
+    df = get_variables()
+    # Filter out non-cycle entries and return sorted unique cycles
+    cycles = [c for c in df['cycle name'].unique() if '-' in c]
+    return sorted(cycles)
+
+
+def check_dataset_coverage(verbose=True):
+    """
+    Check the completeness of NHANES cycle coverage in the dataset.
+    
+    Args:
+        verbose (bool): If True, prints detailed report. Default is True.
+    
+    Returns:
+        dict: Dictionary with coverage information including:
+            - 'continuous_cycles': list of standard biennial cycles present
+            - 'special_cycles': list of special/combined cycles present
+            - 'missing_cycles': list of any missing expected cycles
+            - 'coverage_percent': percentage of expected cycles present
+            - 'total_cycles': total number of cycles in dataset
+    
+    Example:
+        >>> from pandas_nhanes import check_dataset_coverage
+        >>> coverage = check_dataset_coverage(verbose=False)
+        >>> print(f"Coverage: {coverage['coverage_percent']}%")
+    """
+    # Expected cycles
+    expected_continuous = [
+        "1999-2000", "2001-2002", "2003-2004", "2005-2006", "2007-2008",
+        "2009-2010", "2011-2012", "2013-2014", "2015-2016", "2017-2018"
+    ]
+    
+    expected_special = ["2017-2020", "2021-2023"]
+    
+    # Get current cycles
+    df = get_variables()
+    current_cycles = set([c for c in df['cycle name'].unique() if '-' in c])
+    
+    # Calculate coverage
+    continuous_present = [c for c in expected_continuous if c in current_cycles]
+    special_present = [c for c in expected_special if c in current_cycles]
+    missing = [c for c in expected_continuous + expected_special if c not in current_cycles]
+    
+    coverage_percent = int(100 * len(continuous_present) / len(expected_continuous))
+    
+    result = {
+        'continuous_cycles': continuous_present,
+        'special_cycles': special_present,
+        'missing_cycles': missing,
+        'coverage_percent': coverage_percent,
+        'total_cycles': len(current_cycles)
+    }
+    
+    if verbose:
+        print("NHANES Dataset Coverage:")
+        print(f"  Continuous cycles (biennial): {len(continuous_present)}/{len(expected_continuous)} ({coverage_percent}%)")
+        print(f"  Special/COVID-adjusted cycles: {len(special_present)}/{len(expected_special)}")
+        print(f"  Total cycles in dataset: {len(current_cycles)}")
+        if missing:
+            print(f"  Missing cycles: {missing}")
+        else:
+            print("  ✓ All expected cycles present!")
+        if "2017-2020" in current_cycles:
+            print("\n  Note: 2019-2020 data is included in the 2017-2020 pre-pandemic cycle")
+    
+    return result
