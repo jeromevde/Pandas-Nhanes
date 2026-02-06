@@ -193,7 +193,7 @@ When contributing examples:
 - **Variable Availability:** Variables may not exist in all cycles
 - **Data Quality:** NHANES data may have missing values - always clean data
 - **File Downloads:** First run may be slow due to downloading .xpt files
-- **Encoding:** Always use UTF-8 encoding for SAS XPORT files
+- **File Format:** SAS XPORT files (.xpt) are binary format - use `pandas.read_sas()` which handles the encoding automatically
 
 ## Resources
 
