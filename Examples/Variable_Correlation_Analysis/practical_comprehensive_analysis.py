@@ -204,7 +204,8 @@ def compute_correlations_for_cycle(cycle_name, var_list, variables_df):
                                     'abs_correlation': abs(corr),
                                     'n_samples': valid_mask.sum()
                                 })
-                        except:
+                        except (ValueError, RuntimeError, TypeError) as e:
+                            # Skip correlation calculation if data types incompatible
                             continue
         
         print(f"Processed {var_pairs_processed} variable pairs")

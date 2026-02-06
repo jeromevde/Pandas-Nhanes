@@ -114,54 +114,62 @@ def print_scaling_info():
     print()
 
 def main():
-    print_menu()
-    print_recommendation()
-    
-    try:
-        choice = input("Enter choice (1-4) or 's' for scaling info, 'q' to quit: ").strip()
+    """
+    Main execution - provides interactive menu for analysis selection
+    """
+    while True:
+        print_menu()
+        print_recommendation()
         
-        if choice == 'q':
-            print("\nExiting. See COMPREHENSIVE_ANALYSIS_README.md for full documentation.")
+        try:
+            choice = input("Enter choice (1-4) or 's' for scaling info, 'q' to quit: ").strip()
+            
+            if choice == 'q':
+                print("\nExiting. See COMPREHENSIVE_ANALYSIS_README.md for full documentation.")
+                sys.exit(0)
+            elif choice == 's':
+                print()
+                print_scaling_info()
+                continue
+            elif choice == '1':
+                print("\n" + "="*80)
+                print("RUNNING: Practical Comprehensive Analysis")
+                print("="*80)
+                import practical_comprehensive_analysis
+                practical_comprehensive_analysis.main()
+                break
+            elif choice == '2':
+                print("\n" + "="*80)
+                print("RUNNING: Analysis Scope View")
+                print("="*80)
+                import comprehensive_analysis
+                comprehensive_analysis.main()
+                break
+            elif choice == '3':
+                print("\n" + "="*80)
+                print("RUNNING: Demo with Simulated Data")
+                print("="*80)
+                import correlation_analysis_demo
+                correlation_analysis_demo.main()
+                break
+            elif choice == '4':
+                print("\n" + "="*80)
+                print("RUNNING: Single Cycle Analysis")
+                print("="*80)
+                import correlation_analysis
+                correlation_analysis.main()
+                break
+            else:
+                print(f"\nInvalid choice: {choice}")
+                print("Please enter 1, 2, 3, 4, 's', or 'q'\n")
+                continue
+        except KeyboardInterrupt:
+            print("\n\nInterrupted. Exiting.")
             sys.exit(0)
-        elif choice == 's':
-            print()
-            print_scaling_info()
-            main()
-        elif choice == '1':
-            print("\n" + "="*80)
-            print("RUNNING: Practical Comprehensive Analysis")
-            print("="*80)
-            import practical_comprehensive_analysis
-            practical_comprehensive_analysis.main()
-        elif choice == '2':
-            print("\n" + "="*80)
-            print("RUNNING: Analysis Scope View")
-            print("="*80)
-            import comprehensive_analysis
-            comprehensive_analysis.main()
-        elif choice == '3':
-            print("\n" + "="*80)
-            print("RUNNING: Demo with Simulated Data")
-            print("="*80)
-            import correlation_analysis_demo
-            correlation_analysis_demo.main()
-        elif choice == '4':
-            print("\n" + "="*80)
-            print("RUNNING: Single Cycle Analysis")
-            print("="*80)
-            import correlation_analysis
-            correlation_analysis.main()
-        else:
-            print(f"\nInvalid choice: {choice}")
-            print("Please enter 1, 2, 3, 4, 's', or 'q'\n")
-            main()
-    except KeyboardInterrupt:
-        print("\n\nInterrupted. Exiting.")
-        sys.exit(0)
-    except Exception as e:
-        print(f"\nError: {e}")
-        print("\nSee COMPREHENSIVE_ANALYSIS_README.md for troubleshooting.")
-        sys.exit(1)
+        except Exception as e:
+            print(f"\nError: {e}")
+            print("\nSee COMPREHENSIVE_ANALYSIS_README.md for troubleshooting.")
+            sys.exit(1)
 
 if __name__ == "__main__":
     main()
