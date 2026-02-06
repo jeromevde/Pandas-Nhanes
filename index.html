@@ -458,16 +458,27 @@
 
     <script>
         // PNG/HTML pairs for carousel and modal
-        const plotExamples = [
-            { base: 'BMD_Age_Gender' },
-            { base: 'Cholesterol_Age' },
-            { base: 'Estradiol_Age_Gender' },
-            { base: 'Testosterone_Age_Gender' },
-            { base: 'Testosterone_Estrogen_Ratio' }
-        ];
-
+        // Dynamically loaded from Examples/plots.txt
+        let plotExamples = [];
         let currentIndex = 0;
         let plotItems = [];
+        
+        // Load plot list from simple text file (one folder name per line)
+        async function loadPlotList() {
+            try {
+                const response = await fetch('Examples/plots.txt');
+                const text = await response.text();
+                const names = text.split('\n').map(s => s.trim()).filter(s => s.length > 0);
+                return names.map(base => ({
+                    base,
+                    png: `Examples/${base}/${base}.png`,
+                    html: `Examples/${base}/${base}.html`
+                }));
+            } catch (e) {
+                console.error('Failed to load plots.txt:', e);
+                return [];
+            }
+        }
 
 // Add images to carousel as they load, show carousel after first image
 function loadImagesIndividually(plotExamples, baseWidth = 300) {
@@ -476,7 +487,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
     plotItems = [];
     plotExamples.forEach((plot, index) => {
         const img = new window.Image();
-        img.src = `Examples/${plot.base}/${plot.base}.png`;
+        img.src = plot.png;
         img.alt = plot.base;
         img.onload = function() {
             const aspectRatio = img.naturalWidth / img.naturalHeight;
@@ -623,7 +634,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             // Add PNG image as background
             modalImg = document.createElement('img');
             modalImg.id = 'modal-img';
-            modalImg.src = `Examples/${plot.base}/${plot.base}.png`;
+            modalImg.src = plot.png;
             modalImg.alt = plot.base;
             modalImg.style.position = 'absolute';
             modalImg.style.top = '0';
@@ -640,8 +651,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
             // Now load the HTML in the iframe, fade in when loaded
-            if (modalIframe) {
-                modalIframe.src = `Examples/${plot.base}/${plot.base}.html`;
+            if (modalIframe && plot.html) {
+                modalIframe.src = plot.html;
                 modalIframe.style.display = 'block';
                 modalIframe.classList.add('centered');
                 modalIframe.style.zIndex = '2';
@@ -711,7 +722,9 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.body.style.overflow = '';
         }
 
-        document.addEventListener("DOMContentLoaded", function() {
+        document.addEventListener("DOMContentLoaded", async function() {
+            // Load plots dynamically from Examples/plots.txt
+            plotExamples = await loadPlotList();
             createPlotThumbnails();
             // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
