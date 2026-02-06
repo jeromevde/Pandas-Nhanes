@@ -1,0 +1,272 @@
+cycle,var1,var2,var1_desc,var2_desc,category1,category2,cross_category,transform1,transform2,correlation,n_samples,dataset1,dataset2,score
+2015-2016,ALQ160,LBDAPBSI,# days have 4/5 or more drinks in 2 hrs,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ160,LBXAPB,# days have 4/5 or more drinks in 2 hrs,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ160,LBCBB1,# days have 4/5 or more drinks in 2 hrs,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ151,LBXGLY,Ever have 4/5 or more drinks every day?,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ151,LBDAPBSI,Ever have 4/5 or more drinks every day?,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ151,LBXAPB,Ever have 4/5 or more drinks every day?,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ151,LBCBB1,Ever have 4/5 or more drinks every day?,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ160,LBDACRLC,# days have 4/5 or more drinks in 2 hrs,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ160,LBDGLYLC,# days have 4/5 or more drinks in 2 hrs,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ160,LBXACR,# days have 4/5 or more drinks in 2 hrs,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ160,LBXGLY,# days have 4/5 or more drinks in 2 hrs,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141U,LBXACR,"# days per week, month, year?",Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141U,LBXGLY,"# days per week, month, year?",Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141U,LBDAPBSI,"# days per week, month, year?",Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ141U,LBXAPB,"# days per week, month, year?",Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ141U,LBCBB1,"# days per week, month, year?","2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ151,LBDACRLC,Ever have 4/5 or more drinks every day?,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ151,LBDGLYLC,Ever have 4/5 or more drinks every day?,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ151,LBXACR,Ever have 4/5 or more drinks every day?,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,URXUMS,ALQ160,"Albumin, urine (mg/L)",# days have 4/5 or more drinks in 2 hrs,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ101,"Albumin, urine (mg/L)",Had at least 12 alcohol drinks/1 yr?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ110,"Albumin, urine (mg/L)",Had at least 12 alcohol drinks/lifetime?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ120Q,"Albumin, urine (mg/L)",How often drink alcohol over past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ120U,"Albumin, urine (mg/L)","# days drink alcohol per wk, mo, yr",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ130,"Albumin, urine (mg/L)",Avg # alcoholic drinks/day - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ141Q,"Albumin, urine (mg/L)",# days have 4/5 drinks - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ141U,"Albumin, urine (mg/L)","# days per week, month, year?",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMS,ALQ151,"Albumin, urine (mg/L)",Ever have 4/5 or more drinks every day?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ160,"Albumin, urine (ug/mL)",# days have 4/5 or more drinks in 2 hrs,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ101,"Albumin, urine (ug/mL)",Had at least 12 alcohol drinks/1 yr?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ110,"Albumin, urine (ug/mL)",Had at least 12 alcohol drinks/lifetime?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ120Q,"Albumin, urine (ug/mL)",How often drink alcohol over past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ120U,"Albumin, urine (ug/mL)","# days drink alcohol per wk, mo, yr",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ130,"Albumin, urine (ug/mL)",Avg # alcoholic drinks/day - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ141Q,"Albumin, urine (ug/mL)",# days have 4/5 drinks - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ141U,"Albumin, urine (ug/mL)","# days per week, month, year?",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUMA,ALQ151,"Albumin, urine (ug/mL)",Ever have 4/5 or more drinks every day?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,ALQ120Q,LBDACRLC,How often drink alcohol over past 12 mos,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120Q,LBDGLYLC,How often drink alcohol over past 12 mos,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120Q,LBXACR,How often drink alcohol over past 12 mos,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120Q,LBXGLY,How often drink alcohol over past 12 mos,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120Q,LBDAPBSI,How often drink alcohol over past 12 mos,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ120Q,LBXAPB,How often drink alcohol over past 12 mos,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ120Q,LBCBB1,How often drink alcohol over past 12 mos,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ110,LBDGLYLC,Had at least 12 alcohol drinks/lifetime?,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ110,LBXACR,Had at least 12 alcohol drinks/lifetime?,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ110,LBXGLY,Had at least 12 alcohol drinks/lifetime?,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ110,LBDAPBSI,Had at least 12 alcohol drinks/lifetime?,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ110,LBXAPB,Had at least 12 alcohol drinks/lifetime?,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ110,LBCBB1,Had at least 12 alcohol drinks/lifetime?,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ101,LBDAPBSI,Had at least 12 alcohol drinks/1 yr?,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ101,LBXAPB,Had at least 12 alcohol drinks/1 yr?,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ101,LBCBB1,Had at least 12 alcohol drinks/1 yr?,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ110,LBDACRLC,Had at least 12 alcohol drinks/lifetime?,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ101,LBDACRLC,Had at least 12 alcohol drinks/1 yr?,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ101,LBDGLYLC,Had at least 12 alcohol drinks/1 yr?,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ101,LBXACR,Had at least 12 alcohol drinks/1 yr?,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ101,LBXGLY,Had at least 12 alcohol drinks/1 yr?,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141Q,LBXGLY,# days have 4/5 drinks - past 12 mos,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141Q,LBDAPBSI,# days have 4/5 drinks - past 12 mos,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ141Q,LBXAPB,# days have 4/5 drinks - past 12 mos,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ141Q,LBCBB1,# days have 4/5 drinks - past 12 mos,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ141U,LBDACRLC,"# days per week, month, year?",Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141U,LBDGLYLC,"# days per week, month, year?",Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ130,LBDAPBSI,Avg # alcoholic drinks/day - past 12 mos,Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ130,LBXAPB,Avg # alcoholic drinks/day - past 12 mos,Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ130,LBCBB1,Avg # alcoholic drinks/day - past 12 mos,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ141Q,LBDACRLC,# days have 4/5 drinks - past 12 mos,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141Q,LBDGLYLC,# days have 4/5 drinks - past 12 mos,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ141Q,LBXACR,# days have 4/5 drinks - past 12 mos,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120U,LBXAPB,"# days drink alcohol per wk, mo, yr",Apolipoprotein (B) (mg/dL),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,ALQ120U,LBCBB1,"# days drink alcohol per wk, mo, yr","2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",alcohol,laboratory,True,original,original,,,ALQ_I,BFRPOL_I,10
+2015-2016,ALQ130,LBDACRLC,Avg # alcoholic drinks/day - past 12 mos,Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ130,LBDGLYLC,Avg # alcoholic drinks/day - past 12 mos,Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ130,LBXACR,Avg # alcoholic drinks/day - past 12 mos,Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ130,LBXGLY,Avg # alcoholic drinks/day - past 12 mos,Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120U,LBDACRLC,"# days drink alcohol per wk, mo, yr",Acrylamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120U,LBDGLYLC,"# days drink alcohol per wk, mo, yr",Glycidamide comment code,alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120U,LBXACR,"# days drink alcohol per wk, mo, yr",Acrylamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120U,LBXGLY,"# days drink alcohol per wk, mo, yr",Glycideamide (pmol/g Hb),alcohol,laboratory,True,original,original,,,ALQ_I,AMDGYD_I,10
+2015-2016,ALQ120U,LBDAPBSI,"# days drink alcohol per wk, mo, yr",Apolipoprotein (B) (g/L),alcohol,laboratory,True,original,original,,,ALQ_I,APOB_I,10
+2015-2016,URXUCR,ALQ160,"Creatinine, urine (mg/dL)",# days have 4/5 or more drinks in 2 hrs,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ101,"Creatinine, urine (mg/dL)",Had at least 12 alcohol drinks/1 yr?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ110,"Creatinine, urine (mg/dL)",Had at least 12 alcohol drinks/lifetime?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ120Q,"Creatinine, urine (mg/dL)",How often drink alcohol over past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ120U,"Creatinine, urine (mg/dL)","# days drink alcohol per wk, mo, yr",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ130,"Creatinine, urine (mg/dL)",Avg # alcoholic drinks/day - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ141Q,"Creatinine, urine (mg/dL)",# days have 4/5 drinks - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ141U,"Creatinine, urine (mg/dL)","# days per week, month, year?",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXUCR,ALQ151,"Creatinine, urine (mg/dL)",Ever have 4/5 or more drinks every day?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ160,"Creatinine, urine (umol/L)",# days have 4/5 or more drinks in 2 hrs,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ101,"Creatinine, urine (umol/L)",Had at least 12 alcohol drinks/1 yr?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ110,"Creatinine, urine (umol/L)",Had at least 12 alcohol drinks/lifetime?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ120Q,"Creatinine, urine (umol/L)",How often drink alcohol over past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ120U,"Creatinine, urine (umol/L)","# days drink alcohol per wk, mo, yr",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ130,"Creatinine, urine (umol/L)",Avg # alcoholic drinks/day - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ141Q,"Creatinine, urine (umol/L)",# days have 4/5 drinks - past 12 mos,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ141U,"Creatinine, urine (umol/L)","# days per week, month, year?",laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,ALQ151,"Creatinine, urine (umol/L)",Ever have 4/5 or more drinks every day?,laboratory,alcohol,True,original,original,,,ALB_CR_I,ALQ_I,10
+2015-2016,URXCRS,LBDACRLC,"Creatinine, urine (umol/L)",Acrylamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXCRS,LBDGLYLC,"Creatinine, urine (umol/L)",Glycidamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXCRS,LBXACR,"Creatinine, urine (umol/L)",Acrylamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXCRS,LBXGLY,"Creatinine, urine (umol/L)",Glycideamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXCRS,LBDAPBSI,"Creatinine, urine (umol/L)",Apolipoprotein (B) (g/L),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXCRS,LBXAPB,"Creatinine, urine (umol/L)",Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXCRS,LBCBB1,"Creatinine, urine (umol/L)","2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,ALB_CR_I,BFRPOL_I,0
+2015-2016,URXUCR,LBDACRLC,"Creatinine, urine (mg/dL)",Acrylamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUCR,LBDGLYLC,"Creatinine, urine (mg/dL)",Glycidamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUCR,LBXACR,"Creatinine, urine (mg/dL)",Acrylamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUCR,LBXGLY,"Creatinine, urine (mg/dL)",Glycideamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUCR,LBDAPBSI,"Creatinine, urine (mg/dL)",Apolipoprotein (B) (g/L),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXUCR,LBXAPB,"Creatinine, urine (mg/dL)",Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXUCR,LBCBB1,"Creatinine, urine (mg/dL)","2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,ALB_CR_I,BFRPOL_I,0
+2013-2014,URXCRS,LBD4ALC,"Creatinine, urine (umol/L)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBD5ALC,"Creatinine, urine (umol/L)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBD6ALC,"Creatinine, urine (umol/L)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBD7ALC,"Creatinine, urine (umol/L)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBD8ALC,"Creatinine, urine (umol/L)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBD9ALC,"Creatinine, urine (umol/L)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBDBZLC,"Creatinine, urine (umol/L)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBDCRLC,"Creatinine, urine (umol/L)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD10ALC,"Creatinine, urine (mg/dL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD3ALC,"Creatinine, urine (mg/dL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD4ALC,"Creatinine, urine (mg/dL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD5ALC,"Creatinine, urine (mg/dL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD6ALC,"Creatinine, urine (mg/dL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD7ALC,"Creatinine, urine (mg/dL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD8ALC,"Creatinine, urine (mg/dL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBD9ALC,"Creatinine, urine (mg/dL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBDBZLC,"Creatinine, urine (mg/dL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUCR,LBDCRLC,"Creatinine, urine (mg/dL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD10ALC,"Albumin, urine (ug/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD3ALC,"Albumin, urine (ug/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD4ALC,"Albumin, urine (ug/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD5ALC,"Albumin, urine (ug/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD6ALC,"Albumin, urine (ug/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD7ALC,"Albumin, urine (ug/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD8ALC,"Albumin, urine (ug/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBD9ALC,"Albumin, urine (ug/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBDBZLC,"Albumin, urine (ug/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMA,LBDCRLC,"Albumin, urine (ug/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD10ALC,"Albumin, urine (mg/L)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD3ALC,"Albumin, urine (mg/L)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD4ALC,"Albumin, urine (mg/L)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD5ALC,"Albumin, urine (mg/L)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2015-2016,ALQ120U,ALQ130,"# days drink alcohol per wk, mo, yr",Avg # alcoholic drinks/day - past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ120U,ALQ151,"# days drink alcohol per wk, mo, yr",Ever have 4/5 or more drinks every day?,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ120U,ALQ160,"# days drink alcohol per wk, mo, yr",# days have 4/5 or more drinks in 2 hrs,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ130,ALQ141Q,Avg # alcoholic drinks/day - past 12 mos,# days have 4/5 drinks - past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ130,ALQ141U,Avg # alcoholic drinks/day - past 12 mos,"# days per week, month, year?",alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ141Q,ALQ151,# days have 4/5 drinks - past 12 mos,Ever have 4/5 or more drinks every day?,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ141Q,ALQ160,# days have 4/5 drinks - past 12 mos,# days have 4/5 or more drinks in 2 hrs,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ141U,ALQ151,"# days per week, month, year?",Ever have 4/5 or more drinks every day?,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ141U,ALQ160,"# days per week, month, year?",# days have 4/5 or more drinks in 2 hrs,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ101,ALQ120Q,Had at least 12 alcohol drinks/1 yr?,How often drink alcohol over past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ101,ALQ120U,Had at least 12 alcohol drinks/1 yr?,"# days drink alcohol per wk, mo, yr",alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ101,ALQ141Q,Had at least 12 alcohol drinks/1 yr?,# days have 4/5 drinks - past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ101,ALQ141U,Had at least 12 alcohol drinks/1 yr?,"# days per week, month, year?",alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ110,ALQ120Q,Had at least 12 alcohol drinks/lifetime?,How often drink alcohol over past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ110,ALQ120U,Had at least 12 alcohol drinks/lifetime?,"# days drink alcohol per wk, mo, yr",alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ110,ALQ141Q,Had at least 12 alcohol drinks/lifetime?,# days have 4/5 drinks - past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ110,ALQ141U,Had at least 12 alcohol drinks/lifetime?,"# days per week, month, year?",alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ120Q,ALQ130,How often drink alcohol over past 12 mos,Avg # alcoholic drinks/day - past 12 mos,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ120Q,ALQ151,How often drink alcohol over past 12 mos,Ever have 4/5 or more drinks every day?,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,ALQ120Q,ALQ160,How often drink alcohol over past 12 mos,# days have 4/5 or more drinks in 2 hrs,alcohol,alcohol,False,original,original,,,ALQ_I,ALQ_I,0
+2015-2016,URXUMA,LBDACRLC,"Albumin, urine (ug/mL)",Acrylamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMA,LBDGLYLC,"Albumin, urine (ug/mL)",Glycidamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMA,LBXACR,"Albumin, urine (ug/mL)",Acrylamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMA,LBXGLY,"Albumin, urine (ug/mL)",Glycideamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMA,LBDAPBSI,"Albumin, urine (ug/mL)",Apolipoprotein (B) (g/L),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXUMA,LBXAPB,"Albumin, urine (ug/mL)",Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXUMA,LBCBB1,"Albumin, urine (ug/mL)","2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,ALB_CR_I,BFRPOL_I,0
+2015-2016,URXUMS,LBDACRLC,"Albumin, urine (mg/L)",Acrylamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMS,LBDGLYLC,"Albumin, urine (mg/L)",Glycidamide comment code,laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMS,LBXACR,"Albumin, urine (mg/L)",Acrylamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMS,LBXGLY,"Albumin, urine (mg/L)",Glycideamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,ALB_CR_I,AMDGYD_I,0
+2015-2016,URXUMS,LBDAPBSI,"Albumin, urine (mg/L)",Apolipoprotein (B) (g/L),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXUMS,LBXAPB,"Albumin, urine (mg/L)",Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,ALB_CR_I,APOB_I,0
+2015-2016,URXUMS,LBCBB1,"Albumin, urine (mg/L)","2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,ALB_CR_I,BFRPOL_I,0
+2015-2016,LBDACRLC,LBXACR,Acrylamide comment code,Acrylamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,AMDGYD_I,AMDGYD_I,0
+2015-2016,LBDACRLC,LBXGLY,Acrylamide comment code,Glycideamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,AMDGYD_I,AMDGYD_I,0
+2015-2016,LBDACRLC,LBXAPB,Acrylamide comment code,Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,AMDGYD_I,APOB_I,0
+2015-2016,LBDACRLC,LBCBB1,Acrylamide comment code,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,AMDGYD_I,BFRPOL_I,0
+2015-2016,LBDGLYLC,LBXACR,Glycidamide comment code,Acrylamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,AMDGYD_I,AMDGYD_I,0
+2015-2016,LBDGLYLC,LBXGLY,Glycidamide comment code,Glycideamide (pmol/g Hb),laboratory,laboratory,False,original,original,,,AMDGYD_I,AMDGYD_I,0
+2015-2016,LBDGLYLC,LBXAPB,Glycidamide comment code,Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,AMDGYD_I,APOB_I,0
+2015-2016,LBDGLYLC,LBCBB1,Glycidamide comment code,"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,AMDGYD_I,BFRPOL_I,0
+2015-2016,LBXACR,LBDAPBSI,Acrylamide (pmol/g Hb),Apolipoprotein (B) (g/L),laboratory,laboratory,False,original,original,,,AMDGYD_I,APOB_I,0
+2015-2016,LBXACR,LBCBB1,Acrylamide (pmol/g Hb),"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,AMDGYD_I,BFRPOL_I,0
+2015-2016,LBXGLY,LBDAPBSI,Glycideamide (pmol/g Hb),Apolipoprotein (B) (g/L),laboratory,laboratory,False,original,original,,,AMDGYD_I,APOB_I,0
+2015-2016,LBXGLY,LBCBB1,Glycideamide (pmol/g Hb),"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,AMDGYD_I,BFRPOL_I,0
+2015-2016,LBDAPBSI,LBXAPB,Apolipoprotein (B) (g/L),Apolipoprotein (B) (mg/dL),laboratory,laboratory,False,original,original,,,APOB_I,APOB_I,0
+2015-2016,LBDAPBSI,LBCBB1,Apolipoprotein (B) (g/L),"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,APOB_I,BFRPOL_I,0
+2015-2016,LBXAPB,LBCBB1,Apolipoprotein (B) (mg/dL),"2,2',4,4',5,5'-hexabromobiphenyl (pg/g)",laboratory,laboratory,False,original,original,,,APOB_I,BFRPOL_I,0
+2013-2014,URX1NP,LBD10ALC,"1-Aminonaphthalene, urine (pg/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD3ALC,"1-Aminonaphthalene, urine (pg/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD4ALC,"1-Aminonaphthalene, urine (pg/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD5ALC,"1-Aminonaphthalene, urine (pg/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD6ALC,"1-Aminonaphthalene, urine (pg/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD7ALC,"1-Aminonaphthalene, urine (pg/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD8ALC,"1-Aminonaphthalene, urine (pg/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBD9ALC,"1-Aminonaphthalene, urine (pg/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBDBZLC,"1-Aminonaphthalene, urine (pg/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX1NP,LBDCRLC,"1-Aminonaphthalene, urine (pg/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD10ALC,"2-Aminonaphthalene, urine (pg/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD3ALC,"2-Aminonaphthalene, urine (pg/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD4ALC,"2-Aminonaphthalene, urine (pg/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD5ALC,"2-Aminonaphthalene, urine (pg/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD6ALC,"2-Aminonaphthalene, urine (pg/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD7ALC,"2-Aminonaphthalene, urine (pg/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD8ALC,"2-Aminonaphthalene, urine (pg/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBD9ALC,"2-Aminonaphthalene, urine (pg/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBDBZLC,"2-Aminonaphthalene, urine (pg/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX2NP,LBDCRLC,"2-Aminonaphthalene, urine (pg/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD10ALC,"4-Aminobiphenyl, urine (pg/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD3ALC,"4-Aminobiphenyl, urine (pg/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD4ALC,"4-Aminobiphenyl, urine (pg/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD5ALC,"4-Aminobiphenyl, urine (pg/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD6ALC,"4-Aminobiphenyl, urine (pg/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD7ALC,"4-Aminobiphenyl, urine (pg/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD8ALC,"4-Aminobiphenyl, urine (pg/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBD9ALC,"4-Aminobiphenyl, urine (pg/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBDBZLC,"4-Aminobiphenyl, urine (pg/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URX4BP,LBDCRLC,"4-Aminobiphenyl, urine (pg/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD10ALC,"o-Anisidine, urine (pg/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD3ALC,"o-Anisidine, urine (pg/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD4ALC,"o-Anisidine, urine (pg/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD5ALC,"o-Anisidine, urine (pg/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD6ALC,"o-Anisidine, urine (pg/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD7ALC,"o-Anisidine, urine (pg/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD8ALC,"o-Anisidine, urine (pg/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBD9ALC,"o-Anisidine, urine (pg/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBDBZLC,"o-Anisidine, urine (pg/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXANS,LBDCRLC,"o-Anisidine, urine (pg/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD10ALC,"2,6-Dimethylaniline, urine (pg/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD3ALC,"2,6-Dimethylaniline, urine (pg/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD4ALC,"2,6-Dimethylaniline, urine (pg/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD5ALC,"2,6-Dimethylaniline, urine (pg/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD6ALC,"2,6-Dimethylaniline, urine (pg/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD7ALC,"2,6-Dimethylaniline, urine (pg/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD8ALC,"2,6-Dimethylaniline, urine (pg/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBD9ALC,"2,6-Dimethylaniline, urine (pg/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBDBZLC,"2,6-Dimethylaniline, urine (pg/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXDMN,LBDCRLC,"2,6-Dimethylaniline, urine (pg/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD10ALC,"o-Toluidine, urine (pg/mL)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD3ALC,"o-Toluidine, urine (pg/mL)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD4ALC,"o-Toluidine, urine (pg/mL)",Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD5ALC,"o-Toluidine, urine (pg/mL)",Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD6ALC,"o-Toluidine, urine (pg/mL)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD7ALC,"o-Toluidine, urine (pg/mL)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD8ALC,"o-Toluidine, urine (pg/mL)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBD9ALC,"o-Toluidine, urine (pg/mL)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBDBZLC,"o-Toluidine, urine (pg/mL)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXOTD,LBDCRLC,"o-Toluidine, urine (pg/mL)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,AAS_H,ALDS_H,0
+2013-2014,URXCRS,LBD10ALC,"Creatinine, urine (umol/L)",Decanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXCRS,LBD3ALC,"Creatinine, urine (umol/L)",Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD6ALC,"Albumin, urine (mg/L)",Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD7ALC,"Albumin, urine (mg/L)",Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD8ALC,"Albumin, urine (mg/L)",Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBD9ALC,"Albumin, urine (mg/L)",Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBDBZLC,"Albumin, urine (mg/L)",Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,URXUMS,LBDCRLC,"Albumin, urine (mg/L)",Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALB_CR_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD3ALC,Decanaldehyde Comment Code,Propanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD4ALC,Decanaldehyde Comment Code,Butyraldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD5ALC,Decanaldehyde Comment Code,Pentanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD6ALC,Decanaldehyde Comment Code,Hexanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD7ALC,Decanaldehyde Comment Code,Heptanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD8ALC,Decanaldehyde Comment Code,Octanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBD9ALC,Decanaldehyde Comment Code,Nonanaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBDBZLC,Decanaldehyde Comment Code,Benzaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
+2013-2014,LBD10ALC,LBDCRLC,Decanaldehyde Comment Code,Crotonaldehyde Comment Code,laboratory,laboratory,False,original,original,,,ALDS_H,ALDS_H,0
