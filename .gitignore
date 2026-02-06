@@ -1,5 +1,7 @@
 partial_results/*
 
+# Auto-generated files
+plots.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

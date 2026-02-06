@@ -458,14 +458,8 @@
 
     <script>
         // PNG/HTML pairs for carousel and modal
-        const plotExamples = [
-            { base: 'BMD_Age_Gender' },
-            { base: 'Cholesterol_Age' },
-            { base: 'Estradiol_Age_Gender' },
-            { base: 'Testosterone_Age_Gender' },
-            { base: 'Testosterone_Estrogen_Ratio' }
-        ];
-
+        // Dynamically loaded from plots.json
+        let plotExamples = [];
         let currentIndex = 0;
         let plotItems = [];
 
@@ -476,7 +470,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
     plotItems = [];
     plotExamples.forEach((plot, index) => {
         const img = new window.Image();
-        img.src = `Examples/${plot.base}/${plot.base}.png`;
+        img.src = plot.png;
         img.alt = plot.base;
         img.onload = function() {
             const aspectRatio = img.naturalWidth / img.naturalHeight;
@@ -623,7 +617,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             // Add PNG image as background
             modalImg = document.createElement('img');
             modalImg.id = 'modal-img';
-            modalImg.src = `Examples/${plot.base}/${plot.base}.png`;
+            modalImg.src = plot.png;
             modalImg.alt = plot.base;
             modalImg.style.position = 'absolute';
             modalImg.style.top = '0';
@@ -640,8 +634,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             modal.classList.add('show');
             document.body.style.overflow = 'hidden';
             // Now load the HTML in the iframe, fade in when loaded
-            if (modalIframe) {
-                modalIframe.src = `Examples/${plot.base}/${plot.base}.html`;
+            if (modalIframe && plot.html) {
+                modalIframe.src = plot.html;
                 modalIframe.style.display = 'block';
                 modalIframe.classList.add('centered');
                 modalIframe.style.zIndex = '2';
@@ -712,7 +706,19 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            createPlotThumbnails();
+            // Load plots from JSON manifest
+            fetch('plots.json')
+                .then(response => response.json())
+                .then(plots => {
+                    plotExamples = plots;
+                    createPlotThumbnails();
+                })
+                .catch(error => {
+                    console.error('Failed to load plots.json:', error);
+                    // Fallback to empty array
+                    plotExamples = [];
+                    createPlotThumbnails();
+                });
             // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') {
