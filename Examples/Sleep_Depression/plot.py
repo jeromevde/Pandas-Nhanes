@@ -154,5 +154,6 @@ fig.update_yaxes(title_text="Average Depression Score<br>(PHQ-9: 0=none, 27=seve
 fig.update_yaxes(title_text="Number of People", row=2, col=1)
 
 # Save
-fig.write_html("index.html")
-print("✅ Sleep vs Depression plot generated: index.html")
+fig.write_html("Sleep_Depression.html")
+fig.write_image("Sleep_Depression.png", width=1000, height=800, scale=2)
+print("✅ Sleep vs Depression plot generated: Sleep_Depression.html and Sleep_Depression.png")
