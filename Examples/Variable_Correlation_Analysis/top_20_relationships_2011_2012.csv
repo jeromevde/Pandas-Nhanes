@@ -1,0 +1,21 @@
+cycle,var1,var2,var1_desc,var2_desc,category1,category2,cross_category,transform1,transform2,correlation,abs_correlation,n_samples
+2011-2012,BPXCHR,BMXARML,60 sec HR (30 sec HR * 2),Upper Arm Length (cm),blood_pressure,body_measures,True,original,original,-0.696224093348917,0.696224093348917,1785
+2011-2012,PAQ640,PAD615,Number of days walk or bicycle,Minutes vigorous-intensity work,physical_activity,physical_activity,False,original,original,0.6619682870245717,0.6619682870245717,338
+2011-2012,BMXWT,BPXCHR,Weight (kg),60 sec HR (30 sec HR * 2),body_measures,blood_pressure,True,original,original,-0.613043682852843,0.613043682852843,1939
+2011-2012,PAQ640,PAD630,Number of days walk or bicycle,Minutes moderate-intensity work,physical_activity,physical_activity,False,original,original,0.6089118221976025,0.6089118221976025,745
+2011-2012,BMXHT,BPXCHR,Standing Height (cm),60 sec HR (30 sec HR * 2),body_measures,blood_pressure,True,original,original,-0.5276694612591444,0.5276694612591444,1315
+2011-2012,BMXARMC,BPXCHR,Arm Circumference (cm),60 sec HR (30 sec HR * 2),body_measures,blood_pressure,True,original,original,-0.4685392715125565,0.4685392715125565,1783
+2011-2012,DR2TVB2,DR1TVB2,Riboflavin (Vitamin B2) (mg),Riboflavin (Vitamin B2) (mg),dietary,dietary,False,original,original,0.4465038746118304,0.4465038746118304,7486
+2011-2012,BMXSAD1,BPXSY3,Sagittal Abdominal Diameter 1st (cm),Systolic: Blood pres (3rd rdg) mm Hg,body_measures,blood_pressure,True,original,original,0.42218579324475775,0.42218579324475775,6467
+2011-2012,BPXSY3,BMXSAD2,Systolic: Blood pres (3rd rdg) mm Hg,Sagittal Abdominal Diameter 2nd (cm),blood_pressure,body_measures,True,original,original,0.42137159346606945,0.42137159346606945,6467
+2011-2012,BPXSY1,BMXSAD1,Systolic: Blood pres (1st rdg) mm Hg,Sagittal Abdominal Diameter 1st (cm),blood_pressure,body_measures,True,original,original,0.4196427305542291,0.4196427305542291,6322
+2011-2012,BPXSY1,BMXSAD2,Systolic: Blood pres (1st rdg) mm Hg,Sagittal Abdominal Diameter 2nd (cm),blood_pressure,body_measures,True,original,original,0.41852796411876647,0.41852796411876647,6322
+2011-2012,DR1TKCAL,BPXCHR,Energy (kcal),60 sec HR (30 sec HR * 2),dietary,blood_pressure,True,original,original,-0.4068386379299707,0.4068386379299707,1685
+2011-2012,BPXSY3,BMXSAD3,Systolic: Blood pres (3rd rdg) mm Hg,Sagittal Abdominal Diameter 3rd (cm),blood_pressure,body_measures,True,original,original,0.4007680313100133,0.4007680313100133,376
+2011-2012,BPXSY3,BMXWAIST,Systolic: Blood pres (3rd rdg) mm Hg,Waist Circumference (cm),blood_pressure,body_measures,True,original,original,0.3985874938886093,0.3985874938886093,6620
+2011-2012,BPXSY1,BMXSAD3,Systolic: Blood pres (1st rdg) mm Hg,Sagittal Abdominal Diameter 3rd (cm),blood_pressure,body_measures,True,original,original,0.39820811799643885,0.39820811799643885,370
+2011-2012,BPXSY1,BMXWAIST,Systolic: Blood pres (1st rdg) mm Hg,Waist Circumference (cm),blood_pressure,body_measures,True,original,original,0.39630811805104127,0.39630811805104127,6466
+2011-2012,BMXWT,BPXDI1,Weight (kg),Diastolic: Blood pres (1st rdg) mm Hg,body_measures,blood_pressure,True,original,original,0.37432541020273663,0.37432541020273663,6694
+2011-2012,BMXSAD1,BPXSY4,Sagittal Abdominal Diameter 1st (cm),Systolic: Blood pres (4th rdg) mm Hg,body_measures,blood_pressure,True,original,original,0.3704907111946053,0.3704907111946053,415
+2011-2012,BPXDI1,BMXWAIST,Diastolic: Blood pres (1st rdg) mm Hg,Waist Circumference (cm),blood_pressure,body_measures,True,original,original,0.3683865428505843,0.3683865428505843,6466
+2011-2012,BPXSY4,BMXSAD2,Systolic: Blood pres (4th rdg) mm Hg,Sagittal Abdominal Diameter 2nd (cm),blood_pressure,body_measures,True,original,original,0.36596712191112835,0.36596712191112835,415
