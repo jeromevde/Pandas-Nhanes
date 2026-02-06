@@ -458,13 +458,29 @@
 
     <script>
         // PNG/HTML pairs for carousel and modal
-        const plotExamples = [
-            { base: 'BMD_Age_Gender' },
-            { base: 'Cholesterol_Age' },
-            { base: 'Estradiol_Age_Gender' },
-            { base: 'Testosterone_Age_Gender' },
-            { base: 'Testosterone_Estrogen_Ratio' }
-        ];
+        // Dynamic loading of plot examples from GitHub API
+        let plotExamples = [];
+        
+        async function fetchPlotExamples() {
+            try {
+                const response = await fetch('https://api.github.com/repos/jeromevde/Pandas-Nhanes/contents/Examples');
+                const data = await response.json();
+                return data
+                    .filter(item => item.type === 'dir')
+                    .map(item => ({ base: item.name }));
+            } catch (error) {
+                console.error('Failed to fetch examples, using fallback:', error);
+                // Fallback to known examples if API fails
+                return [
+                    { base: 'BMD_Age_Gender' },
+                    { base: 'Cholesterol_Age' },
+                    { base: 'Estradiol_Age_Gender' },
+                    { base: 'Testosterone_Age_Gender' },
+                    { base: 'Testosterone_Estrogen_Ratio' },
+                    { base: 'Sleep_Depression' }
+                ];
+            }
+        }
 
         let currentIndex = 0;
         let plotItems = [];
@@ -551,7 +567,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
     });
 }
 
-        function createPlotThumbnails() {
+        async function createPlotThumbnails() {
     const carouselWrapper = document.getElementById('carousel-wrapper');
     const indicatorsContainer = document.getElementById('carousel-indicators');
             // Responsive thumbnail width
@@ -559,6 +575,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
     // Remove any existing children (for reloads)
     carouselWrapper.innerHTML = '';
     indicatorsContainer.innerHTML = '';
+    // Fetch plot examples dynamically
+    plotExamples = await fetchPlotExamples();
     loadImagesIndividually(plotExamples, baseWidth);
 }
 
