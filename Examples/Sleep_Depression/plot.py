@@ -87,37 +87,40 @@ fig.add_trace(
     row=2, col=1
 )
 
-# Add annotations explaining the pattern
+# Add annotations explaining the pattern - positioned to avoid overlap
 fig.add_annotation(
     text="⚠️ Short sleep<br>(3-5h)<br>Higher depression",
-    x=4, y=5,
+    x=4, y=4.5,
     showarrow=True,
     arrowhead=2,
     arrowcolor="#E63946",
-    ax=-50, ay=-30,
-    font=dict(size=11, color="#E63946"),
+    ax=-70, ay=-50,
+    font=dict(size=10, color="#E63946"),
+    bgcolor="rgba(255,255,255,0.8)",
     row=1, col=1
 )
 
 fig.add_annotation(
-    text="✅ Optimal sleep<br>(7-8h)<br>Lower depression",
-    x=7.5, y=2.3,
+    text="✅ Optimal<br>(7-8h)<br>Lowest",
+    x=7.5, y=2.4,
     showarrow=True,
     arrowhead=2,
     arrowcolor="#2A9D8F",
-    ax=0, ay=-50,
-    font=dict(size=11, color="#2A9D8F"),
+    ax=-30, ay=-60,
+    font=dict(size=10, color="#2A9D8F"),
+    bgcolor="rgba(255,255,255,0.8)",
     row=1, col=1
 )
 
 fig.add_annotation(
     text="⚠️ Long sleep<br>(10-12h)<br>Depression rises",
-    x=11, y=5,
+    x=11, y=4.8,
     showarrow=True,
     arrowhead=2,
     arrowcolor="#F77F00",
-    ax=50, ay=-30,
-    font=dict(size=11, color="#F77F00"),
+    ax=70, ay=-50,
+    font=dict(size=10, color="#F77F00"),
+    bgcolor="rgba(255,255,255,0.8)",
     row=1, col=1
 )
 
