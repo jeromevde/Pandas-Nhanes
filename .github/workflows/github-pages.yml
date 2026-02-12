@@ -32,6 +32,7 @@ jobs:
           # Create a clean site directory with only the files needed for the website
           mkdir -p site
           cp index.html site/
+          cp plots.json site/
           cp -r Examples site/
           cp -r pandas_nhanes site/
           cp .nojekyll site/

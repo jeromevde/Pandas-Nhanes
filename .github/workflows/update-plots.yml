@@ -1,0 +1,61 @@
+name: Update plots.json
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'Examples/**'
+      - '.github/workflows/update-plots.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-plots:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Use a token that can push back to the repo
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate plots.json
+        run: |
+          python3 - <<'PYEOF'
+          import json, pathlib, sys
+
+          examples_dir = pathlib.Path("Examples")
+          plots = []
+
+          for folder in sorted(examples_dir.iterdir()):
+              if not folder.is_dir():
+                  continue
+              for html_file in sorted(folder.glob("*.html")):
+                  png_file = html_file.with_suffix(".png")
+                  if png_file.exists():
+                      plots.append({
+                          "base": html_file.stem,
+                          "png":  str(html_file.with_suffix(".png")).replace("\\", "/"),
+                          "html": str(html_file).replace("\\", "/"),
+                      })
+
+          out = pathlib.Path("plots.json")
+          out.write_text(json.dumps(plots, indent=2) + "\n")
+          print(f"Wrote {len(plots)} entries to plots.json")
+          for p in plots:
+              print(f"  {p['base']}")
+          PYEOF
+
+      - name: Commit plots.json if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add plots.json
+          if git diff --cached --quiet; then
+            echo "plots.json unchanged – nothing to commit"
+          else
+            git commit -m "chore: auto-update plots.json [skip ci]"
+            git push
+          fi

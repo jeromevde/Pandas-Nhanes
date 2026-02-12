@@ -1,0 +1,32 @@
+[
+  {
+    "base": "BMD_Age_Gender",
+    "png": "Examples/BMD_Age_Gender/BMD_Age_Gender.png",
+    "html": "Examples/BMD_Age_Gender/BMD_Age_Gender.html"
+  },
+  {
+    "base": "Cholesterol_Age",
+    "png": "Examples/Cholesterol_Age/Cholesterol_Age.png",
+    "html": "Examples/Cholesterol_Age/Cholesterol_Age.html"
+  },
+  {
+    "base": "Estradiol_Age_Gender",
+    "png": "Examples/Estradiol_Age_Gender/Estradiol_Age_Gender.png",
+    "html": "Examples/Estradiol_Age_Gender/Estradiol_Age_Gender.html"
+  },
+  {
+    "base": "Sleep_Depression",
+    "png": "Examples/Sleep_Depression/Sleep_Depression.png",
+    "html": "Examples/Sleep_Depression/Sleep_Depression.html"
+  },
+  {
+    "base": "Testosterone_Age_Gender",
+    "png": "Examples/Testosterone_Age_Gender/Testosterone_Age_Gender.png",
+    "html": "Examples/Testosterone_Age_Gender/Testosterone_Age_Gender.html"
+  },
+  {
+    "base": "Testosterone_Estrogen_Ratio",
+    "png": "Examples/Testosterone_Estrogen_Ratio/Testosterone_Estrogen_Ratio.png",
+    "html": "Examples/Testosterone_Estrogen_Ratio/Testosterone_Estrogen_Ratio.html"
+  }
+]
