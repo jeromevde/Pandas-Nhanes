@@ -413,6 +413,53 @@
             pointer-events: auto;
             filter: none;
         }
+
+        /* ── Correlation matrix section ── */
+        #corr-section {
+            margin-bottom: 3em;
+        }
+        #corr-section h2 {
+            margin-bottom: 0.75em;
+        }
+        #corr-wrapper {
+            position: relative;
+            width: 100%;
+            height: 920px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
+        }
+        #corr-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        #corr-loading {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            color: #6c757d;
+            font-size: 0.95em;
+            gap: 14px;
+            pointer-events: none;
+            transition: opacity 0.4s;
+        }
+        #corr-loading.hidden { opacity: 0; pointer-events: none; }
+        .corr-spinner {
+            width: 40px; height: 40px;
+            border: 4px solid #dee2e6;
+            border-top-color: #1a365d;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
@@ -429,6 +476,18 @@
                 <!-- Indicators will be generated automatically -->
             </div>
         </div>
+
+        <!-- Correlation matrix section -->
+        <section id="corr-section">
+            <h2>NHANES Correlation Matrix</h2>
+            <div id="corr-wrapper">
+                <div id="corr-loading">
+                    <div class="corr-spinner"></div>
+                    <span>Scroll down to load the correlation matrix&hellip;</span>
+                </div>
+                <iframe id="corr-iframe" src="" scrolling="yes"></iframe>
+            </div>
+        </section>
 
         <div id="variable-explorer">
             <h2>NHANES Variable Explorer</h2>
@@ -715,6 +774,29 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 console.warn('Could not load plots.json – carousel will be empty', e);
             }
             createPlotThumbnails();
+
+            // ── Correlation matrix: lazy-load iframe when scrolled into view ──
+            const corrIframe   = document.getElementById('corr-iframe');
+            const corrWrapper  = document.getElementById('corr-wrapper');
+            const corrLoading  = document.getElementById('corr-loading');
+            const corrSrc      = 'Examples/Correlation_Matrix/Correlation_Matrix.html';
+            corrLoading.querySelector('span').textContent = 'Scroll down to load the correlation matrix…';
+
+            const corrObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !corrIframe.src.includes('Correlation_Matrix.html')) {
+                        corrLoading.querySelector('span').textContent = 'Loading correlation matrix (this may take a moment)…';
+                        corrIframe.src = corrSrc;
+                        corrIframe.onload = () => {
+                            corrLoading.classList.add('hidden');
+                            setTimeout(() => corrLoading.remove(), 450);
+                        };
+                        corrObserver.disconnect();
+                    }
+                });
+            }, { rootMargin: '300px' });
+            corrObserver.observe(corrWrapper);
+
             // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
                 if (e.key === 'ArrowLeft') {

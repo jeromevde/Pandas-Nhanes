@@ -26,12 +26,11 @@ COHORTS = {                 # cycle label → XPT file suffix
     "2017-2018": "J",
 }
 
-MIN_VALID_COL   = 100    # rows with non-null values required to include a column
-MIN_SHARED      = 50     # shared non-null rows required to compute a pair's r
-P_THRESHOLD     = 0.05   # significance cutoff
-MAX_VARS        = 200    # cap columns per cohort (sorted by n_valid desc)
-MAX_SCATTER_PAIRS = 1500 # pre-compute scatter data for this many top significant pairs
-SCATTER_SAMPLES = 200    # max data points embedded per scatter plot
+MIN_VALID_COL  = 100    # rows with non-null values required to include a column
+MIN_SHARED     = 50     # shared non-null rows required to compute a pair's r
+P_THRESHOLD    = 0.05   # significance cutoff
+MAX_VARS       = 200    # cap columns per cohort (sorted by n_valid desc)
+SCATTER_ROWS   = 3000   # rows sampled per cohort for on-the-fly scatter display
 
 OUTPUT_FILE = os.path.join(os.path.dirname(__file__), "Correlation_Matrix.html")
 CACHE_DIR   = os.path.expanduser("~/.cache/pandas_nhanes")
@@ -148,33 +147,20 @@ def compute_lower_triangle(df, cols):
 
 # ─── Scatter data ─────────────────────────────────────────────────────────────
 
-def build_scatter(df, cols, corr, pval):
-    n = len(cols)
-    # collect significant pairs sorted by |r| desc
-    candidates = []
-    for i in range(n):
-        for j in range(i):
-            r = corr[i, j]
-            p = pval[i, j]
-            if not np.isnan(r) and not np.isnan(p) and p < P_THRESHOLD:
-                candidates.append((i, j, abs(r)))
-    candidates.sort(key=lambda x: -x[2])
-    top = candidates[:MAX_SCATTER_PAIRS]
-
-    scatter = {}
-    for i, j, _ in top:
-        ci, cj = cols[i], cols[j]
-        sub = df[[ci, cj]].dropna()
-        n_total = len(sub)
-        if n_total > SCATTER_SAMPLES:
-            sub = sub.sample(n=SCATTER_SAMPLES, random_state=42)
-        scatter[f"{i}|{j}"] = {
-            "xi": [round(v, 4) for v in sub[cj].tolist()],   # j → x axis
-            "yi": [round(v, 4) for v in sub[ci].tolist()],   # i → y axis
-            "n":  n_total,
-        }
-    print(f"  Scatter plots pre-computed: {len(scatter)}")
-    return scatter
+def build_col_data(df, cols):
+    """Sample SCATTER_ROWS rows and store each column as a fixed-length list
+    (None for NaN).  JS zips two columns on click → instant scatter for any pair."""
+    sample = df[cols].sample(n=min(SCATTER_ROWS, len(df)), random_state=42)
+    col_data = {}
+    for col in cols:
+        vals = sample[col].tolist()
+        col_data[col] = [
+            None if (v is None or (isinstance(v, float) and np.isnan(v)))
+            else round(float(v), 3)
+            for v in vals
+        ]
+    print(f"  Column data: {len(cols)} vars × {len(sample):,} sampled rows")
+    return col_data
 
 
 # ─── Per-cohort pipeline ──────────────────────────────────────────────────────
@@ -202,7 +188,7 @@ def process_cohort(cycle, suffix):
     n_sig = int(np.nansum(pval < P_THRESHOLD))
     print(f"  Significant pairs: {n_sig:,}")
 
-    scatter = build_scatter(df, cols, corr, pval)
+    col_data = build_col_data(df, cols)
 
     # Convert NaN → None for JSON serialisation
     def _clean(arr):
@@ -211,15 +197,15 @@ def process_cohort(cycle, suffix):
                 for row in arr.tolist()]
 
     return {
-        "cycle":   cycle,
-        "cols":    cols,
-        "meta":    meta,
-        "corr":    _clean(corr),
-        "pval":    _clean(pval),
-        "nshare":  nshare.tolist(),
-        "scatter": scatter,
-        "n_rows":  int(len(df)),
-        "n_sig":   n_sig,
+        "cycle":    cycle,
+        "cols":     cols,
+        "meta":     meta,
+        "corr":     _clean(corr),
+        "pval":     _clean(pval),
+        "nshare":   nshare.tolist(),
+        "col_data": col_data,
+        "n_rows":   int(len(df)),
+        "n_sig":    n_sig,
     }
 
 
@@ -402,15 +388,20 @@ function loadYear(yr) {{
 }}
 
 // ── Matrix ──────────────────────────────────────────────────────────────────
-const LABEL_PAD = 140;   // px for axis labels
+const LABEL_PAD   = 220;  // px reserved for y-axis labels (left)
+const LABEL_PAD_X = 220;  // px reserved for x-axis labels (bottom, rotated)
+const MIN_LABEL_PX = 11;  // minimum cell height (px) before a label is drawn
 
 function renderMatrix() {{
   const {{ cols, meta, corr, pval, nshare, n_rows, n_sig }} = active;
   const n      = cols.length;
   const cellPx = Math.max(4, Math.min(13, Math.floor(880 / n)));
   const matPx  = n * cellPx;
-  const svgW   = matPx + LABEL_PAD;
-  const svgH   = matPx + LABEL_PAD;
+  // stride: skip labels when cells are too small to fit text without overlap
+  const stride = Math.ceil(MIN_LABEL_PX / cellPx); // e.g. cellPx=4 → stride=3
+
+  const svgW = matPx + LABEL_PAD;
+  const svgH = matPx + LABEL_PAD_X;
 
   const svg = document.getElementById('matrix-svg');
   svg.setAttribute('width',  svgW);
@@ -428,6 +419,13 @@ function renderMatrix() {{
 
   // White background
   mk('rect', {{ x: 0, y: 0, width: svgW, height: svgH, fill: '#fff' }}, svg);
+
+  // clipPaths so labels never bleed into the matrix area or beyond their box
+  const defs = mk('defs', {{}}, svg);
+  const cpY  = mk('clipPath', {{ id: 'cpY' }}, defs);
+  mk('rect', {{ x: 0, y: 0, width: LABEL_PAD - 2, height: matPx }}, cpY);
+  const cpX  = mk('clipPath', {{ id: 'cpX' }}, defs);
+  mk('rect', {{ x: LABEL_PAD, y: matPx, width: matPx, height: LABEL_PAD_X }}, cpX);
 
   // ── cells ──
   const g = mk('g', {{ transform: `translate(${{LABEL_PAD}},0)` }}, svg);
@@ -464,41 +462,45 @@ function renderMatrix() {{
     }}
   }}
 
-  // ── Y-labels (left) ──
+  const fSize = Math.max(7, Math.min(11, cellPx + 3));
+
+  // ── Y-labels (left) – thinned by stride ──
+  const gy = mk('g', {{ 'clip-path': 'url(#cpY)' }}, svg);
   for (let i = 0; i < n; i++) {{
-    const cy   = i * cellPx + cellPx / 2;
-    const a    = mk('a', {{ href: meta[cols[i]].link, target: '_blank' }}, svg);
-    const txt  = mk('text', {{
-      x: LABEL_PAD - 6, y: cy,
+    if (i % stride !== 0) continue;
+    const cy  = i * cellPx + cellPx / 2;
+    const a   = mk('a', {{ href: meta[cols[i]].link, target: '_blank' }}, gy);
+    const txt = mk('text', {{
+      x: LABEL_PAD - 7, y: cy,
       'text-anchor': 'end', 'dominant-baseline': 'middle',
-      'font-size': Math.max(6, Math.min(10, cellPx - 1)),
-      fill: '#3182ce', style: 'text-decoration:underline;cursor:pointer',
+      'font-size': fSize, fill: '#3182ce',
+      style: 'text-decoration:underline;cursor:pointer',
     }}, a);
-    txt.textContent = trunc(meta[cols[i]].desc, 26);
+    txt.textContent = trunc(meta[cols[i]].desc, 30);
     txt.addEventListener('mouseenter', e => labelTip(e, cols[i], meta[cols[i]].desc));
     txt.addEventListener('mouseleave', hideTip);
   }}
 
-  // ── X-labels (bottom) ──
-  const gx = mk('g', {{ transform: `translate(${{LABEL_PAD}},0)` }}, svg);
+  // ── X-labels (bottom, 45°) – thinned by stride ──
+  const gx = mk('g', {{ 'clip-path': 'url(#cpX)', transform: `translate(${{LABEL_PAD}},0)` }}, svg);
   for (let j = 0; j < n; j++) {{
+    if (j % stride !== 0) continue;
     const cx  = j * cellPx + cellPx / 2;
     const a   = mk('a', {{ href: meta[cols[j]].link, target: '_blank' }}, gx);
     const txt = mk('text', {{
-      x: cx, y: matPx + 5,
+      x: cx, y: matPx + 6,
       'text-anchor': 'start', 'dominant-baseline': 'auto',
-      'font-size': Math.max(6, Math.min(10, cellPx - 1)),
-      fill: '#3182ce',
-      transform: `rotate(45,${{cx}},${{matPx + 5}})`,
+      'font-size': fSize, fill: '#3182ce',
+      transform: `rotate(45,${{cx}},${{matPx + 6}})`,
       style: 'text-decoration:underline;cursor:pointer',
     }}, a);
-    txt.textContent = trunc(meta[cols[j]].desc, 26);
+    txt.textContent = trunc(meta[cols[j]].desc, 30);
     txt.addEventListener('mouseenter', e => labelTip(e, cols[j], meta[cols[j]].desc));
     txt.addEventListener('mouseleave', hideTip);
   }}
 
   document.getElementById('stats').textContent =
-    `${{n}} variables · ${{n_rows.toLocaleString()}} respondents · ${{n_sig.toLocaleString()}} significant pairs`;
+    `${{n}} variables · ${{n_rows.toLocaleString()}} respondents · ${{n_sig.toLocaleString()}} significant pairs · all pairs clickable`;
 }}
 
 // ── Tooltip ─────────────────────────────────────────────────────────────────
@@ -564,16 +566,25 @@ function swapAxes() {{
 
 function drawScatter() {{
   const {{ i, j, swapped }} = scatterState;
-  const {{ cols, meta, corr, pval, nshare, scatter }} = active;
+  const {{ cols, meta, corr, pval, nshare, col_data }} = active;
   const ci = cols[i], cj = cols[j];
   const di = meta[ci].desc, dj = meta[cj].desc;
   const r  = corr[i][j];
   const p  = pval[i][j];
   const ns = nshare[i][j];
 
-  const sd  = scatter[`${{i}}|${{j}}`];
+  // Compute intersection row-by-row from sampled column arrays – instant
+  const vi = col_data[ci];
+  const vj = col_data[cj];
+  const xs = [], ys = [];
+  for (let k = 0; k < vi.length; k++) {{
+    if (vi[k] !== null && vj[k] !== null) {{
+      xs.push(swapped ? vi[k] : vj[k]);
+      ys.push(swapped ? vj[k] : vi[k]);
+    }}
+  }}
 
-  // Determine axis assignment
+  // Determine axis labels
   const xDesc = swapped ? di : dj;
   const yDesc = swapped ? dj : di;
   const xCode = swapped ? ci : cj;
@@ -583,38 +594,32 @@ function drawScatter() {{
     `${{xDesc}} × ${{yDesc}}`;
 
   document.getElementById('scatter-meta').innerHTML =
-    `<b>X-axis:</b> ${{xDesc}}
-     (<a href="${{meta[xCode].link}}" target="_blank">${{xCode}}</a>) &nbsp;|&nbsp; ` +
-    `<b>Y-axis:</b> ${{yDesc}}
-     (<a href="${{meta[yCode].link}}" target="_blank">${{yCode}}</a>)<br>` +
-    `Pearson r = <b>${{r != null ? r.toFixed(4) : '–'}}</b> &nbsp;|&nbsp; ` +
-    `p = <b>${{p != null ? p.toExponential(3) : '–'}}</b> &nbsp;|&nbsp; ` +
-    `n = <b>${{ns != null ? ns.toLocaleString() : '–'}}</b> shared observations`;
+    `<b>X:</b> ${{xDesc}} (<a href="${{meta[xCode].link}}" target="_blank">${{xCode}}</a>) &nbsp;| ` +
+    `<b>Y:</b> ${{yDesc}} (<a href="${{meta[yCode].link}}" target="_blank">${{yCode}}</a>)<br>` +
+    `Pearson r = <b>${{r != null ? r.toFixed(4) : '–'}}</b> &nbsp;|&nbsp; ` +
+    `p = <b>${{p != null ? p.toExponential(3) : '–'}}</b> &nbsp;|&nbsp; ` +
+    `n = <b>${{ns != null ? ns.toLocaleString() : '–'}}</b> shared (full data)  |  ` +
+    `showing <b>${{xs.length.toLocaleString()}}</b> sampled points`;
 
-  if (!sd) {{
+  if (xs.length < 2) {{
     document.getElementById('scatter-plot').innerHTML =
-      '<p style="padding:60px;text-align:center;color:#718096">' +
-      'Scatter data not pre-computed for this pair.<br>' +
-      `(Only the top ${{Object.keys(scatter).length.toLocaleString()}} significant pairs by |r| are included.)</p>`;
+      '<p style="padding:50px;text-align:center;color:#718096">Not enough shared sampled points to plot.</p>';
     return;
   }}
 
-  const xdata = swapped ? sd.yi : sd.xi;
-  const ydata = swapped ? sd.xi : sd.yi;
-
   // Regression line
-  const nn   = xdata.length;
-  const mx   = xdata.reduce((a, v) => a + v, 0) / nn;
-  const my   = ydata.reduce((a, v) => a + v, 0) / nn;
-  const num  = xdata.reduce((a, v, k) => a + (v - mx) * (ydata[k] - my), 0);
-  const den  = xdata.reduce((a, v) => a + (v - mx) ** 2, 0);
-  const m    = den ? num / den : 0;
-  const b    = my - m * mx;
-  const xmin = Math.min(...xdata), xmax = Math.max(...xdata);
+  const nn  = xs.length;
+  const mx  = xs.reduce((a, v) => a + v, 0) / nn;
+  const my  = ys.reduce((a, v) => a + v, 0) / nn;
+  const num = xs.reduce((a, v, k) => a + (v - mx) * (ys[k] - my), 0);
+  const den = xs.reduce((a, v) => a + (v - mx) ** 2, 0);
+  const m   = den ? num / den : 0;
+  const b   = my - m * mx;
+  const xmin = Math.min(...xs), xmax = Math.max(...xs);
 
   Plotly.react('scatter-plot', [
     {{
-      x: xdata, y: ydata,
+      x: xs, y: ys,
       mode: 'markers', type: 'scatter',
       name: 'Observations',
       marker: {{ size: 6, opacity: .55, color: '#3182ce' }},
