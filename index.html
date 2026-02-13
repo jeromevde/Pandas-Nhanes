@@ -414,52 +414,76 @@
             filter: none;
         }
 
-        /* ── Correlation matrix section ── */
-        #corr-section {
-            margin-bottom: 3em;
-        }
-        #corr-section h2 {
-            margin-bottom: 0.75em;
-        }
-        #corr-wrapper {
-            position: relative;
-            width: 100%;
-            height: 920px;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #dee2e6;
-            background: #fff;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.08);
-        }
-        #corr-iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            display: block;
-        }
-        #corr-loading {
-            position: absolute;
+        /* ── Correlates drawer ── */
+        #corr-drawer-overlay {
+            display: none;
+            position: fixed;
             inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        #corr-drawer-overlay.open { display: block; opacity: 1; }
+        #corr-drawer {
+            position: fixed;
+            top: 0; right: 0;
+            width: min(520px, 96vw);
+            height: 100vh;
+            background: #fff;
+            z-index: 2001;
+            box-shadow: -4px 0 24px rgba(0,0,0,0.15);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: #f8f9fa;
-            color: #6c757d;
-            font-size: 0.95em;
-            gap: 14px;
-            pointer-events: none;
-            transition: opacity 0.4s;
+            transform: translateX(100%);
+            transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+            overflow: hidden;
         }
-        #corr-loading.hidden { opacity: 0; pointer-events: none; }
-        .corr-spinner {
-            width: 40px; height: 40px;
-            border: 4px solid #dee2e6;
-            border-top-color: #1a365d;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+        #corr-drawer.open { transform: translateX(0); }
+        #corr-drawer-header {
+            padding: 1.2em 1.4em 1em;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5em;
+            background: #f7fafc;
         }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        #corr-drawer-header-text { flex: 1; min-width: 0; }
+        #corr-drawer-title { font-size: 1.2em; font-weight: 700; color: #1a202c; }
+        #corr-drawer-desc { margin-top: 0.3em; font-size: 0.88em; color: #4a5568; line-height: 1.4; }
+        #corr-drawer-doclink { margin-top: 0.35em; display: inline-block; font-size: 0.82em; color: #3182ce; text-decoration: underline; }
+        #corr-drawer-close { background: none; border: none; font-size: 1.6em; cursor: pointer; color: #718096; padding: 0 0.2em; line-height: 1; flex-shrink: 0; }
+        #corr-drawer-close:hover { color: #1a202c; }
+        #corr-drawer-body { flex: 1; overflow-y: auto; padding: 0.5em 0 1em; }
+        .corr-loading-msg, .corr-no-data { text-align: center; color: #718096; font-size: 0.95em; padding: 2em 1em; }
+        .corr-cycle-section { margin-bottom: 0.25em; }
+        .corr-cycle-header {
+            padding: 0.45em 1.4em;
+            font-size: 0.78em; font-weight: 700; letter-spacing: 0.05em;
+            text-transform: uppercase; color: #718096;
+            background: #f7fafc;
+            border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;
+            position: sticky; top: 0; z-index: 1;
+        }
+        .corr-table { width: 100%; border-collapse: collapse; }
+        .corr-row { cursor: pointer; transition: background 0.12s; }
+        .corr-row:hover { background: #ebf8ff; }
+        .corr-rank { width: 2em; text-align: center; color: #a0aec0; font-size: 0.78em; padding: 0.5em 0.3em 0.5em 1em; }
+        .corr-varname { font-family: monospace; font-size: 0.88em; font-weight: 700; color: #2d3748; padding: 0.5em 0.3em; white-space: nowrap; }
+        .corr-vardesc { font-size: 0.80em; color: #4a5568; padding: 0.5em 0.3em; max-width: 160px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .corr-bar-cell { padding: 0.5em 0.5em; white-space: nowrap; }
+        .corr-bar { display: inline-block; height: 8px; border-radius: 4px; opacity: 0.65; vertical-align: middle; min-width: 2px; }
+        .corr-r { font-size: 0.83em; font-weight: 700; margin-left: 5px; vertical-align: middle; }
+        .corr-n { font-size: 0.76em; color: #718096; padding: 0.5em 0.4em; white-space: nowrap; }
+        .corr-doc-link { color: #3182ce; font-size: 0.76em; padding: 0.5em 1em 0.5em 0.2em; }
+        .corr-btn {
+            background: #ebf8ff; border: 1px solid #bee3f8;
+            border-radius: 4px; color: #2b6cb0;
+            font-size: 0.8em; cursor: pointer; padding: 2px 8px;
+            transition: background 0.15s; white-space: nowrap;
+        }
+        .corr-btn:hover { background: #bee3f8; }
     </style>
 </head>
 <body>
@@ -477,17 +501,19 @@
             </div>
         </div>
 
-        <!-- Correlation matrix section -->
-        <section id="corr-section">
-            <h2>NHANES Correlation Matrix</h2>
-            <div id="corr-wrapper">
-                <div id="corr-loading">
-                    <div class="corr-spinner"></div>
-                    <span>Scroll down to load the correlation matrix&hellip;</span>
+        <!-- Correlates drawer (slides in from right) -->
+        <div id="corr-drawer-overlay"></div>
+        <div id="corr-drawer">
+            <div id="corr-drawer-header">
+                <div id="corr-drawer-header-text">
+                    <div id="corr-drawer-title"></div>
+                    <div id="corr-drawer-desc"></div>
+                    <a id="corr-drawer-doclink" href="#" target="_blank" rel="noopener">View NHANES documentation &#8599;</a>
                 </div>
-                <iframe id="corr-iframe" src="" scrolling="yes"></iframe>
+                <button id="corr-drawer-close" title="Close">&times;</button>
             </div>
-        </section>
+            <div id="corr-drawer-body"></div>
+        </div>
 
         <div id="variable-explorer">
             <h2>NHANES Variable Explorer</h2>
@@ -765,6 +791,94 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.body.style.overflow = '';
         }
 
+        // ── Correlates drawer ────────────────────────────────────────────────
+        let corrLookup  = null;
+        let corrFetching = false;
+        let corrQueue   = [];
+        let varMeta     = {};  // {varName → {desc, docLink}} populated after CSV loads
+
+        async function getCorrLookup() {
+            if (corrLookup) return corrLookup;
+            if (corrFetching) return new Promise(r => corrQueue.push(r));
+            corrFetching = true;
+            try {
+                const res = await fetch('corr_lookup.json');
+                corrLookup = res.ok ? await res.json() : {};
+            } catch { corrLookup = {}; }
+            corrFetching = false;
+            corrQueue.forEach(r => r(corrLookup));
+            corrQueue = [];
+            return corrLookup;
+        }
+
+        function showCorrelates(varName, varDesc, varDocLink) {
+            document.getElementById('corr-drawer-title').textContent = varName;
+            document.getElementById('corr-drawer-desc').textContent  = varDesc || '';
+            const docA = document.getElementById('corr-drawer-doclink');
+            docA.href = varDocLink || '#';
+            docA.style.display = varDocLink ? '' : 'none';
+            document.getElementById('corr-drawer-body').innerHTML =
+                '<div class="corr-loading-msg">Loading correlates…</div>';
+            document.getElementById('corr-drawer').classList.add('open');
+            document.getElementById('corr-drawer-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+            getCorrLookup().then(lookup => renderCorrelates(lookup, varName));
+        }
+
+        function renderCorrelates(lookup, varName) {
+            const body = document.getElementById('corr-drawer-body');
+            const sections = Object.entries(lookup)
+                .map(([cycle, data]) => ({ cycle, entries: (data[varName] || []) }))
+                .filter(s => s.entries.length > 0);
+            if (!sections.length) {
+                body.innerHTML = '<p class="corr-no-data">No significant correlates found in any cached cohort for this variable.</p>';
+                return;
+            }
+            body.innerHTML = '';
+            for (const { cycle, entries } of sections) {
+                const section = document.createElement('div');
+                section.className = 'corr-cycle-section';
+                const hdr = document.createElement('div');
+                hdr.className = 'corr-cycle-header';
+                hdr.textContent = cycle;
+                section.appendChild(hdr);
+                const table = document.createElement('table');
+                table.className = 'corr-table';
+                entries.forEach(([v, r, n], idx) => {
+                    const meta     = varMeta[v] || {};
+                    const desc     = meta.desc || v;
+                    const link     = meta.docLink || '';
+                    const absR     = Math.abs(r);
+                    const color    = r > 0 ? '#2b6cb0' : '#c53030';
+                    const sign     = r > 0 ? '+' : '';
+                    const nFmt     = n >= 1000 ? (n / 1000).toFixed(1) + 'k' : String(n);
+                    const shortD   = desc.length > 42 ? desc.slice(0, 42) + '\u2026' : desc;
+                    const tr = document.createElement('tr');
+                    tr.className = 'corr-row';
+                    tr.innerHTML = `
+                        <td class="corr-rank">${idx + 1}</td>
+                        <td class="corr-varname">${v}</td>
+                        <td class="corr-vardesc" title="${desc.replace(/"/g, '&quot;')}">${shortD}</td>
+                        <td class="corr-bar-cell">
+                            <div class="corr-bar" style="width:${Math.round(absR * 80)}px;background:${color}"></div>
+                            <span class="corr-r" style="color:${color}">${sign}${r.toFixed(2)}</span>
+                        </td>
+                        <td class="corr-n" title="${n.toLocaleString()} shared observations">n=${nFmt}</td>
+                        ${link ? `<td><a class="corr-doc-link" href="${link}" target="_blank" rel="noopener">doc</a></td>` : '<td></td>'}`;
+                    tr.addEventListener('click', () => showCorrelates(v, meta.desc || '', link));
+                    table.appendChild(tr);
+                });
+                section.appendChild(table);
+                body.appendChild(section);
+            }
+        }
+
+        function closeCorrelates() {
+            document.getElementById('corr-drawer').classList.remove('open');
+            document.getElementById('corr-drawer-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
         document.addEventListener("DOMContentLoaded", async function() {
             // Load plot list from plots.json (kept up-to-date by GitHub Actions)
             try {
@@ -775,27 +889,11 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             }
             createPlotThumbnails();
 
-            // ── Correlation matrix: lazy-load iframe when scrolled into view ──
-            const corrIframe   = document.getElementById('corr-iframe');
-            const corrWrapper  = document.getElementById('corr-wrapper');
-            const corrLoading  = document.getElementById('corr-loading');
-            const corrSrc      = 'Examples/Correlation_Matrix/Correlation_Matrix.html';
-            corrLoading.querySelector('span').textContent = 'Scroll down to load the correlation matrix…';
-
-            const corrObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting && !corrIframe.src.includes('Correlation_Matrix.html')) {
-                        corrLoading.querySelector('span').textContent = 'Loading correlation matrix (this may take a moment)…';
-                        corrIframe.src = corrSrc;
-                        corrIframe.onload = () => {
-                            corrLoading.classList.add('hidden');
-                            setTimeout(() => corrLoading.remove(), 450);
-                        };
-                        corrObserver.disconnect();
-                    }
-                });
-            }, { rootMargin: '300px' });
-            corrObserver.observe(corrWrapper);
+            // ── Correlates drawer wiring ──────────────────────────────────────
+            document.getElementById('corr-drawer-overlay').addEventListener('click', closeCorrelates);
+            document.getElementById('corr-drawer-close').addEventListener('click', closeCorrelates);
+            // Prefetch corr_lookup.json on idle so first click is instant
+            (window.requestIdleCallback || setTimeout)(() => getCorrLookup(), 2000);
 
             // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
@@ -805,6 +903,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     nextSlide();
                 } else if (e.key === 'Escape') {
                     closeModal();
+                    closeCorrelates();
                 }
             });
             // Touch/double-touch swipe
@@ -880,6 +979,14 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             let allData = []; // raw objects
             let fields = [];
             let allRowEls = []; // tr elements for current render
+
+            // Event delegation: corr buttons rendered via innerHTML can't have direct listeners
+            tableBody.addEventListener('click', e => {
+                const btn = e.target.closest('.corr-btn');
+                if (!btn) return;
+                e.stopPropagation();
+                showCorrelates(btn.dataset.var, btn.dataset.desc, btn.dataset.doc);
+            });
             // Status element
             const statusEl = document.createElement('div');
             statusEl.id = 'table-status';
@@ -896,10 +1003,17 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     th.textContent = field;
                     tableHeaderRow.appendChild(th);
                 });
+                const thCorr = document.createElement('th');
+                thCorr.textContent = 'Correlates';
+                thCorr.title = 'Click to find significantly co-moving variables';
+                tableHeaderRow.appendChild(thCorr);
             }
             // Helper: build a row element from data
             function buildRow(row) {
-                const tr = document.createElement('tr');
+                const tr  = document.createElement('tr');
+                const vn  = (row['variable name'] || '').replace(/"/g, '&quot;');
+                const vd  = (row['variable explanation'] || '').replace(/"/g, '&quot;');
+                const vl  = (row['dataset documentation link'] || '').replace(/"/g, '&quot;');
                 tr.innerHTML = fields.map(f => {
                     const v = row[f];
                     if (f === 'dataset link' && v) {
@@ -909,7 +1023,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     } else {
                         return `<td>${v || ''}</td>`;
                     }
-                }).join('');
+                }).join('') +
+                `<td><button class="corr-btn" data-var="${vn}" data-desc="${vd}" data-doc="${vl}" title="Find correlated variables">correlates</button></td>`;
                 return tr;
             }
             // Incremental append in batches to avoid layout thrash
@@ -967,6 +1082,16 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                         appendQueue.push(buffer.splice(0, buffer.length));
                         scheduleAppend();
                     }
+                    // Build varMeta for the correlates drawer (first occurrence per variable)
+                    allData.forEach(row => {
+                        const vn = row['variable name'];
+                        if (vn && !varMeta[vn]) {
+                            varMeta[vn] = {
+                                desc:    row['variable explanation'] || '',
+                                docLink: row['dataset documentation link'] || '',
+                            };
+                        }
+                    });
                     statusEl.textContent = `Loaded ${allData.length.toLocaleString()} variables.`;
                 },
                 error: function(err) {
