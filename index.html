@@ -893,7 +893,11 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.getElementById('corr-drawer-overlay').addEventListener('click', closeCorrelates);
             document.getElementById('corr-drawer-close').addEventListener('click', closeCorrelates);
             // Prefetch corr_lookup.json on idle so first click is instant
-            (window.requestIdleCallback || setTimeout)(() => getCorrLookup(), 2000);
+            if (window.requestIdleCallback) {
+                requestIdleCallback(() => getCorrLookup(), { timeout: 2000 });
+            } else {
+                setTimeout(() => getCorrLookup(), 2000);
+            }
 
             // Removed prev/next button event listeners since buttons are gone
             document.addEventListener('keydown', (e) => {
