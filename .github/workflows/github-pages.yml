@@ -26,7 +26,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache NHANES XPT files
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pandas_nhanes
+          key: nhanes-xpt-v1
+
+      - name: Install Python dependencies
+        run: pip install pandas numpy requests
+
+      - name: Build cycle data
+        run: python build_cycle_data.py
+
       - name: Prepare site files
         run: |
           # Create a clean site directory with only the files needed for the website

@@ -75,5 +75,8 @@ ENV/
 # Ignore NHANES data downloads (if any)
 nhanes_data/
 
+# Generated cycle data (built during CI deployment)
+data/
+
 # Node modules
 node_modules/

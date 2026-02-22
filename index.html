@@ -840,7 +840,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             if (corrManifest.length) return corrManifest;
             try {
                 const r = await fetch('data/manifest.json');
-                if (r.ok) corrManifest = await r.json();
+                if (r.ok) {
+                    corrManifest = await r.json();
+                    // Build Set per cycle for O(1) variable lookup
+                    for (const m of corrManifest) {
+                        m.varSet = new Set(m.vars || m.cols || []);
+                    }
+                }
             } catch { corrManifest = []; }
             return corrManifest;
         }
@@ -902,11 +908,31 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 return;
             }
 
-            // Build cycle tabs
+            // Find which cycles actually contain this variable
+            const cyclesWithVar = manifest.filter(m => m.varSet && m.varSet.has(varName));
+
+            if (!cyclesWithVar.length) {
+                document.getElementById('corr-tabs').innerHTML = '';
+                document.getElementById('corr-list').innerHTML =
+                    `<p class="corr-no-data">` +
+                    `Variable <b>${varName}</b> is not available in the precomputed correlation data.<br><br>` +
+                    `<span style="font-size:0.88em;color:#718096;">` +
+                    `This can happen when the variable is non-numeric, has too few observations, ` +
+                    `or belongs to a survey component not yet included in the sampled dataset. ` +
+                    `Currently ${manifest.length} cycles are covered with ${manifest.reduce((s,m)=>s+(m.n_cols||0),0).toLocaleString()} numeric variables total.` +
+                    `</span></p>`;
+                return;
+            }
+
+            // Build cycle tabs — only cycles that have this variable
             const tabsEl = document.getElementById('corr-tabs');
             tabsEl.innerHTML = '';
-            const defaultCycle = manifest.find(m => m.cycle === preferredCycle) ? preferredCycle : manifest[0].cycle;
-            for (const m of manifest) {
+            // Prefer the variable's own cycle; otherwise pick the most recent available
+            const defaultCycle = cyclesWithVar.find(m => m.cycle === preferredCycle)
+                ? preferredCycle
+                : cyclesWithVar[cyclesWithVar.length - 1].cycle;
+
+            for (const m of cyclesWithVar) {
                 const btn = document.createElement('button');
                 btn.className = 'corr-tab' + (m.cycle === defaultCycle ? ' active' : '');
                 btn.textContent = m.cycle;
