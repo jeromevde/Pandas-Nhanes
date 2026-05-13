@@ -16,6 +16,7 @@ Output (in data/):
 
 import os, json, gzip
 from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Optional
 import numpy as np
 import pandas as pd
 import requests
@@ -91,7 +92,7 @@ def download_cycle_xpts(cycle: str, csv_df: pd.DataFrame):
 
 
 # ── Load & merge ──────────────────────────────────────────────────────────────
-def load_merged_from_csv(cycle: str, csv_df: pd.DataFrame) -> pd.DataFrame | None:
+def load_merged_from_csv(cycle: str, csv_df: pd.DataFrame) -> Optional[pd.DataFrame]:
     """Load all cached XPT files for a cycle (discovered via CSV) and merge."""
     sub = csv_df[csv_df["cycle name"] == cycle]
     dataset_names = sorted(sub["dataset"].dropna().unique())
@@ -129,13 +130,26 @@ def load_merged_from_csv(cycle: str, csv_df: pd.DataFrame) -> pd.DataFrame | Non
     return merged
 
 
-def select_numeric(df: pd.DataFrame) -> list[str]:
+def classify_columns(df: pd.DataFrame) -> dict:
+    """Return {col: 'num'|'cat'} for all eligible numeric columns.
+    Columns with ≤ 12 unique non-null values are treated as categorical codes
+    (e.g. RIAGENDR, race/ethnicity, education level, yes/no variables)."""
     num = df.select_dtypes(include=[np.number])
     counts = num.notna().sum()
-    cols = (counts[counts >= MIN_VALID_COL]
-            .drop("SEQN", errors="ignore")
-            .index.tolist())
-    return cols
+    eligible = (counts[counts >= MIN_VALID_COL]
+                .drop("SEQN", errors="ignore"))
+    result = {}
+    for c in eligible.index:
+        col = df[c].dropna()
+        if col.std() == 0:
+            continue
+        result[c] = 'cat' if col.nunique() <= 12 else 'num'
+    return result
+
+
+def select_numeric(df: pd.DataFrame) -> list[str]:
+    """Backward-compat wrapper – returns all eligible column names."""
+    return list(classify_columns(df).keys())
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -161,11 +175,14 @@ def main():
             print("  No cached data – skipping.")
             continue
 
-        cols = select_numeric(df)
+        col_types = classify_columns(df)
+        cols = list(col_types.keys())
         n_total = len(df)
         n_sample = min(SAMPLE_ROWS, n_total)
+        n_num = sum(1 for t in col_types.values() if t == 'num')
+        n_cat = sum(1 for t in col_types.values() if t == 'cat')
         print(f"  Merged → {n_total:,} rows × {len(df.columns):,} columns")
-        print(f"  Eligible numeric columns: {len(cols)}")
+        print(f"  Eligible columns: {len(cols)} ({n_num} numeric, {n_cat} categorical)")
 
         if len(cols) < 2:
             continue
@@ -175,18 +192,26 @@ def main():
         col_data = {}
         for c in cols:
             vals = sample[c].tolist()
-            col_data[c] = [
-                None if (v is None or (isinstance(v, float) and np.isnan(v)))
-                else round(float(v), ROUND_DP)
-                for v in vals
-            ]
+            if col_types[c] == 'cat':
+                col_data[c] = [
+                    None if (v is None or (isinstance(v, float) and np.isnan(v)))
+                    else int(v)
+                    for v in vals
+                ]
+            else:
+                col_data[c] = [
+                    None if (v is None or (isinstance(v, float) and np.isnan(v)))
+                    else round(float(v), ROUND_DP)
+                    for v in vals
+                ]
 
         payload = {
-            "cycle":    cycle,
-            "n_total":  n_total,
-            "n_sample": n_sample,
-            "cols":     cols,
-            "data":     col_data,
+            "cycle":     cycle,
+            "n_total":   n_total,
+            "n_sample":  n_sample,
+            "cols":      cols,
+            "col_types": col_types,
+            "data":      col_data,
         }
 
         outpath = os.path.join(OUTPUT_DIR, f"{cycle}.json")
