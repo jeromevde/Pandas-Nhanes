@@ -2,54 +2,59 @@
 """
 build_cycle_data.py
 ───────────────────
-1. Read the NHANES variables CSV to discover all XPT dataset links per cycle.
-2. Download any missing XPT files to the local cache.
-3. For each cycle, merge all cached XPT files, sample rows, keep numeric
-   columns, and write a compact JSON file for browser-side correlation
-   computation and scatter plots.
+For each NHANES cycle:
 
-Output (in data/):
-  manifest.json          – list of available cycles + column counts + var list
-  2009-2010.json         – sampled column data for that cohort
-  2011-2012.json         – …
+1. Download missing XPT files into ~/.cache/pandas_nhanes/
+2. Merge all datasets on SEQN
+3. Classify columns as numeric ('num') or categorical ('cat', ≤12 unique values)
+4. Write one output file per cycle into data/:
+
+   <cycle>.scatter.json
+       Sampled column arrays (SCATTER_ROWS rows) used by the browser for:
+         - On-the-fly correlation computation when a user picks a variable
+         - Scatter plots / box plots / heatmaps on pair click
+       {cycle, n_total, n_sample, cols, col_types, data: {col: [val, ...]}}
+       Typical size: ~3 MB raw, ~700 KB gzip per cycle
+
+5. Write data/manifest.json
+       [{cycle, n_cols, n_total, n_sample, vars, col_types}]
+       Tells the browser which cycles exist and which variables are available.
+
+JS-side computation (in index.html):
+  - Pearson r   for num×num pairs
+  - eta (η)     for num×cat or cat×num pairs  (correlation ratio)
+  - Cramér's V  for cat×cat pairs
+  All N*(N-1)/2 pairs computed in < 200 ms on 3000 rows × 300 cols.
+  Results sorted by |assoc| descending — no significance threshold applied.
 """
 
-import os, json, gzip
+import os, json, gzip, math
 from concurrent.futures import ThreadPoolExecutor, as_completed
-from typing import Optional
+from typing import Optional, Dict, List
 import numpy as np
 import pandas as pd
 import requests
 
 # ── Configuration ─────────────────────────────────────────────────────────────
-# Standard 2-year cycles with their XPT suffix (for glob-based discovery)
-# Plus CSV-based dataset lookup for all cycles
 CYCLES = [
-    "2001-2002",
-    "2003-2004",
-    "2005-2006",
-    "2007-2008",
-    "2009-2010",
-    "2011-2012",
-    "2013-2014",
-    "2015-2016",
-    "2017-2018",
-    "2021-2023",
+    "2001-2002", "2003-2004", "2005-2006", "2007-2008",
+    "2009-2010", "2011-2012", "2013-2014", "2015-2016",
+    "2017-2018", "2021-2023",
 ]
 
 CSV_PATH      = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                              "pandas_nhanes", "nhanes_variables.csv")
 CACHE_DIR     = os.path.expanduser("~/.cache/pandas_nhanes")
 OUTPUT_DIR    = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
-SAMPLE_ROWS   = 1500
-MIN_VALID_COL = 100    # column must have ≥ this many non-null values to keep
-ROUND_DP      = 2      # decimal places for stored numbers
-DL_WORKERS    = 8      # parallel download threads
+
+MIN_VALID_COL = 100    # column needs ≥ this many non-null values to be included
+CAT_MAX_UNIQ  = 12     # ≤ this many unique values → treat column as categorical
+SCATTER_ROWS  = 5000   # rows sampled per cycle (higher = more reliable JS stats)
+DL_WORKERS    = 8
 
 
-# ── Download helpers ──────────────────────────────────────────────────────────
+# ── Download ──────────────────────────────────────────────────────────────────
 def _download_one(dataset: str, url: str) -> str:
-    """Download a single XPT file to cache.  Returns status string."""
     cache_path = os.path.join(CACHE_DIR, f"{dataset}.xpt")
     if os.path.exists(cache_path):
         return f"  ✓ {dataset} (cached)"
@@ -64,92 +69,70 @@ def _download_one(dataset: str, url: str) -> str:
 
 
 def download_cycle_xpts(cycle: str, csv_df: pd.DataFrame):
-    """Download all missing XPT files for a cycle, in parallel."""
     sub = csv_df[csv_df["cycle name"] == cycle]
     links = sub[["dataset", "dataset link"]].drop_duplicates().dropna()
     if links.empty:
         print("  No dataset links found in CSV.")
         return
-
-    missing = [(r["dataset"], r["dataset link"]) for _, r in links.iterrows()
-               if not os.path.exists(os.path.join(CACHE_DIR, f"{r['dataset']}.xpt"))]
-
+    missing = [(row["dataset"], row["dataset link"]) for _, row in links.iterrows()
+               if not os.path.exists(os.path.join(CACHE_DIR, f"{row['dataset']}.xpt"))]
     if not missing:
         print(f"  All {len(links)} XPT files already cached.")
         return
-
-    print(f"  Downloading {len(missing)} / {len(links)} missing XPT files …")
+    print(f"  Downloading {len(missing)}/{len(links)} missing XPT files …")
     with ThreadPoolExecutor(max_workers=DL_WORKERS) as pool:
         futs = {pool.submit(_download_one, ds, url): ds for ds, url in missing}
         done = 0
         for fut in as_completed(futs):
             done += 1
             msg = fut.result()
-            # Print every 20th or failed ones
             if done % 20 == 0 or "✗" in msg:
                 print(msg)
-        print(f"  Download complete: {done} files processed.")
+    print(f"  {done} files processed.")
 
 
 # ── Load & merge ──────────────────────────────────────────────────────────────
-def load_merged_from_csv(cycle: str, csv_df: pd.DataFrame) -> Optional[pd.DataFrame]:
-    """Load all cached XPT files for a cycle (discovered via CSV) and merge."""
+def load_merged(cycle: str, csv_df: pd.DataFrame) -> Optional[pd.DataFrame]:
     sub = csv_df[csv_df["cycle name"] == cycle]
-    dataset_names = sorted(sub["dataset"].dropna().unique())
-    if not dataset_names:
-        return None
-
-    tables = []
-    n_skipped_dup = 0
-    n_skipped_err = 0
-    n_missing = 0
-    for name in dataset_names:
+    names = sorted(sub["dataset"].dropna().unique())
+    tables, n_dup, n_err, n_miss = [], 0, 0, 0
+    for name in names:
         path = os.path.join(CACHE_DIR, f"{name}.xpt")
         if not os.path.exists(path):
-            n_missing += 1
-            continue
+            n_miss += 1; continue
         try:
             df = pd.read_sas(path)
             if "SEQN" not in df.columns:
                 continue
             df = df.set_index("SEQN")
             if df.index.duplicated().any():
-                n_skipped_dup += 1
-                continue
+                n_dup += 1; continue
             tables.append(df)
         except Exception:
-            n_skipped_err += 1
-
-    print(f"  Loaded {len(tables)} datasets ({n_skipped_dup} multi-row, {n_skipped_err} errors, {n_missing} missing)")
+            n_err += 1
+    print(f"  Loaded {len(tables)} datasets  "
+          f"({n_dup} dup-key, {n_err} errors, {n_miss} missing)")
     if not tables:
         return None
-
     merged = pd.concat(tables, axis=1, join="outer")
     merged = merged.loc[:, ~merged.columns.duplicated()]
     merged.reset_index(inplace=True)
     return merged
 
 
-def classify_columns(df: pd.DataFrame) -> dict:
-    """Return {col: 'num'|'cat'} for all eligible numeric columns.
-    Columns with ≤ 12 unique non-null values are treated as categorical codes
-    (e.g. RIAGENDR, race/ethnicity, education level, yes/no variables)."""
+# ── Column classification ──────────────────────────────────────────────────────
+def classify_columns(df: pd.DataFrame) -> Dict[str, str]:
+    """Return {col: 'num'|'cat'} for every eligible column."""
     num = df.select_dtypes(include=[np.number])
     counts = num.notna().sum()
-    eligible = (counts[counts >= MIN_VALID_COL]
-                .drop("SEQN", errors="ignore"))
-    result = {}
+    eligible = counts[counts >= MIN_VALID_COL].drop("SEQN", errors="ignore")
+    result: Dict[str, str] = {}
     for c in eligible.index:
         col = df[c].dropna()
         if col.std() == 0:
             continue
-        result[c] = 'cat' if col.nunique() <= 12 else 'num'
+        result[c] = "cat" if col.nunique() <= CAT_MAX_UNIQ else "num"
     return result
-
-
-def select_numeric(df: pd.DataFrame) -> list[str]:
-    """Backward-compat wrapper – returns all eligible column names."""
-    return list(classify_columns(df).keys())
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -158,51 +141,42 @@ def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     manifest = []
 
-    # Load CSV for download discovery
     csv_df = pd.read_csv(CSV_PATH)
 
     for cycle in CYCLES:
-        print(f"\n{'━' * 56}")
-        print(f"  Cohort {cycle}")
-        print(f"{'━' * 56}")
+        print(f"\n{'━'*56}\n  {cycle}\n{'━'*56}")
 
-        # Step 1: download any missing XPT files for this cycle
         download_cycle_xpts(cycle, csv_df)
 
-        # Step 2: load & merge
-        df = load_merged_from_csv(cycle, csv_df)
+        df = load_merged(cycle, csv_df)
         if df is None:
-            print("  No cached data – skipping.")
+            print("  No data – skipping.")
             continue
 
         col_types = classify_columns(df)
         cols = list(col_types.keys())
         n_total = len(df)
-        n_sample = min(SAMPLE_ROWS, n_total)
-        n_num = sum(1 for t in col_types.values() if t == 'num')
-        n_cat = sum(1 for t in col_types.values() if t == 'cat')
-        print(f"  Merged → {n_total:,} rows × {len(df.columns):,} columns")
-        print(f"  Eligible columns: {len(cols)} ({n_num} numeric, {n_cat} categorical)")
+        n_sample = min(SCATTER_ROWS, n_total)
+        n_num = sum(1 for t in col_types.values() if t == "num")
+        n_cat = sum(1 for t in col_types.values() if t == "cat")
+        print(f"  {n_total:,} respondents · {len(cols)} cols ({n_num} num, {n_cat} cat)")
 
         if len(cols) < 2:
             continue
 
         sample = df[cols].sample(n=n_sample, random_state=42)
-
-        col_data = {}
+        col_data: Dict[str, list] = {}
         for c in cols:
             vals = sample[c].tolist()
-            if col_types[c] == 'cat':
+            if col_types[c] == "cat":
                 col_data[c] = [
-                    None if (v is None or (isinstance(v, float) and np.isnan(v)))
-                    else int(v)
-                    for v in vals
+                    None if (v is None or (isinstance(v, float) and math.isnan(v)))
+                    else int(v) for v in vals
                 ]
             else:
                 col_data[c] = [
-                    None if (v is None or (isinstance(v, float) and np.isnan(v)))
-                    else round(float(v), ROUND_DP)
-                    for v in vals
+                    None if (v is None or (isinstance(v, float) and math.isnan(v)))
+                    else round(float(v), 2) for v in vals
                 ]
 
         payload = {
@@ -214,36 +188,40 @@ def main():
             "data":      col_data,
         }
 
-        outpath = os.path.join(OUTPUT_DIR, f"{cycle}.json")
+        out_path = os.path.join(OUTPUT_DIR, f"{cycle}.scatter.json")
         raw = json.dumps(payload, separators=(",", ":"))
-        with open(outpath, "w") as fh:
+        with open(out_path, "w") as fh:
             fh.write(raw)
-
-        raw_mb = len(raw) / 1e6
-        gz_mb  = len(gzip.compress(raw.encode())) / 1e6
-        print(f"  Written → {outpath}")
-        print(f"  JSON = {raw_mb:.1f} MB  |  gzip = {gz_mb:.1f} MB")
+        gz = len(gzip.compress(raw.encode()))
+        print(f"  → {out_path}")
+        print(f"     {len(raw)/1e6:.1f} MB raw  |  {gz/1e6:.2f} MB gzip")
 
         manifest.append({
-            "cycle":    cycle,
-            "n_cols":   len(cols),
-            "n_total":  n_total,
-            "n_sample": n_sample,
-            "vars":     cols,          # ← variable list for instant JS lookup
+            "cycle":     cycle,
+            "n_cols":    len(cols),
+            "n_total":   n_total,
+            "n_sample":  n_sample,
+            "vars":      cols,
+            "col_types": col_types,
         })
 
     mpath = os.path.join(OUTPUT_DIR, "manifest.json")
     with open(mpath, "w") as fh:
         json.dump(manifest, fh, separators=(",", ":"))
-    print(f"\n{'━' * 56}")
-    print(f"Manifest → {mpath}  ({len(manifest)} cycles)")
 
+    total_raw = sum(
+        os.path.getsize(os.path.join(OUTPUT_DIR, f"{m['cycle']}.scatter.json"))
+        for m in manifest
+        if os.path.exists(os.path.join(OUTPUT_DIR, f"{m['cycle']}.scatter.json"))
+    )
     total_gz = sum(
-        len(gzip.compress(
-            open(os.path.join(OUTPUT_DIR, f"{m['cycle']}.json"), "rb").read()
-        )) for m in manifest
-    ) / 1e6
-    print(f"Total gzip size: {total_gz:.1f} MB")
+        len(gzip.compress(open(os.path.join(OUTPUT_DIR, f"{m['cycle']}.scatter.json"), "rb").read()))
+        for m in manifest
+        if os.path.exists(os.path.join(OUTPUT_DIR, f"{m['cycle']}.scatter.json"))
+    )
+    print(f"\n{'━'*56}")
+    print(f"Manifest → {mpath}  ({len(manifest)} cycles)")
+    print(f"Total: {total_raw/1e6:.0f} MB raw  |  {total_gz/1e6:.0f} MB gzip")
     print("Done!")
 
 
