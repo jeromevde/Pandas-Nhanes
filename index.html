@@ -506,7 +506,37 @@
             font-size: 0.8em; cursor: pointer; padding: 2px 8px;
             transition: background 0.15s; white-space: nowrap;
         }
-        .corr-btn:hover { background: #bee3f8; }
+        .corr-sig-sep td {
+            padding: 0.3em 1em; font-size: 0.72em; color: #a0aec0;
+            text-align: center; letter-spacing: 0.04em;
+            border-top: 1px dashed #e2e8f0; border-bottom: 1px dashed #e2e8f0;
+            background: #fafbfc;
+        }
+        .corr-row-nonsig { opacity: 0.38; cursor: pointer; transition: opacity 0.12s; }
+        .corr-row-nonsig:hover { opacity: 0.65; background: #f7fafc; }
+        .corr-pval { font-size: 0.72em; color: #a0aec0; margin-left: 5px; vertical-align: middle; }
+
+        /* ── Variable explorer grouped table ── */
+        .cycle-chip {
+            display: inline-block; background: #ebf8ff; color: #2b6cb0;
+            font-size: 0.68em; font-weight: 600; padding: 1px 7px;
+            border-radius: 10px; margin: 1px 2px; white-space: nowrap;
+        }
+        .cycles-cell { line-height: 1.8; }
+        .var-name-cell { font-family: monospace; font-weight: 700; font-size: 0.88em; white-space: nowrap; padding: 0.8em 0.5em; }
+
+        /* ── Distribution panel ── */
+        #dist-panel { display: none; padding: 1em 1.4em; flex-direction: column; overflow: hidden; }
+        #dist-panel.open { display: flex; }
+        .dist-toolbar { display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.6em; flex-wrap: wrap; }
+        .dist-toolbar label { font-size: 0.85em; color: #4a5568; font-weight: 600; }
+        .dist-toolbar select { font-size: 0.82em; padding: 3px 8px; border: 1px solid #cbd5e0; border-radius: 4px; background: #fff; color: #2d3748; cursor: pointer; }
+        #dist-plot { width: 100%; height: 430px; }
+        /* ── View toggle (Correlates / Distribution) ── */
+        .view-toggle { display: flex; border: 1px solid #cbd5e0; border-radius: 5px; overflow: hidden; flex-shrink: 0; }
+        .view-toggle-btn { padding: 4px 14px; font-size: 0.82em; border: none; background: #f7fafc; color: #718096; cursor: pointer; font-weight: 600; transition: background 0.15s, color 0.15s; }
+        .view-toggle-btn.active { background: #2b6cb0; color: #fff; }
+        .view-toggle-btn:hover:not(.active) { background: #ebf8ff; color: #2b6cb0; }
     </style>
 </head>
 <body>
@@ -533,11 +563,29 @@
                     <div id="corr-desc"></div>
                     <a id="corr-doclink" href="#" target="_blank" rel="noopener">NHANES documentation &#8599;</a>
                 </div>
+                <div class="view-toggle" id="corr-view-toggle">
+                    <button class="view-toggle-btn active" id="btn-view-correlates">Correlates</button>
+                    <button class="view-toggle-btn" id="btn-view-dist">Distribution</button>
+                </div>
                 <button id="corr-close" title="Close">&times;</button>
             </div>
             <div id="corr-tabs"></div>
             <div id="corr-body">
                 <div id="corr-list"></div>
+                <div id="dist-panel">
+                    <div class="dist-toolbar">
+                        <label for="dist-stratify">Stratify by:</label>
+                        <select id="dist-stratify">
+                            <option value="">None</option>
+                            <option value="RIAGENDR">Sex (RIAGENDR)</option>
+                            <option value="RIDAGEYR_bin">Age group (RIDAGEYR)</option>
+                            <option value="RIDRETH1">Race/Ethnicity (RIDRETH1)</option>
+                            <option value="DMDEDUC2">Education (DMDEDUC2)</option>
+                            <option value="INDFMPIR_bin">Poverty ratio (INDFMPIR)</option>
+                        </select>
+                    </div>
+                    <div id="dist-plot"></div>
+                </div>
                 <div id="corr-scatter">
                     <div class="corr-scatter-toolbar">
                         <div>
@@ -833,7 +881,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         // ── Correlates (on-the-fly) ─────────────────────────────────────────
         // One file per cycle: <cycle>.scatter.json
         // Contains sampled raw arrays → JS computes associations on click.
-        let varMeta   = {};   // {varName → {desc, docLink}} built from CSV
+        let varMeta      = {};   // {varName → {desc, docLink}} built from CSV
+        let valueLabels  = {};   // {varName → {code_str → label}} from nhanes_value_labels.json
         const scatterCache = {}; // {cycle → scatter JSON}
         let corrManifest  = [];
         let corrActiveVar  = null;
@@ -866,6 +915,25 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         const TYPE_CSS    = ['type-r', 'type-eta', 'type-v'];
         const TYPE_COLORS = { r_pos:'#2b6cb0', r_neg:'#c53030', eta:'#276749', V:'#6b46c1' };
 
+        // ── P-value helpers ───────────────────────────────────────────────────
+        function _normalCDF(x) {
+            // Abramowitz & Stegun §26.2.17 — max error 7.5e-8
+            const a1=0.254829592,a2=-0.284496736,a3=1.421413741,a4=-1.453152027,a5=1.061405429,p=0.3275911;
+            const sign = x < 0 ? -1 : 1;
+            const t = 1 / (1 + p * Math.abs(x) / Math.SQRT2);
+            const y = 1 - (((((a5*t+a4)*t+a3)*t+a2)*t+a1)*t) * Math.exp(-(x*x)/2);
+            return 0.5 * (1 + sign * y);
+        }
+        // Two-tailed t-test p-value (normal approx. — fine for n≥50 always true here)
+        function _tPvalue(t, df) { return 2 * (1 - _normalCDF(Math.abs(t))); }
+        // Chi-squared survival function via Wilson-Hilferty approximation
+        function _chi2P(chi2, df) {
+            if (chi2 <= 0 || df <= 0) return 1;
+            const x = chi2 / df;
+            const z = (Math.pow(x, 1/3) - (1 - 2/(9*df))) / Math.sqrt(2/(9*df));
+            return 1 - _normalCDF(z);
+        }
+
         function pearsonR(a, b) {
             let sx=0,sy=0,sxx=0,syy=0,sxy=0,n=0;
             for (let i=0;i<a.length;i++) {
@@ -875,7 +943,9 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             if (n < MIN_SHARED) return null;
             const d = Math.sqrt((n*sxx-sx*sx)*(n*syy-sy*sy));
             if (d === 0) return null;
-            return { assoc: Math.round((n*sxy-sx*sy)/d * 1000)/1000, n, tcode: 0 };
+            const r = (n*sxy-sx*sy)/d;
+            const t = r * Math.sqrt(n-2) / Math.sqrt(Math.max(1e-12, 1 - r*r));
+            return { assoc: Math.round(r * 1000)/1000, n, tcode: 0, p: _tPvalue(t, n-2) };
         }
 
         function etaSquared(numArr, catArr) {
@@ -895,7 +965,11 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 for (const v of vals) ssT += (v-gMean)**2;
             }
             if (ssT===0) return null;
-            return { assoc: Math.round(Math.sqrt(ssB/ssT)*1000)/1000, n: totalN, tcode: 1 };
+            const eta = Math.sqrt(ssB/ssT);
+            // F-test: F = (ssB/(k-1)) / (ssW/(n-k)); for large n, (k-1)*F ~ chi2(k-1)
+            const k = groups.size, ssW = ssT - ssB;
+            const F = (ssB / (k-1)) / (Math.max(1e-12, ssW) / (totalN-k));
+            return { assoc: Math.round(eta*1000)/1000, n: totalN, tcode: 1, p: _chi2P(F*(k-1), k-1) };
         }
 
         function cramersV(a, b) {
@@ -914,7 +988,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 if (exp>0) chi2+=(obs-exp)**2/exp;
             }
             const k=Math.min(rC.size,cC.size); if (k<2) return null;
-            return { assoc: Math.round(Math.sqrt(chi2/(n*(k-1)))*1000)/1000, n, tcode: 2 };
+            const df = (rC.size-1)*(cC.size-1);
+            return { assoc: Math.round(Math.sqrt(chi2/(n*(k-1)))*1000)/1000, n, tcode: 2, p: _chi2P(chi2, df) };
         }
 
         function computeCorrelates(scatterData, varName) {
@@ -935,8 +1010,11 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 if (res) results.push({ col, ...res,
                     sign: res.tcode===0 ? Math.sign(res.assoc) : 1 });
             }
-            results.sort((a,b) => Math.abs(b.assoc)-Math.abs(a.assoc));
-            return results;
+            // Sort significant results by p-value, non-significant by |assoc| at bottom
+            const SIG = 0.05;
+            const sig    = results.filter(r => r.p < SIG).sort((a, b) => a.p - b.p);
+            const nonsig = results.filter(r => r.p >= SIG).sort((a, b) => Math.abs(b.assoc) - Math.abs(a.assoc));
+            return [...sig, ...nonsig];
         }
 
         // ── Show modal ────────────────────────────────────────────────────────
@@ -949,6 +1027,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.getElementById('corr-list').innerHTML = '<div class="corr-loading-msg">Loading…</div>';
             document.getElementById('corr-scatter').classList.remove('open');
             document.getElementById('corr-list').style.display = '';
+            switchViewMode('correlates');
             document.getElementById('corr-overlay').classList.add('open');
             document.getElementById('corr-modal').classList.add('open');
             document.body.style.overflow = 'hidden';
@@ -991,6 +1070,10 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             corrActiveCycle = cycle;
             document.querySelectorAll('.corr-tab').forEach(t =>
                 t.classList.toggle('active', t.textContent === cycle));
+            if (corrViewMode === 'distribution') {
+                refreshDistribution();
+                return;
+            }
             document.getElementById('corr-scatter').classList.remove('open');
             const listEl = document.getElementById('corr-list');
             listEl.style.display = '';
@@ -1013,11 +1096,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             const colTypes = scatterData.col_types || {};
             const nNum = Object.values(colTypes).filter(t => t === 'num').length;
             const nCat = Object.values(colTypes).filter(t => t === 'cat').length;
+            const SIG = 0.05;
+            const nSig = results.filter(r => r.p < SIG).length;
 
             const info = document.createElement('div');
             info.style.cssText = 'padding:0.5em 1.2em;font-size:0.78em;color:#718096;display:flex;gap:1em;align-items:center;flex-wrap:wrap;';
             info.innerHTML =
-                `<span>${results.length} associations · ${ms}ms</span>` +
+                `<span>${nSig} significant · ${results.length - nSig} not · ${ms}ms</span>` +
                 `<span>${scatterData.cols.length} variables (${nNum} numeric, ${nCat} categorical) · ` +
                 `${scatterData.n_total.toLocaleString()} respondents · ` +
                 `${scatterData.n_sample.toLocaleString()} sampled</span>`;
@@ -1026,11 +1111,22 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             const tbl = document.createElement('table');
             tbl.className = 'corr-table';
 
-            results.forEach(({col, assoc, tcode, n, sign}, idx) => {
+            let sepInserted = false;
+            results.forEach(({col, assoc, tcode, n, sign, p}, idx) => {
+                // Insert separator between significant and non-significant
+                if (!sepInserted && p >= SIG) {
+                    sepInserted = true;
+                    const sepTr = document.createElement('tr');
+                    sepTr.className = 'corr-sig-sep';
+                    sepTr.innerHTML = '<td colspan="5">not significant (p ≥ 0.05)</td>';
+                    tbl.appendChild(sepTr);
+                }
+
                 const desc = (varMeta[col] && varMeta[col].desc) || col;
                 const absA = assoc !== null ? Math.abs(assoc) : 0;
                 const label = TYPE_LABELS[tcode];
                 const typeClass = TYPE_CSS[tcode];
+                const isSig = p < SIG;
 
                 let color, rStr;
                 if (assoc === null) {
@@ -1044,6 +1140,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     rStr  = assoc.toFixed(3);
                 }
 
+                const pStr = p < 0.0001 ? 'p<0.0001' : `p=${p < 0.01 ? p.toFixed(4) : p.toFixed(3)}`;
                 const nFmt = n >= 1000 ? (n/1000).toFixed(1)+'k' : String(n);
                 const shortD = desc.length > 50 ? desc.slice(0, 50) + '\u2026' : desc;
                 const colType = colTypes[col] || 'num';
@@ -1052,9 +1149,10 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 const clickable = assoc !== null;
 
                 const tr = document.createElement('tr');
-                tr.className = clickable ? 'corr-row-scatter' : 'corr-row';
+                tr.className = isSig
+                    ? (clickable ? 'corr-row-scatter' : 'corr-row')
+                    : 'corr-row-nonsig';
                 if (clickable) tr.title = 'Click to view chart';
-                else tr.style.opacity = '0.5';
                 tr.innerHTML = `
                     <td class="corr-rank">${idx+1}</td>
                     <td class="corr-varname">${col}${catBadge}</td>
@@ -1063,6 +1161,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                         <div class="corr-bar" style="width:${Math.round(absA*100)}px;background:${color}"></div>
                         <span class="corr-r" style="color:${color}">${rStr}
                           <span class="type-badge ${typeClass}">${label}</span></span>
+                        <span class="corr-pval">${pStr}</span>
                     </td>
                     <td class="corr-n" title="${n.toLocaleString()} shared observations">n=${nFmt}</td>`;
                 if (clickable) tr.addEventListener('click', () => openScatter(corrActiveVar, col));
@@ -1229,9 +1328,219 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
         function closeCorrelates() {
             closeScatter();
+            switchViewMode('correlates');
             document.getElementById('corr-modal').classList.remove('open');
             document.getElementById('corr-overlay').classList.remove('open');
             document.body.style.overflow = '';
+        }
+
+        // ── Distribution view ─────────────────────────────────────────────────
+        let corrViewMode = 'correlates';
+
+        const DIST_PALETTE      = ['#3182ce','#e53e3e','#38a169','#d69e2e','#805ad5','#dd6b20','#319795','#e2748f'];
+        const DIST_PALETTE_FILL = [
+            'rgba(49,130,206,0.10)','rgba(229,62,62,0.10)','rgba(56,161,105,0.10)','rgba(214,158,46,0.10)',
+            'rgba(128,90,213,0.10)','rgba(221,107,32,0.10)','rgba(49,151,149,0.10)','rgba(226,116,143,0.10)'];
+
+        const STRAT_SOURCE = { RIDAGEYR_bin: 'RIDAGEYR', INDFMPIR_bin: 'INDFMPIR' };
+        const STRAT_BINS   = {
+            RIDAGEYR_bin: v => v === null ? null : v < 18 ? '0–17'  : v < 40 ? '18–39' : v < 60 ? '40–59' : '60+',
+            INDFMPIR_bin: v => v === null ? null : v < 1  ? '<1.0'  : v < 2  ? '1–2'   : v < 3  ? '2–3'   : v < 4 ? '3–4' : '≥4',
+        };
+        const STRAT_ORDER = {
+            RIDAGEYR_bin: ['0–17','18–39','40–59','60+'],
+            INDFMPIR_bin: ['<1.0','1–2','2–3','3–4','≥4'],
+        };
+        const STRAT_LABELS = {
+            RIAGENDR: { 1:'Male', 2:'Female' },
+            RIDRETH1: { 1:'Mexican American', 2:'Other Hispanic', 3:'Non-Hisp White', 4:'Non-Hisp Black', 5:'Other/Multi' },
+            DMDEDUC2: { 1:'<9th grade', 2:'9–11th grade', 3:'HS/GED', 4:'Some college', 5:'College+' },
+        };
+
+        function distStdDev(arr) {
+            const n = arr.length;
+            if (n < 2) return 1;
+            const m = arr.reduce((a, b) => a + b, 0) / n;
+            return Math.sqrt(arr.reduce((s, v) => s + (v - m) ** 2, 0) / (n - 1));
+        }
+
+        function gaussianKDE(values, h, pts) {
+            const sq2pi = Math.sqrt(2 * Math.PI);
+            return pts.map(x => {
+                let s = 0;
+                for (const v of values) { const u = (x - v) / h; s += Math.exp(-0.5 * u * u); }
+                return s / (values.length * h * sq2pi);
+            });
+        }
+
+        function switchViewMode(mode) {
+            corrViewMode = mode;
+            const btnC = document.getElementById('btn-view-correlates');
+            const btnD = document.getElementById('btn-view-dist');
+            if (btnC) btnC.classList.toggle('active', mode === 'correlates');
+            if (btnD) btnD.classList.toggle('active', mode === 'distribution');
+            const distPanel = document.getElementById('dist-panel');
+            const corrList  = document.getElementById('corr-list');
+            const corrScat  = document.getElementById('corr-scatter');
+            if (mode === 'distribution') {
+                if (corrList)  corrList.style.display  = 'none';
+                if (corrScat)  corrScat.classList.remove('open');
+                if (distPanel) distPanel.classList.add('open');
+                refreshDistribution();
+            } else {
+                if (distPanel) distPanel.classList.remove('open');
+                if (corrList)  corrList.style.display  = '';
+            }
+        }
+
+        async function refreshDistribution() {
+            if (!corrActiveVar || !corrActiveCycle) return;
+            const stratify = document.getElementById('dist-stratify').value;
+            await drawDistribution(corrActiveCycle, corrActiveVar, stratify);
+        }
+
+        async function drawDistribution(cycle, varName, stratifyBy) {
+            const panel = document.getElementById('dist-plot');
+            // Purge any existing Plotly instance before clearing innerHTML,
+            // otherwise Plotly's internal state conflicts with the new render.
+            Plotly.purge('dist-plot');
+            panel.innerHTML = '<div class="corr-loading-msg">Loading…</div>';
+
+            const scatterData = await loadScatterData(cycle);
+            // Wait for the browser to paint the panel visible before Plotly measures it
+            await new Promise(r => requestAnimationFrame(r));
+            if (!scatterData || !scatterData.data[varName]) {
+                panel.innerHTML = `<p class="corr-no-data"><b>${varName}</b> not available in ${cycle} data.</p>`;
+                return;
+            }
+
+            const raw      = scatterData.data[varName];
+            const colTypes = scatterData.col_types || {};
+            const isNum    = (colTypes[varName] || 'num') === 'num';
+            const valid    = raw.filter(v => v !== null);
+
+            if (!valid.length) {
+                panel.innerHTML = '<p class="corr-no-data">No data available.</p>';
+                return;
+            }
+
+            const cfg        = { responsive: true, displayModeBar: false };
+            const baseLayout = {
+                margin: { t: 40, r: 20, b: 60, l: 60 },
+                paper_bgcolor: '#fafbfc', plot_bgcolor: '#fafbfc',
+                font: { family: 'system-ui, -apple-system, sans-serif', size: 11 },
+                legend: { orientation: 'v', x: 1.02, xanchor: 'left', y: 1 },
+                xaxis: { title: varName, automargin: true },
+            };
+
+            // value_labels from nhanes_value_labels.json (loaded once at startup)
+            // Fall back to hardcoded STRAT_LABELS for population vars
+            function getLabels(col) {
+                return valueLabels[col] || STRAT_LABELS[col] || {};
+            }
+            function applyLabel(labelMap, code) {
+                return labelMap[String(code)] || labelMap[code] || String(code);
+            }
+
+            if (!stratifyBy) {
+                // ── Unstratified ──────────────────────────────────────────────
+                if (isNum) {
+                    const h    = Math.max(1e-10, 1.06 * distStdDev(valid) * Math.pow(valid.length, -0.2));
+                    const xMin = Math.min(...valid), xMax = Math.max(...valid);
+                    const pts  = Array.from({length: 300}, (_, i) => xMin + (i / 299) * (xMax - xMin));
+                    const kde  = gaussianKDE(valid, h, pts);
+                    Plotly.react('dist-plot', [
+                        { x: valid, type: 'histogram', histnorm: 'probability density',
+                          name: varName, marker: { color: DIST_PALETTE[0], opacity: 0.45, line: { width: 0 } },
+                          showlegend: false },
+                        { x: pts, y: kde, type: 'scatter', mode: 'lines', name: 'KDE',
+                          line: { color: '#1a365d', width: 2.5 }, showlegend: false, hoverinfo: 'skip' }
+                    ], { ...baseLayout,
+                         title: { text: `Distribution of ${varName}  (n=${valid.length.toLocaleString()})`, font: { size: 13 } },
+                         yaxis: { title: 'Density', automargin: true } }, cfg);
+                } else {
+                    const counts   = {};
+                    for (const v of valid) counts[v] = (counts[v] || 0) + 1;
+                    const cats     = Object.keys(counts).map(Number).sort((a, b) => a - b);
+                    const labelMap = getLabels(varName);
+                    Plotly.react('dist-plot',
+                        [{ x: cats.map(c => applyLabel(labelMap, c)),
+                           y: cats.map(c => counts[c]),
+                           type: 'bar', marker: { color: DIST_PALETTE[0], opacity: 0.75 } }],
+                        { ...baseLayout,
+                          title: { text: `Distribution of ${varName}  (n=${valid.length.toLocaleString()})`, font: { size: 13 } },
+                          yaxis: { title: 'Count', automargin: true } }, cfg);
+                }
+            } else {
+                // ── Stratified ────────────────────────────────────────────────
+                const srcCol      = STRAT_SOURCE[stratifyBy] || stratifyBy;
+                const stratRaw    = scatterData.data[srcCol];
+                if (!stratRaw) {
+                    panel.innerHTML = `<p class="corr-no-data">Stratification variable <b>${srcCol}</b> not available in ${cycle}.</p>`;
+                    return;
+                }
+                const binFn       = STRAT_BINS[stratifyBy] || (v => v === null ? null : String(v));
+                const stratLabels = getLabels(srcCol);
+
+                const groups = {};
+                for (let i = 0; i < raw.length; i++) {
+                    const yv = raw[i], sv = stratRaw[i];
+                    if (yv === null || sv === null) continue;
+                    const key = binFn(sv);
+                    if (key === null) continue;
+                    if (!groups[key]) groups[key] = [];
+                    groups[key].push(yv);
+                }
+
+                let orderedKeys = STRAT_ORDER[stratifyBy]
+                    ? STRAT_ORDER[stratifyBy].filter(k => groups[k])
+                    : Object.keys(groups).sort((a, b) => Number(a) - Number(b));
+
+                if (!orderedKeys.length) {
+                    panel.innerHTML = '<p class="corr-no-data">No overlapping data for the selected stratification.</p>';
+                    return;
+                }
+
+                if (isNum) {
+                    const allVals = orderedKeys.flatMap(k => groups[k]);
+                    const xMin   = Math.min(...allVals), xMax = Math.max(...allVals);
+                    const pts    = Array.from({length: 300}, (_, i) => xMin + (i / 299) * (xMax - xMin));
+                    const traces = orderedKeys.map((key, idx) => {
+                        const vals  = groups[key];
+                        const h     = Math.max(1e-10, 1.06 * distStdDev(vals) * Math.pow(vals.length, -0.2));
+                        const kde   = gaussianKDE(vals, h, pts);
+                        const label = applyLabel(stratLabels, key);
+                        return { x: pts, y: kde, type: 'scatter', mode: 'lines',
+                                 name: `${label} (n=${vals.length.toLocaleString()})`,
+                                 line: { color: DIST_PALETTE[idx % DIST_PALETTE.length], width: 2.2 },
+                                 fill: 'tozeroy', fillcolor: DIST_PALETTE_FILL[idx % DIST_PALETTE_FILL.length],
+                                 hovertemplate: `%{x:.3g}<extra>${label}</extra>` };
+                    });
+                    Plotly.react('dist-plot', traces, {
+                        ...baseLayout,
+                        title: { text: `${varName} by ${stratifyBy.replace('_bin', '')}`, font: { size: 13 } },
+                        yaxis: { title: 'Density', automargin: true }
+                    }, cfg);
+                } else {
+                    const mainLabels = getLabels(varName);
+                    const cats  = [...new Set(valid)].map(Number).sort((a, b) => a - b);
+                    const traces = orderedKeys.map((key, idx) => {
+                        const vals   = groups[key];
+                        const counts = {};
+                        for (const v of vals) counts[v] = (counts[v] || 0) + 1;
+                        const label  = applyLabel(stratLabels, key);
+                        return { x: cats.map(c => applyLabel(mainLabels, c)),
+                                 y: cats.map(c => counts[c] || 0),
+                                 type: 'bar', name: `${label} (n=${vals.length.toLocaleString()})`,
+                                 marker: { color: DIST_PALETTE[idx % DIST_PALETTE.length], opacity: 0.8 } };
+                    });
+                    Plotly.react('dist-plot', traces, {
+                        ...baseLayout,
+                        title: { text: `${varName} by ${stratifyBy.replace('_bin', '')}`, font: { size: 13 } },
+                        barmode: 'group', yaxis: { title: 'Count', automargin: true }
+                    }, cfg);
+                }
+            }
         }
 
         document.addEventListener("DOMContentLoaded", async function() {
@@ -1242,6 +1551,14 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             } catch (e) {
                 console.warn('Could not load plots.json – carousel will be empty', e);
             }
+
+            // Load value labels (produced by scrape_variables.py, static asset)
+            try {
+                const res = await fetch('pandas_nhanes/nhanes_value_labels.json');
+                if (res.ok) valueLabels = await res.json();
+            } catch (e) {
+                console.warn('Could not load nhanes_value_labels.json – categorical labels will be numeric', e);
+            }
             createPlotThumbnails();
 
             // ── Correlates modal wiring ──────────────────────────────────────
@@ -1249,6 +1566,9 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.getElementById('corr-close').addEventListener('click', closeCorrelates);
             document.getElementById('scatter-swap').addEventListener('click', swapScatterAxes);
             document.getElementById('scatter-back').addEventListener('click', closeScatter);
+            document.getElementById('btn-view-correlates').addEventListener('click', () => switchViewMode('correlates'));
+            document.getElementById('btn-view-dist').addEventListener('click', () => switchViewMode('distribution'));
+            document.getElementById('dist-stratify').addEventListener('change', refreshDistribution);
             // Prefetch manifest so the first click is instant
             if (window.requestIdleCallback) {
                 requestIdleCallback(() => loadManifest(), { timeout: 2000 });
@@ -1337,17 +1657,18 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');
             const tableHeaderRow = document.getElementById('variables-table-header-row');
-            let allData = []; // raw objects
-            let fields = [];
-            let allRowEls = []; // tr elements for current render
+            let allData = [];      // raw CSV rows
+            let groupedData = [];  // [{varName, explanation, cycles, docLink}]
+            let allRowEls = [];
 
-            // Event delegation: corr buttons rendered via innerHTML can't have direct listeners
+            // Event delegation for corr-btn (rendered via innerHTML)
             tableBody.addEventListener('click', e => {
                 const btn = e.target.closest('.corr-btn');
                 if (!btn) return;
                 e.stopPropagation();
                 showCorrelates(btn.dataset.var, btn.dataset.desc, btn.dataset.doc, btn.dataset.cycle);
             });
+
             // Status element
             const statusEl = document.createElement('div');
             statusEl.id = 'table-status';
@@ -1355,166 +1676,114 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             const explorer = document.getElementById('variable-explorer');
             explorer.insertBefore(statusEl, explorer.querySelector('.table-scroll'));
 
-            // Helper: render header once
-            function renderHeader(cols) {
-                if (!cols || !cols.length) return;
+            // Fixed grouped header
+            function renderHeader() {
                 tableHeaderRow.innerHTML = '';
-                cols.forEach(field => {
+                for (const text of ['Variable', 'Description', 'Available cycles', 'Doc', '']) {
                     const th = document.createElement('th');
-                    th.textContent = field;
+                    th.textContent = text;
                     tableHeaderRow.appendChild(th);
-                });
-                const thCorr = document.createElement('th');
-                thCorr.textContent = 'Correlates';
-                thCorr.title = 'Click to find significantly co-moving variables';
-                tableHeaderRow.appendChild(thCorr);
+                }
             }
-            // Helper: build a row element from data
-            function buildRow(row) {
-                const tr  = document.createElement('tr');
-                const vn  = (row['variable name'] || '').replace(/"/g, '&quot;');
-                const vd  = (row['variable explanation'] || '').replace(/"/g, '&quot;');
-                const vl  = (row['dataset documentation link'] || '').replace(/"/g, '&quot;');
-                const vc  = (row['cycle name'] || '').replace(/"/g, '&quot;');
-                tr.innerHTML = fields.map(f => {
-                    const v = row[f];
-                    if (f === 'dataset link' && v) {
-                        return `<td><a href="${v}" target="_blank" rel="noopener">data</a></td>`;
-                    } else if (f === 'dataset documentation link' && v) {
-                        return `<td><a href="${v}" target="_blank" rel="noopener">doc</a></td>`;
-                    } else {
-                        return `<td>${v || ''}</td>`;
+
+            // Build grouped data: one entry per unique variable name
+            function buildGroupedData(rawData) {
+                const map = new Map();
+                rawData.forEach(row => {
+                    const vn = (row['variable name'] || '').trim();
+                    if (!vn) return;
+                    if (!map.has(vn)) {
+                        map.set(vn, { varName: vn, explanation: row['variable explanation'] || '', cycles: [], docLink: '' });
                     }
-                }).join('') +
-                `<td><button class="corr-btn" data-var="${vn}" data-desc="${vd}" data-doc="${vl}" data-cycle="${vc}" title="Find correlated variables">correlates</button></td>`;
+                    const entry = map.get(vn);
+                    const cycle = (row['cycle name'] || '').trim();
+                    if (cycle && !entry.cycles.includes(cycle)) entry.cycles.push(cycle);
+                    if (row['dataset documentation link']) entry.docLink = row['dataset documentation link'];
+                });
+                const result = [...map.values()];
+                result.forEach(e => e.cycles.sort());
+                return result;
+            }
+
+            // Build a single grouped table row
+            function buildGroupedRow(entry) {
+                const tr  = document.createElement('tr');
+                const vn  = entry.varName.replace(/"/g, '&quot;');
+                const vd  = entry.explanation.replace(/"/g, '&quot;');
+                const vl  = entry.docLink.replace(/"/g, '&quot;');
+                const mostRecent = entry.cycles[entry.cycles.length - 1] || '';
+                const chips = entry.cycles.map(c => `<span class="cycle-chip">${c}</span>`).join('');
+                tr.innerHTML =
+                    `<td class="var-name-cell">${entry.varName}</td>` +
+                    `<td style="font-size:0.88em;padding:0.8em 0.5em">${entry.explanation}</td>` +
+                    `<td class="cycles-cell">${chips}</td>` +
+                    `<td style="white-space:nowrap">${entry.docLink ? `<a href="${vl}" target="_blank" rel="noopener">doc ↗</a>` : ''}</td>` +
+                    `<td><button class="corr-btn" data-var="${vn}" data-desc="${vd}" data-doc="${vl}" data-cycle="${mostRecent}" title="Find correlated variables">correlates</button></td>`;
                 return tr;
             }
-            // Incremental append in batches to avoid layout thrash
-            function appendBatch(batch) {
+
+            function appendGroupedBatch(entries) {
                 const frag = document.createDocumentFragment();
-                batch.forEach(row => {
-                    const tr = buildRow(row);
-                    frag.appendChild(tr);
-                    allRowEls.push(tr);
-                });
+                entries.forEach(entry => { const tr = buildGroupedRow(entry); frag.appendChild(tr); allRowEls.push(tr); });
                 tableBody.appendChild(frag);
             }
-            // Append queue processed on idle frames
-            const appendQueue = [];
-            const buffer = [];
-            let appendScheduled = false;
-            function scheduleAppend() {
-                if (appendScheduled) return;
-                appendScheduled = true;
-                (window.requestIdleCallback || window.requestAnimationFrame)(function() {
-                    appendScheduled = false;
-                    const batch = appendQueue.shift();
-                    if (batch) {
-                        appendBatch(batch);
-                        if (appendQueue.length) scheduleAppend();
-                    }
-                });
-            }
-            // Stream parse using worker
+
+            // Stream parse – collect only, no incremental table render
             const csvUrl = new URL('./pandas_nhanes/nhanes_variables.csv', window.location.href).toString();
             Papa.parse(csvUrl, {
-                download: true,
-                header: true,
-                worker: true,
-                step: function(results, parser) {
+                download: true, header: true, worker: true,
+                step: function(results) {
                     const row = results.data;
-                    if (fields.length === 0 && results.meta && results.meta.fields) {
-                        fields = results.meta.fields.slice();
-                        renderHeader(fields);
-                    }
-                    // Only keep non-empty rows
-                    if (fields.some(f => row[f] && String(row[f]).trim() !== '')) {
-                        allData.push(row);
-                        // Buffer rows then append in chunks
-                        buffer.push(row);
-                        if (buffer.length >= 100) {
-                            const batch = buffer.splice(0, buffer.length);
-                            appendQueue.push(batch);
-                            scheduleAppend();
-                        }
-                    }
+                    if (row['variable name'] && String(row['variable name']).trim()) allData.push(row);
                 },
                 complete: function() {
-                    if (buffer.length) {
-                        appendQueue.push(buffer.splice(0, buffer.length));
-                        scheduleAppend();
-                    }
-                    // Build varMeta for the correlates drawer (first occurrence per variable)
+                    // Build varMeta for the correlates drawer
                     allData.forEach(row => {
                         const vn = row['variable name'];
                         if (vn && !varMeta[vn]) {
-                            varMeta[vn] = {
-                                desc:    row['variable explanation'] || '',
-                                docLink: row['dataset documentation link'] || '',
-                            };
+                            varMeta[vn] = { desc: row['variable explanation'] || '', docLink: row['dataset documentation link'] || '' };
                         }
                     });
-                    statusEl.textContent = `Loaded ${allData.length.toLocaleString()} variables.`;
+                    groupedData = buildGroupedData(allData);
+                    renderHeader();
+                    applySearch('');
+                    statusEl.textContent = `${groupedData.length.toLocaleString()} unique variables across ${allData.length.toLocaleString()} cycle entries`;
                 },
-                error: function(err) {
-                    statusEl.textContent = `Failed to load variables: ${err}`;
-                }
+                error: function(err) { statusEl.textContent = `Failed to load variables: ${err}`; }
             });
 
-            // Debounced, async search over allData with chunked DOM updates
+            // Search filters groupedData (varName + explanation)
             let searchEpoch = 0;
             function applySearch(term) {
                 const myEpoch = ++searchEpoch;
-                // Reset table quickly
                 tableBody.innerHTML = '';
                 allRowEls = [];
-                if (!term) {
-                    // Render first N quickly, then stream rest for idle loading
-                    const initial = allData.slice(0, 300);
-                    appendBatch(initial);
-                    let idx = 300;
-                    function streamRest() {
-                        if (myEpoch !== searchEpoch) return; // canceled
-                        if (idx >= allData.length) return;
-                        const next = allData.slice(idx, idx + 300);
-                        idx += 300;
-                        appendBatch(next);
-                        (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
+                if (!groupedData.length) return;
+                const lower = term ? term.toLowerCase() : '';
+                const data = lower
+                    ? groupedData.filter(e =>
+                        e.varName.toLowerCase().includes(lower) ||
+                        e.explanation.toLowerCase().includes(lower) ||
+                        e.cycles.some(c => c.includes(lower)))
+                    : groupedData;
+                // Render first slice immediately, stream the rest on idle frames
+                const CHUNK = 200;
+                appendGroupedBatch(data.slice(0, CHUNK));
+                let idx = CHUNK;
+                function streamRest() {
+                    if (myEpoch !== searchEpoch) return;
+                    if (idx >= data.length) {
+                        statusEl.textContent = lower
+                            ? `Found ${data.length.toLocaleString()} variables`
+                            : `${groupedData.length.toLocaleString()} unique variables across ${allData.length.toLocaleString()} cycle entries`;
+                        return;
                     }
+                    appendGroupedBatch(data.slice(idx, idx + CHUNK));
+                    idx += CHUNK;
                     (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
-                    statusEl.textContent = `Showing ${Math.min(300, allData.length).toLocaleString()} of ${allData.length.toLocaleString()} rows (idle streaming...)`;
-                    return;
                 }
-                const lower = term.toLowerCase();
-                let i = 0;
-                let shown = 0;
-                function processChunk() {
-                    if (myEpoch !== searchEpoch) return; // canceled
-                    const end = Math.min(i + 400, allData.length);
-                    const batch = [];
-                    for (; i < end; i++) {
-                        const row = allData[i];
-                        // Fast stringify and match
-                        for (let k = 0; k < fields.length; k++) {
-                            const v = row[fields[k]];
-                            if (v && String(v).toLowerCase().includes(lower)) {
-                                batch.push(row);
-                                break;
-                            }
-                        }
-                    }
-                    if (batch.length) {
-                        appendBatch(batch);
-                        shown += batch.length;
-                        statusEl.textContent = `Found ${shown.toLocaleString()} (scanning...)`;
-                    }
-                    if (i < allData.length) {
-                        setTimeout(processChunk, 0);
-                    } else {
-                        statusEl.textContent = `Found ${shown.toLocaleString()} matches.`;
-                    }
-                }
-                processChunk();
+                (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
+                statusEl.textContent = lower ? `Found ${data.length.toLocaleString()} variables` : 'Rendering…';
             }
             function debounce(fn, delay) {
                 let t;

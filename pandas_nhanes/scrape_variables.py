@@ -6,6 +6,7 @@ import pandas as pd
 import urllib
 from concurrent.futures import ThreadPoolExecutor
 import os
+import json
 from tqdm import tqdm
 import logging
 import urllib3
@@ -59,26 +60,65 @@ def extract_table_to_dataframe():
     return df
 
 def extract_variable_info(doc_link):
-    """Extract variable information from a documentation page."""
+    """Extract variable information and value labels from a documentation page.
+
+    Returns
+    -------
+    variables_df : pd.DataFrame   columns: variable name, variable explanation
+    value_labels : dict           {var_name: {code_str: label_str}}
+    """
+    SKIP_LABELS = {
+        "missing", "don't know", "refused", "could not obtain",
+        "no response", "not applicable",
+    }
     response = requests.get(doc_link, verify=False, timeout=5)
     response.raise_for_status()
-    
+
     soup = BeautifulSoup(response.content, "lxml")
+
+    # ── Variable names & explanations (from the nav list) ────────────────────
     codebook_section = soup.find("ul", id="CodebookLinks")
-    
-    if not codebook_section:
-        return pd.DataFrame()
-    
     variables = []
-    for li in codebook_section.find_all("li"):
-        link_tag = li.find("a")
-        if link_tag:
-            text = link_tag.text.strip()
-            if " - " in text:
-                variable_name, variable_explanation = text.split(" - ", 1)
-                variables.append([variable_name, variable_explanation])
-    
-    return pd.DataFrame(variables, columns=["variable name", "variable explanation"])
+    if codebook_section:
+        for li in codebook_section.find_all("li"):
+            link_tag = li.find("a")
+            if link_tag:
+                text = link_tag.text.strip()
+                if " - " in text:
+                    variable_name, variable_explanation = text.split(" - ", 1)
+                    variables.append([variable_name, variable_explanation])
+
+    # ── Value labels (from the codebook tables on the same page) ─────────────
+    value_labels = {}
+    for h3 in soup.find_all("h3"):
+        var_id = h3.get("id", "").strip()
+        if not var_id:
+            continue
+        table = h3.find_next("table")
+        if not table:
+            continue
+        labels = {}
+        for row in table.find_all("tr")[1:]:   # skip header row
+            cells = row.find_all("td")
+            if len(cells) < 2:
+                continue
+            code = cells[0].text.strip()
+            desc = cells[1].text.strip()
+            if code in (".", "", "Range of Values"):
+                continue
+            if desc.lower() in SKIP_LABELS:
+                continue
+            try:
+                labels[str(int(float(code)))] = desc
+            except (ValueError, OverflowError):
+                pass
+        if labels:
+            value_labels[var_id] = labels
+
+    return (
+        pd.DataFrame(variables, columns=["variable name", "variable explanation"]),
+        value_labels,
+    )
 
 def process_dataset(index, row):
     """Process a single dataset row and save its variables DataFrame."""
@@ -89,15 +129,20 @@ def process_dataset(index, row):
         dataset_doc_link = row["dataset documentation link"]
         
         if dataset_doc_link:
-            variables_df = extract_variable_info(dataset_doc_link)
+            variables_df, value_labels = extract_variable_info(dataset_doc_link)
             if not variables_df.empty:
                 variables_df.insert(0, "cycle name", cycle_name)
                 variables_df.insert(1, "dataset", dataset)
                 variables_df.insert(2, "dataset link", dataset_link)
                 variables_df.insert(3, "dataset documentation link", dataset_doc_link)
-                # Save partial result
+                # Save partial CSV
                 filename = f"partial_results/dataset_{index}.csv"
                 variables_df.to_csv(filename, index=False)
+                # Save partial value labels
+                if value_labels:
+                    vl_filename = f"partial_results/value_labels_{index}.json"
+                    with open(vl_filename, "w") as f:
+                        json.dump(value_labels, f, separators=(",", ":"))
                 return variables_df
         return pd.DataFrame()
     except Exception as e:
@@ -167,4 +212,20 @@ if __name__ == "__main__":
     if final_dataframe is not None and not final_dataframe.empty:
         print(final_dataframe)
         final_dataframe.to_csv("nhanes_variables.csv", index=False)
-# %%
+
+    # Merge all partial value label JSONs into one file
+    partial_dir = "partial_results"
+    all_value_labels = {}
+    vl_files = sorted(
+        f for f in os.listdir(partial_dir)
+        if f.startswith("value_labels_") and f.endswith(".json")
+    )
+    for fname in vl_files:
+        with open(os.path.join(partial_dir, fname)) as fp:
+            all_value_labels.update(json.load(fp))
+
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+    out_path = os.path.join(script_dir, "nhanes_value_labels.json")
+    with open(out_path, "w") as f:
+        json.dump(all_value_labels, f, separators=(",", ":"))
+    print(f"Saved value labels for {len(all_value_labels)} variables → {out_path}")
