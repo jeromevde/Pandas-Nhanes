@@ -516,6 +516,28 @@
         .corr-row-nonsig:hover { opacity: 0.65; background: #f7fafc; }
         .corr-pval { font-size: 0.72em; color: #a0aec0; margin-left: 5px; vertical-align: middle; }
 
+        /* ── Population filter bar ── */
+        #corr-filter-bar {
+            display: flex; align-items: center; gap: 0.45em;
+            padding: 0.4em 1.2em; background: #f7fafc;
+            border-bottom: 1px solid #e2e8f0; flex-wrap: wrap;
+            font-size: 0.82em; flex-shrink: 0;
+        }
+        .flt-label { font-weight: 700; color: #4a5568; margin-right: 0.15em; white-space: nowrap; }
+        #corr-filter-bar select {
+            font-size: 0.8em; padding: 2px 6px; border: 1px solid #cbd5e0;
+            border-radius: 4px; background: #fff; color: #2d3748; cursor: pointer;
+        }
+        #corr-filter-bar select.flt-active { background: #ebf8ff; border-color: #63b3ed; color: #2b6cb0; font-weight: 700; }
+        #flt-reset {
+            font-size: 0.78em; padding: 2px 9px; border: 1px solid #fed7d7;
+            border-radius: 4px; background: #fff5f5; color: #c53030; cursor: pointer;
+            display: none;
+        }
+        #flt-reset.visible { display: inline-block; }
+        #flt-reset:hover { background: #fed7d7; }
+        #flt-status { color: #718096; font-style: italic; font-size: 0.82em; margin-left: 0.3em; }
+
         /* ── Variable explorer grouped table ── */
         .cycle-chip {
             display: inline-block; background: #ebf8ff; color: #2b6cb0;
@@ -570,6 +592,47 @@
                 <button id="corr-close" title="Close">&times;</button>
             </div>
             <div id="corr-tabs"></div>
+            <div id="corr-filter-bar">
+                <span class="flt-label">Subset:</span>
+                <select id="flt-sex" title="Filter by sex">
+                    <option value="">All sexes</option>
+                    <option value="1">Male</option>
+                    <option value="2">Female</option>
+                </select>
+                <select id="flt-age" title="Filter by age group">
+                    <option value="">All ages</option>
+                    <option value="0–17">0–17</option>
+                    <option value="18–39">18–39</option>
+                    <option value="40–59">40–59</option>
+                    <option value="60+">60+</option>
+                </select>
+                <select id="flt-race" title="Filter by race/ethnicity">
+                    <option value="">All races</option>
+                    <option value="1">Mexican American</option>
+                    <option value="2">Other Hispanic</option>
+                    <option value="3">Non-Hisp. White</option>
+                    <option value="4">Non-Hisp. Black</option>
+                    <option value="5">Other/Multi</option>
+                </select>
+                <select id="flt-educ" title="Filter by education level">
+                    <option value="">All education</option>
+                    <option value="1">&lt; 9th grade</option>
+                    <option value="2">9–11th grade</option>
+                    <option value="3">HS / GED</option>
+                    <option value="4">Some college</option>
+                    <option value="5">College grad+</option>
+                </select>
+                <select id="flt-pir" title="Filter by income/poverty ratio">
+                    <option value="">All income</option>
+                    <option value="<1.0">PIR &lt; 1.0</option>
+                    <option value="1–2">PIR 1–2</option>
+                    <option value="2–3">PIR 2–3</option>
+                    <option value="3–4">PIR 3–4</option>
+                    <option value="≥4">PIR ≥ 4</option>
+                </select>
+                <button id="flt-reset" title="Clear all filters">✕ clear</button>
+                <span id="flt-status"></span>
+            </div>
             <div id="corr-body">
                 <div id="corr-list"></div>
                 <div id="dist-panel">
@@ -1085,9 +1148,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 listEl.innerHTML = `<p class="corr-no-data"><b>${corrActiveVar}</b> not found in ${cycle} data.</p>`;
                 return;
             }
-            const results = computeCorrelates(data, corrActiveVar);
+            const filtered  = applyPopFilter(data);
+            const workData  = filtered || data;
+            const statusEl2 = document.getElementById('flt-status');
+            if (statusEl2) statusEl2.textContent = filtered ? `${filtered.n_sample.toLocaleString()} of ${data.n_sample.toLocaleString()} in subset` : '';
+            const results = computeCorrelates(workData, corrActiveVar);
             const ms = Math.round(performance.now() - t0);
-            renderCorrTable(results, data, ms);
+            renderCorrTable(results, workData, ms);
         }
 
         function renderCorrTable(results, scatterData, ms) {
@@ -1186,7 +1253,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 panel.innerHTML = '<p class="corr-no-data">Scatter data not available for this cycle.</p>';
                 return;
             }
-            drawScatter(scatter);
+            drawScatter(applyPopFilter(scatter) || scatter);
         }
 
         function drawScatter(scatterData) {
@@ -1326,6 +1393,61 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.getElementById('corr-list').style.display = '';
         }
 
+        // ── Population subset filter ──────────────────────────────────────────
+        function applyPopFilter(scatterData) {
+            const sex  = document.getElementById('flt-sex').value;
+            const age  = document.getElementById('flt-age').value;
+            const race = document.getElementById('flt-race').value;
+            const educ = document.getElementById('flt-educ').value;
+            const pir  = document.getElementById('flt-pir').value;
+            if (!sex && !age && !race && !educ && !pir) return null; // no filter active
+
+            const cols   = scatterData.cols;
+            const n      = (scatterData.data[cols[0]] || []).length;
+            const sexArr  = scatterData.data['RIAGENDR'];
+            const ageArr  = scatterData.data['RIDAGEYR'];
+            const raceArr = scatterData.data['RIDRETH1'];
+            const educArr = scatterData.data['DMDEDUC2'];
+            const pirArr  = scatterData.data['INDFMPIR'];
+
+            const mask = [];
+            for (let i = 0; i < n; i++) {
+                if (sex  && sexArr  && String(sexArr[i])  !== sex)  continue;
+                if (race && raceArr && String(raceArr[i]) !== race) continue;
+                if (educ && educArr && String(educArr[i]) !== educ) continue;
+                if (age  && ageArr) {
+                    if (STRAT_BINS.RIDAGEYR_bin(ageArr[i]) !== age) continue;
+                }
+                if (pir && pirArr) {
+                    if (STRAT_BINS.INDFMPIR_bin(pirArr[i]) !== pir) continue;
+                }
+                mask.push(i);
+            }
+
+            if (!mask.length) return { ...scatterData, n_sample: 0, data: Object.fromEntries(cols.map(c => [c, []])) };
+
+            const filtered = { ...scatterData, n_total: scatterData.n_total, n_sample: mask.length, data: {} };
+            for (const col of cols) {
+                const arr = scatterData.data[col];
+                filtered.data[col] = mask.map(i => arr[i]);
+            }
+            return filtered;
+        }
+
+        function syncFilterUI() {
+            const ids = ['flt-sex','flt-age','flt-race','flt-educ','flt-pir'];
+            let anyActive = false;
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                const active = el.value !== '';
+                el.classList.toggle('flt-active', active);
+                if (active) anyActive = true;
+            });
+            const resetBtn = document.getElementById('flt-reset');
+            if (resetBtn) resetBtn.classList.toggle('visible', anyActive);
+        }
+
         function closeCorrelates() {
             closeScatter();
             switchViewMode('correlates');
@@ -1406,13 +1528,14 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             Plotly.purge('dist-plot');
             panel.innerHTML = '<div class="corr-loading-msg">Loading…</div>';
 
-            const scatterData = await loadScatterData(cycle);
+            const rawScatter = await loadScatterData(cycle);
             // Wait for the browser to paint the panel visible before Plotly measures it
             await new Promise(r => requestAnimationFrame(r));
-            if (!scatterData || !scatterData.data[varName]) {
+            if (!rawScatter || !rawScatter.data[varName]) {
                 panel.innerHTML = `<p class="corr-no-data"><b>${varName}</b> not available in ${cycle} data.</p>`;
                 return;
             }
+            const scatterData = applyPopFilter(rawScatter) || rawScatter;
 
             const raw      = scatterData.data[varName];
             const colTypes = scatterData.col_types || {};
@@ -1569,6 +1692,27 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             document.getElementById('btn-view-correlates').addEventListener('click', () => switchViewMode('correlates'));
             document.getElementById('btn-view-dist').addEventListener('click', () => switchViewMode('distribution'));
             document.getElementById('dist-stratify').addEventListener('change', refreshDistribution);
+
+            // Population filter bar
+            ['flt-sex','flt-age','flt-race','flt-educ','flt-pir'].forEach(id => {
+                document.getElementById(id).addEventListener('change', () => {
+                    syncFilterUI();
+                    if (!corrActiveCycle) return;
+                    if (corrViewMode === 'distribution') refreshDistribution();
+                    else switchCycleTab(corrActiveCycle);
+                });
+            });
+            document.getElementById('flt-reset').addEventListener('click', () => {
+                ['flt-sex','flt-age','flt-race','flt-educ','flt-pir'].forEach(id => {
+                    document.getElementById(id).value = '';
+                });
+                syncFilterUI();
+                const statusEl2 = document.getElementById('flt-status');
+                if (statusEl2) statusEl2.textContent = '';
+                if (!corrActiveCycle) return;
+                if (corrViewMode === 'distribution') refreshDistribution();
+                else switchCycleTab(corrActiveCycle);
+            });
             // Prefetch manifest so the first click is instant
             if (window.requestIdleCallback) {
                 requestIdleCallback(() => loadManifest(), { timeout: 2000 });
