@@ -8,8 +8,8 @@
     <script src="https://cdn.plot.ly/plotly-2.35.2.min.js" charset="utf-8"></script>
     <style>
         body { font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; margin: 2em; background-color: #f8f9fa; color: #212529; }
-        h1, h2 { text-align: center; color: #343a40; }
-        .container { max-width: 1200px; margin: 0 auto; }
+        h1, h2 { text-align: left; color: #343a40; margin: 0 0 0.6em; }
+        .container { max-width: 1600px; margin: 0 auto; }
         .grid-container {
             position: relative;
             width: 100%;
@@ -266,15 +266,16 @@
             text-decoration: underline;
         }
         #variable-explorer {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            padding: 2em;
+            padding: 0;
+            margin-bottom: 2.5em;
         }
         #variable-explorer .table-scroll {
-            max-height: 400px;
+            max-height: 600px;
             overflow-y: auto;
             overflow-x: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 6px;
+            background: #fff;
         }
         #search-input {
             width: 100%;
@@ -549,6 +550,8 @@
         }
         .cycles-cell { line-height: 1.8; }
         .var-name-cell { font-family: monospace; font-weight: 700; font-size: 0.88em; white-space: nowrap; padding: 0.8em 0.5em; }
+        .var-entry-name { font-family: monospace; font-weight: 700; font-size: 0.8em; color: #2b6cb0; margin-right: 4px; white-space: nowrap; }
+        .var-cycles-row { white-space: nowrap; line-height: 2; }
         #variables-table tbody tr { cursor: pointer; transition: background 0.1s; }
         #variables-table tbody tr:hover { background: #ebf8ff; }
 
@@ -568,8 +571,24 @@
 </head>
 <body>
     <div class="container">
-        <h1>pandas-nhanes</h1>
-        
+        <div id="variable-explorer">
+            <h2>NHANES Variable Explorer</h2>
+            <input type="text" id="search-input" placeholder="Search variables...">
+            <div class="table-scroll">
+                <table id="variables-table">
+                    <thead>
+                        <tr id="variables-table-header-row">
+                            <!-- Headers will be loaded here -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <h2>Examples</h2>
         <div class="grid-container" id="grid-container">
             
             <div class="carousel-wrapper" id="carousel-wrapper">
@@ -671,21 +690,6 @@
             </div>
         </div>
 
-        <div id="variable-explorer">
-            <h2>NHANES Variable Explorer</h2>
-            <input type="text" id="search-input" placeholder="Search variables...">
-            <div class="table-scroll">
-                <table id="variables-table">
-                    <thead>
-                        <tr id="variables-table-header-row">
-                            <!-- Headers will be loaded here -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Data will be loaded here -->
-                    </tbody>
-                </table>
-            </div>
         </div>
     </div>
 
@@ -1837,8 +1841,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             const searchInput = document.getElementById('search-input');
             const tableBody = document.querySelector('#variables-table tbody');
             const tableHeaderRow = document.getElementById('variables-table-header-row');
-            let allData = [];      // raw CSV rows
-            let groupedData = [];  // [{varName, explanation, cycles, docLink}]
+            let allData = [];         // raw CSV rows
+            let measurementData = []; // [{explanation, varEntries:[{varName,cycles,docLink}], bestVarName, bestCycle, bestDocLink}]
             let allRowEls = [];
 
             // Row click opens correlates modal; doc links stop propagation
@@ -1856,68 +1860,93 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             const explorer = document.getElementById('variable-explorer');
             explorer.insertBefore(statusEl, explorer.querySelector('.table-scroll'));
 
-            // Fixed grouped header
+            // Fixed header for measurement-grouped table
             function renderHeader() {
                 tableHeaderRow.innerHTML = '';
-                for (const text of ['Variable', 'Description', 'Available cycles', 'Doc']) {
+                for (const text of ['Measurement', 'Description', 'Variable name(s) & cycles', 'Doc']) {
                     const th = document.createElement('th');
                     th.textContent = text;
                     tableHeaderRow.appendChild(th);
                 }
             }
 
-            // Build grouped data: one entry per unique variable name
-            function buildGroupedData(rawData) {
-                const map = new Map();
+            // Group rows: Step 1 by varName, Step 2 merge by normalized explanation
+            function normalizeExpl(s) { return (s || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
+
+            function buildMeasurementData(rawData) {
+                const byVar = new Map();
                 rawData.forEach(row => {
                     const vn = (row['variable name'] || '').trim();
                     if (!vn) return;
-                    if (!map.has(vn)) {
-                        map.set(vn, { varName: vn, explanation: row['variable explanation'] || '', cycles: [], docLink: '' });
-                    }
-                    const entry = map.get(vn);
+                    if (!byVar.has(vn)) byVar.set(vn, { varName: vn, explanation: row['variable explanation'] || '', cycles: [], docLink: '' });
+                    const e = byVar.get(vn);
                     const cycle = (row['cycle name'] || '').trim();
-                    if (cycle && !entry.cycles.includes(cycle)) entry.cycles.push(cycle);
-                    if (row['dataset documentation link']) entry.docLink = row['dataset documentation link'];
+                    if (cycle && !e.cycles.includes(cycle)) e.cycles.push(cycle);
+                    if (row['dataset documentation link']) e.docLink = row['dataset documentation link'];
                 });
-                const result = [...map.values()];
-                result.forEach(e => e.cycles.sort());
+                byVar.forEach(e => e.cycles.sort());
+
+                const byExpl = new Map();
+                for (const entry of byVar.values()) {
+                    const key = normalizeExpl(entry.explanation);
+                    if (!byExpl.has(key)) byExpl.set(key, { explanation: entry.explanation, varEntries: [] });
+                    byExpl.get(key).varEntries.push(entry);
+                }
+
+                const result = [];
+                for (const group of byExpl.values()) {
+                    group.varEntries.sort((a, b) => {
+                        if (b.cycles.length !== a.cycles.length) return b.cycles.length - a.cycles.length;
+                        return (b.cycles[b.cycles.length-1]||'').localeCompare(a.cycles[a.cycles.length-1]||'');
+                    });
+                    const best = group.varEntries[0];
+                    result.push({
+                        explanation: group.explanation,
+                        varEntries:  group.varEntries,
+                        bestVarName: best.varName,
+                        bestCycle:   best.cycles[best.cycles.length - 1] || '',
+                        bestDocLink: group.varEntries.find(e => e.docLink)?.docLink || '',
+                    });
+                }
+                result.sort((a, b) => a.explanation.localeCompare(b.explanation));
                 return result;
             }
 
-            // Build a single grouped table row
-            function buildGroupedRow(entry) {
-                const tr  = document.createElement('tr');
-                const vn  = entry.varName.replace(/"/g, '&quot;');
-                const vd  = entry.explanation.replace(/"/g, '&quot;');
-                const vl  = entry.docLink.replace(/"/g, '&quot;');
-                const mostRecent = entry.cycles[entry.cycles.length - 1] || '';
-                // Store data on tr for event delegation
-                tr.dataset.var   = entry.varName;
+            // Build a single measurement table row
+            function buildMeasurementRow(entry) {
+                const tr = document.createElement('tr');
+                tr.dataset.var   = entry.bestVarName;
                 tr.dataset.desc  = entry.explanation;
-                tr.dataset.doc   = entry.docLink;
-                tr.dataset.cycle = mostRecent;
-                const chips = entry.cycles.map(c => `<span class="cycle-chip">${c}</span>`).join('');
-                const det  = varDetails[entry.varName];
-                const et   = det && det.english_text ? det.english_text.trim() : '';
-                const tgt  = det && det.target       ? det.target.trim()       : '';
-                const showSub = et && et.toLowerCase() !== entry.explanation.toLowerCase();
-                const descCell = `<td style="font-size:0.88em;padding:0.8em 0.5em"` +
+                tr.dataset.doc   = entry.bestDocLink;
+                tr.dataset.cycle = entry.bestCycle;
+
+                const det    = varDetails[entry.bestVarName] || {};
+                const tgt    = (det.target       || '').trim();
+                const et     = (det.english_text || '').trim();
+                const descText = (et && et.toLowerCase() !== entry.explanation.toLowerCase()) ? et : '';
+
+                const varCellHtml = entry.varEntries.map(ve => {
+                    const chips = ve.cycles.map(c => `<span class="cycle-chip">${c}</span>`).join('');
+                    return `<div class="var-cycles-row"><span class="var-entry-name">${ve.varName}</span>${chips}</div>`;
+                }).join('');
+
+                const docHtml = entry.bestDocLink
+                    ? `<a href="${entry.bestDocLink.replace(/"/g,'&quot;')}" target="_blank" rel="noopener">doc ↗</a>` : '';
+
+                tr.innerHTML =
+                    `<td style="font-size:0.88em;padding:0.8em 0.5em;font-weight:600"` +
                     (tgt ? ` title="${tgt.replace(/"/g,'&quot;')}"` : '') + `>` +
                     entry.explanation +
-                    (showSub ? `<span class="var-detail-sub">${et}</span>` : '') +
-                    `</td>`;
-                tr.innerHTML =
-                    `<td class="var-name-cell">${entry.varName}</td>` +
-                    descCell +
-                    `<td class="cycles-cell">${chips}</td>` +
-                    `<td style="white-space:nowrap">${entry.docLink ? `<a href="${vl}" target="_blank" rel="noopener">doc ↗</a>` : ''}</td>`;
+                    `</td>` +
+                    `<td style="font-size:0.82em;color:#718096;padding:0.8em 0.5em">${descText}</td>` +
+                    `<td class="cycles-cell">${varCellHtml}</td>` +
+                    `<td style="white-space:nowrap">${docHtml}</td>`;
                 return tr;
             }
 
             function appendGroupedBatch(entries) {
                 const frag = document.createDocumentFragment();
-                entries.forEach(entry => { const tr = buildGroupedRow(entry); frag.appendChild(tr); allRowEls.push(tr); });
+                entries.forEach(entry => { const tr = buildMeasurementRow(entry); frag.appendChild(tr); allRowEls.push(tr); });
                 tableBody.appendChild(frag);
             }
 
@@ -1937,38 +1966,40 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                             varMeta[vn] = { desc: row['variable explanation'] || '', docLink: row['dataset documentation link'] || '' };
                         }
                     });
-                    groupedData = buildGroupedData(allData);
+                    measurementData = buildMeasurementData(allData);
                     renderHeader();
                     applySearch('');
-                    statusEl.textContent = `${groupedData.length.toLocaleString()} unique variables across ${allData.length.toLocaleString()} cycle entries`;
+                    const nVars = new Set(allData.map(r => r['variable name'])).size;
+                    statusEl.textContent = `${measurementData.length.toLocaleString()} measurements \u00b7 ${nVars.toLocaleString()} variable names`;
                 },
                 error: function(err) { statusEl.textContent = `Failed to load variables: ${err}`; }
             });
 
-            // Search filters groupedData (varName + explanation)
+            // Search filters measurementData (explanation + any varName + cycles)
             let searchEpoch = 0;
             function applySearch(term) {
                 const myEpoch = ++searchEpoch;
                 tableBody.innerHTML = '';
                 allRowEls = [];
-                if (!groupedData.length) return;
+                if (!measurementData.length) return;
                 const lower = term ? term.toLowerCase() : '';
                 const data = lower
-                    ? groupedData.filter(e =>
-                        e.varName.toLowerCase().includes(lower) ||
+                    ? measurementData.filter(e =>
                         e.explanation.toLowerCase().includes(lower) ||
-                        e.cycles.some(c => c.includes(lower)))
-                    : groupedData;
-                // Render first slice immediately, stream the rest on idle frames
+                        e.varEntries.some(ve =>
+                            ve.varName.toLowerCase().includes(lower) ||
+                            ve.cycles.some(c => c.includes(lower))))
+                    : measurementData;
                 const CHUNK = 200;
                 appendGroupedBatch(data.slice(0, CHUNK));
                 let idx = CHUNK;
+                const nVars = new Set(allData.map(r => r['variable name'])).size;
                 function streamRest() {
                     if (myEpoch !== searchEpoch) return;
                     if (idx >= data.length) {
                         statusEl.textContent = lower
-                            ? `Found ${data.length.toLocaleString()} variables`
-                            : `${groupedData.length.toLocaleString()} unique variables across ${allData.length.toLocaleString()} cycle entries`;
+                            ? `Found ${data.length.toLocaleString()} measurements`
+                            : `${measurementData.length.toLocaleString()} measurements \u00b7 ${nVars.toLocaleString()} variable names`;
                         return;
                     }
                     appendGroupedBatch(data.slice(idx, idx + CHUNK));
@@ -1976,7 +2007,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
                 }
                 (window.requestIdleCallback || window.requestAnimationFrame)(streamRest);
-                statusEl.textContent = lower ? `Found ${data.length.toLocaleString()} variables` : 'Rendering…';
+                statusEl.textContent = lower ? `Found ${data.length.toLocaleString()} measurements` : 'Rendering\u2026';
             }
             function debounce(fn, delay) {
                 let t;
