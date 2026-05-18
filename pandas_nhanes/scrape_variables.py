@@ -59,7 +59,12 @@ def extract_table_to_dataframe():
     df = df[["cycle name", "dataset", "dataset link", "dataset documentation link"]]
     return df
 
-def extract_variable_info(doc_link):
+import re as _re
+_ANSI_ESCAPE = _re.compile(r'[\x00-\x08\x0b-\x1f\x7f]|\x1b\[[0-9;]*[mABCDEFGHJKSTfu]')
+
+def _safe(text):
+    """Strip ANSI/control sequences from text before printing to terminal."""
+    return _ANSI_ESCAPE.sub('', str(text))
     """Extract variable information and value labels from a documentation page.
 
     Returns
@@ -88,17 +93,46 @@ def extract_variable_info(doc_link):
                     variable_name, variable_explanation = text.split(" - ", 1)
                     variables.append([variable_name, variable_explanation])
 
-    # ── Value labels (from the codebook tables on the same page) ─────────────
+    # ── Value labels + variable details (from the codebook sections on the same page) ─
     value_labels = {}
+    var_details  = {}
     for h3 in soup.find_all("h3"):
         var_id = h3.get("id", "").strip()
         if not var_id:
             continue
-        table = h3.find_next("table")
-        if not table:
+        # Collect the <dl> and <table> that belong to this variable,
+        # stopping before the next <h3> so we don't cross into the next section.
+        dl_el = None
+        table_el = None
+        el = h3.next_sibling
+        while el:
+            tag = getattr(el, "name", None)
+            if tag == "h3":
+                break
+            if tag == "dl" and dl_el is None:
+                dl_el = el
+            if tag == "table" and table_el is None:
+                table_el = el
+            el = el.next_sibling
+        # Extract "English Text" and "Target" from the <dl>
+        if dl_el:
+            details = {}
+            for dt in dl_el.find_all("dt"):
+                key = dt.text.strip().rstrip(":").lower()
+                dd = dt.find_next_sibling("dd")
+                if dd:
+                    val = dd.get_text(" ", strip=True)
+                    if "english text" in key:
+                        details['english_text'] = _safe(val)
+                    elif key == 'target':
+                        details['target'] = _safe(val)
+            if details:
+                var_details[var_id] = details
+        # Extract value labels from the <table>
+        if not table_el:
             continue
         labels = {}
-        for row in table.find_all("tr")[1:]:   # skip header row
+        for row in table_el.find_all("tr")[1:]:   # skip header row
             cells = row.find_all("td")
             if len(cells) < 2:
                 continue
@@ -118,6 +152,7 @@ def extract_variable_info(doc_link):
     return (
         pd.DataFrame(variables, columns=["variable name", "variable explanation"]),
         value_labels,
+        var_details,
     )
 
 def process_dataset(index, row):
@@ -129,7 +164,7 @@ def process_dataset(index, row):
         dataset_doc_link = row["dataset documentation link"]
         
         if dataset_doc_link:
-            variables_df, value_labels = extract_variable_info(dataset_doc_link)
+            variables_df, value_labels, var_details = extract_variable_info(dataset_doc_link)
             if not variables_df.empty:
                 variables_df.insert(0, "cycle name", cycle_name)
                 variables_df.insert(1, "dataset", dataset)
@@ -143,10 +178,15 @@ def process_dataset(index, row):
                     vl_filename = f"partial_results/value_labels_{index}.json"
                     with open(vl_filename, "w") as f:
                         json.dump(value_labels, f, separators=(",", ":"))
+                # Save partial variable details
+                if var_details:
+                    vd_filename = f"partial_results/var_details_{index}.json"
+                    with open(vd_filename, "w") as f:
+                        json.dump(var_details, f, separators=(",", ":"))
                 return variables_df
         return pd.DataFrame()
     except Exception as e:
-        print(f"Error processing {cycle_name}: {e}")
+        print("Error processing " + _safe(cycle_name) + ": " + _safe(e))
         return pd.DataFrame()
 
 def main():
@@ -229,3 +269,17 @@ if __name__ == "__main__":
     with open(out_path, "w") as f:
         json.dump(all_value_labels, f, separators=(",", ":"))
     print(f"Saved value labels for {len(all_value_labels)} variables → {out_path}")
+
+    # Merge all partial var_details JSONs into one file
+    all_var_details = {}
+    vd_files = sorted(
+        f for f in os.listdir(partial_dir)
+        if f.startswith("var_details_") and f.endswith(".json")
+    )
+    for fname in vd_files:
+        with open(os.path.join(partial_dir, fname)) as fp:
+            all_var_details.update(json.load(fp))
+    out_path = os.path.join(script_dir, "nhanes_var_details.json")
+    with open(out_path, "w") as f:
+        json.dump(all_var_details, f, separators=(",", ":"))
+    print(f"Saved variable details for {len(all_var_details)} variables → {out_path}")

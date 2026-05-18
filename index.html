@@ -442,6 +442,9 @@
         #corr-header-text { flex: 1; min-width: 0; }
         #corr-title { font-size: 1.15em; font-weight: 700; color: #1a202c; }
         #corr-desc  { margin-top: 0.25em; font-size: 0.85em; color: #4a5568; line-height: 1.4; }
+        #corr-detail { font-size: 0.82em; color: #718096; font-style: italic; margin: 0.15em 0 0.05em; line-height: 1.4; display: none; }
+        .corr-detail-target { font-size: 0.88em; color: #a0aec0; font-style: normal; }
+        .var-detail-sub { font-size: 0.78em; color: #a0aec0; font-style: italic; display: block; margin-top: 2px; }
         #corr-doclink { margin-top: 0.3em; display: inline-block; font-size: 0.82em; color: #3182ce; text-decoration: underline; }
         #corr-close { background: none; border: none; font-size: 1.6em; cursor: pointer; color: #718096; padding: 0; line-height: 1; }
         #corr-close:hover { color: #1a202c; }
@@ -546,6 +549,8 @@
         }
         .cycles-cell { line-height: 1.8; }
         .var-name-cell { font-family: monospace; font-weight: 700; font-size: 0.88em; white-space: nowrap; padding: 0.8em 0.5em; }
+        #variables-table tbody tr { cursor: pointer; transition: background 0.1s; }
+        #variables-table tbody tr:hover { background: #ebf8ff; }
 
         /* ── Distribution panel ── */
         #dist-panel { display: none; padding: 1em 1.4em; flex-direction: column; overflow: hidden; }
@@ -583,6 +588,7 @@
                 <div id="corr-header-text">
                     <div id="corr-title"></div>
                     <div id="corr-desc"></div>
+                    <div id="corr-detail"></div>
                     <a id="corr-doclink" href="#" target="_blank" rel="noopener">NHANES documentation &#8599;</a>
                 </div>
                 <div class="view-toggle" id="corr-view-toggle">
@@ -946,6 +952,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         // Contains sampled raw arrays → JS computes associations on click.
         let varMeta      = {};   // {varName → {desc, docLink}} built from CSV
         let valueLabels  = {};   // {varName → {code_str → label}} from nhanes_value_labels.json
+        let varDetails   = {};   // {varName → {english_text, target}} from nhanes_var_details.json
         const scatterCache = {}; // {cycle → scatter JSON}
         let corrManifest  = [];
         let corrActiveVar  = null;
@@ -1085,6 +1092,20 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             corrActiveVar = varName;
             document.getElementById('corr-title').textContent = varName;
             document.getElementById('corr-desc').textContent  = varDesc || '';
+            // Detailed description from nhanes_var_details.json
+            const detailEl = document.getElementById('corr-detail');
+            const det = varDetails[varName];
+            if (detailEl && det) {
+                const et  = (det.english_text || '').trim();
+                const tgt = (det.target || '').trim();
+                const showET = et && et.toLowerCase() !== (varDesc || '').toLowerCase();
+                detailEl.innerHTML =
+                    (showET ? `<span>${et}</span>` : '') +
+                    (tgt ? `<span class="corr-detail-target"${showET ? ' style="margin-left:0.5em"' : ''}>${tgt}</span>` : '');
+                detailEl.style.display = (showET || tgt) ? '' : 'none';
+            } else if (detailEl) {
+                detailEl.style.display = 'none';
+            }
             const docA = document.getElementById('corr-doclink');
             docA.href = varDocLink || '#'; docA.style.display = varDocLink ? '' : 'none';
             document.getElementById('corr-list').innerHTML = '<div class="corr-loading-msg">Loading…</div>';
@@ -1323,11 +1344,12 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     groups[k].push(ys[i]);
                 }
                 const cats = Object.keys(groups).sort((a,b) => Number(a)-Number(b));
+                const labX = getLabels(scatterColX);
                 document.getElementById('scatter-stats').textContent =
                     `η association  ·  n = ${xs.length.toLocaleString()}  ·  ${cats.length} categories`;
                 Plotly.react('scatter-plot',
                     cats.map(cat => ({
-                        y: groups[cat], type: 'box', name: cat,
+                        y: groups[cat], type: 'box', name: applyLabel(labX, cat),
                         boxpoints: groups[cat].length <= 300 ? 'outliers' : false,
                         marker: { size: 3, opacity: 0.5, color: '#3182ce' }
                     })),
@@ -1344,11 +1366,12 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     groups[k].push(xs[i]);
                 }
                 const cats = Object.keys(groups).sort((a,b) => Number(a)-Number(b));
+                const labY = getLabels(scatterColY);
                 document.getElementById('scatter-stats').textContent =
                     `η association  ·  n = ${xs.length.toLocaleString()}  ·  ${cats.length} categories`;
                 Plotly.react('scatter-plot',
                     cats.map(cat => ({
-                        x: groups[cat], type: 'box', name: cat, orientation: 'h',
+                        x: groups[cat], type: 'box', name: applyLabel(labY, cat), orientation: 'h',
                         boxpoints: groups[cat].length <= 300 ? 'outliers' : false,
                         marker: { size: 3, opacity: 0.5, color: '#3182ce' }
                     })),
@@ -1360,6 +1383,10 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 // Both categorical: contingency heatmap
                 const rowCats = [...new Set(ys.filter(v=>v!==null))].map(Number).sort((a,b)=>a-b);
                 const colCats = [...new Set(xs.filter(v=>v!==null))].map(Number).sort((a,b)=>a-b);
+                const labX = getLabels(scatterColX);
+                const labY = getLabels(scatterColY);
+                const xLabels = colCats.map(c => applyLabel(labX, c));
+                const yLabels = rowCats.map(r => applyLabel(labY, r));
                 const z = rowCats.map(r =>
                     colCats.map(c => {
                         let count = 0;
@@ -1370,7 +1397,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 document.getElementById('scatter-stats').textContent =
                     `Cramér's V  ·  n = ${xs.length.toLocaleString()}  ·  ${rowCats.length} × ${colCats.length} categories`;
                 Plotly.react('scatter-plot',
-                    [{ z, x: colCats.map(String), y: rowCats.map(String),
+                    [{ z, x: xLabels, y: yLabels,
                        type: 'heatmap', colorscale: 'Blues', showscale: true,
                        hovertemplate: `${scatterColX}=%{x}<br>${scatterColY}=%{y}<br>count=%{z}<extra></extra>` }],
                     { ...baseLayout,
@@ -1479,6 +1506,14 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             DMDEDUC2: { 1:'<9th grade', 2:'9–11th grade', 3:'HS/GED', 4:'Some college', 5:'College+' },
         };
 
+        // Resolve value labels for a column (value_labels JSON → hardcoded strat labels → empty)
+        function getLabels(col) {
+            return valueLabels[col] || STRAT_LABELS[col] || {};
+        }
+        function applyLabel(labelMap, code) {
+            return labelMap[String(code)] || labelMap[code] || String(code);
+        }
+
         function distStdDev(arr) {
             const n = arr.length;
             if (n < 2) return 1;
@@ -1558,12 +1593,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
             // value_labels from nhanes_value_labels.json (loaded once at startup)
             // Fall back to hardcoded STRAT_LABELS for population vars
-            function getLabels(col) {
-                return valueLabels[col] || STRAT_LABELS[col] || {};
-            }
-            function applyLabel(labelMap, code) {
-                return labelMap[String(code)] || labelMap[code] || String(code);
-            }
+            // (getLabels and applyLabel are defined at module scope)
 
             if (!stratifyBy) {
                 // ── Unstratified ──────────────────────────────────────────────
@@ -1681,6 +1711,12 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 if (res.ok) valueLabels = await res.json();
             } catch (e) {
                 console.warn('Could not load nhanes_value_labels.json – categorical labels will be numeric', e);
+            }
+            try {
+                const res = await fetch('pandas_nhanes/nhanes_var_details.json');
+                if (res.ok) varDetails = await res.json();
+            } catch (e) {
+                console.warn('Could not load nhanes_var_details.json – run scrape_variables.py to generate it', e);
             }
             createPlotThumbnails();
 
@@ -1805,12 +1841,12 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             let groupedData = [];  // [{varName, explanation, cycles, docLink}]
             let allRowEls = [];
 
-            // Event delegation for corr-btn (rendered via innerHTML)
+            // Row click opens correlates modal; doc links stop propagation
             tableBody.addEventListener('click', e => {
-                const btn = e.target.closest('.corr-btn');
-                if (!btn) return;
-                e.stopPropagation();
-                showCorrelates(btn.dataset.var, btn.dataset.desc, btn.dataset.doc, btn.dataset.cycle);
+                if (e.target.closest('a')) return; // let doc link open normally
+                const tr = e.target.closest('tr');
+                if (!tr || !tr.dataset.var) return;
+                showCorrelates(tr.dataset.var, tr.dataset.desc, tr.dataset.doc, tr.dataset.cycle);
             });
 
             // Status element
@@ -1823,7 +1859,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             // Fixed grouped header
             function renderHeader() {
                 tableHeaderRow.innerHTML = '';
-                for (const text of ['Variable', 'Description', 'Available cycles', 'Doc', '']) {
+                for (const text of ['Variable', 'Description', 'Available cycles', 'Doc']) {
                     const th = document.createElement('th');
                     th.textContent = text;
                     tableHeaderRow.appendChild(th);
@@ -1856,13 +1892,26 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 const vd  = entry.explanation.replace(/"/g, '&quot;');
                 const vl  = entry.docLink.replace(/"/g, '&quot;');
                 const mostRecent = entry.cycles[entry.cycles.length - 1] || '';
+                // Store data on tr for event delegation
+                tr.dataset.var   = entry.varName;
+                tr.dataset.desc  = entry.explanation;
+                tr.dataset.doc   = entry.docLink;
+                tr.dataset.cycle = mostRecent;
                 const chips = entry.cycles.map(c => `<span class="cycle-chip">${c}</span>`).join('');
+                const det  = varDetails[entry.varName];
+                const et   = det && det.english_text ? det.english_text.trim() : '';
+                const tgt  = det && det.target       ? det.target.trim()       : '';
+                const showSub = et && et.toLowerCase() !== entry.explanation.toLowerCase();
+                const descCell = `<td style="font-size:0.88em;padding:0.8em 0.5em"` +
+                    (tgt ? ` title="${tgt.replace(/"/g,'&quot;')}"` : '') + `>` +
+                    entry.explanation +
+                    (showSub ? `<span class="var-detail-sub">${et}</span>` : '') +
+                    `</td>`;
                 tr.innerHTML =
                     `<td class="var-name-cell">${entry.varName}</td>` +
-                    `<td style="font-size:0.88em;padding:0.8em 0.5em">${entry.explanation}</td>` +
+                    descCell +
                     `<td class="cycles-cell">${chips}</td>` +
-                    `<td style="white-space:nowrap">${entry.docLink ? `<a href="${vl}" target="_blank" rel="noopener">doc ↗</a>` : ''}</td>` +
-                    `<td><button class="corr-btn" data-var="${vn}" data-desc="${vd}" data-doc="${vl}" data-cycle="${mostRecent}" title="Find correlated variables">correlates</button></td>`;
+                    `<td style="white-space:nowrap">${entry.docLink ? `<a href="${vl}" target="_blank" rel="noopener">doc ↗</a>` : ''}</td>`;
                 return tr;
             }
 

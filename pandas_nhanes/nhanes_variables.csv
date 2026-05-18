@@ -4682,40 +4682,6 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 1999-2004,SSUCSH_A,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SSUCSH_A.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SSUCSH_A.htm
 1999-2004,SSUCSH_A,SSUCTVL,Cytomegalovirus viral load Copies/mL,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SSUCSH_A.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SSUCSH_A.htm
 1999-2004,SSUCSH_A,SSUCYSH,Cytomegalovirus shedding,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SSUCSH_A.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/SSUCSH_A.htm
-1999-2020,DSBI,DSDBCCAT,BLEND COMPONENT CATEGORY,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
-1999-2020,DSBI,DSDBCID,BLEND COMPONENT ID - OLD VERSION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
-1999-2020,DSBI,DSDBCNAM,BLEND COMPONENT NAME,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
-1999-2020,DSBI,DSDBID,BLEND COMPONENT ID,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
-1999-2020,DSBI,DSDIID,INGREDIENT ID NUMBER,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
-1999-2020,DSBI,DSDINGR,INGREDIENT NAME,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
-1999-2020,DSII,DSDBLFLG,BLEND FLAG,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDCAT,INGREDIENT CATEGORY,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDIID,INGREDIENT ID NUMBER,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDINGID,INGREDIENT ID NUMBER - OLD VERSION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDINGR,INGREDIENT NAME,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDOPER,INGREDIENT OPERATOR,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDPID,SUPPLEMENT ID NUMBER,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDQTY,INGREDIENT QUANTITY,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDSUPP,SUPPLEMENT NAME,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSII,DSDUNIT,INGREDIENT UNIT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSII.htm
-1999-2020,DSPI,DSDCNTA,COUNT OF AMINO ACIDS IN THE SUPPLEMENT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDCNTB,COUNT OF BOTANICALS IN THE SUPPLEMENT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDCNTM,COUNT OF MINERALS IN THE SUPPLEMENT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDCNTO,COUNT OF OTHER INGREDIENTS IN SUPPLEMENT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDCNTV,COUNT OF VITAMINS IN THE SUPPLEMENT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDLINRF,LINEAR FORMULATION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDORGID,ORIGINAL PRODUCT ID,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDPID,SUPPLEMENT ID NUMBER,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDPRDT,PRODUCT TYPE,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDPREID,PREVIOUS PRODUCT ID,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSEQF,SEQUENTIAL FORMULATION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSERVQ,SERVING SIZE QUANTITY,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSERVU,SERVING SIZE UNIT,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSGPF,SEQUENTIAL GROUP FORMULATION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSRCE,SUPPLEMENT INFORMATION SOURCE,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSUPID,SUPPLEMENT ID NUMBER - OLD VERSION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDSUPP,SUPPLEMENT NAME,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
-1999-2020,DSPI,DSDTYPE,SUPPLEMENT TYPE,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSPI.htm
 1999-2023,DSBI,DSDBCCAT,BLEND COMPONENT CATEGORY,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
 1999-2023,DSBI,DSDBCID,BLEND COMPONENT ID - OLD VERSION,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
 1999-2023,DSBI,DSDBCNAM,BLEND COMPONENT NAME,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/1999/DataFiles/DSBI.htm
@@ -20686,9 +20652,10 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2007-2008,HEPA_E,LBXHA,Hepatitis A Antibody (Anti-HAV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPA_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPA_E.htm
 2007-2008,HEPA_E,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPA_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPA_E.htm
 2007-2008,HEPBD_E,LBDHBG,Hepatitis B surface antigen,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.htm
-2007-2008,HEPBD_E,LBDHD,Hepatitis D (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.htm
+2007-2008,HEPBD_E,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.htm
 2007-2008,HEPBD_E,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.htm
 2007-2008,HEPBD_E,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.htm
+2007-2008,HEPBD_E,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPBD_E.htm
 2007-2008,HEPB_S_E,LBXHBS,Hepatitis B surface antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPB_S_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPB_S_E.htm
 2007-2008,HEPB_S_E,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPB_S_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPB_S_E.htm
 2007-2008,HEPC_E,LBDHCV,Hepatitis C antibody (confirmed),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPC_E.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2007/DataFiles/HEPC_E.htm
@@ -25209,9 +25176,10 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2009-2010,HEPA_F,LBXHA,Hepatitis A Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPA_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPA_F.htm
 2009-2010,HEPA_F,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPA_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPA_F.htm
 2009-2010,HEPBD_F,LBDHBG,Hepatitis B surface antigen,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.htm
-2009-2010,HEPBD_F,LBDHD,Hepatitis D (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.htm
+2009-2010,HEPBD_F,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.htm
 2009-2010,HEPBD_F,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.htm
 2009-2010,HEPBD_F,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.htm
+2009-2010,HEPBD_F,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPBD_F.htm
 2009-2010,HEPB_S_F,LBXHBS,Hepatitis B surface antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPB_S_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPB_S_F.htm
 2009-2010,HEPB_S_F,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPB_S_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPB_S_F.htm
 2009-2010,HEPC_F,LBDHCV,Hepatitis C antibody (confirmed),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPC_F.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2009/DataFiles/HEPC_F.htm
@@ -29571,9 +29539,10 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2011-2012,HEPA_G,LBXHA,Hepatitis A antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPA_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPA_G.htm
 2011-2012,HEPA_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPA_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPA_G.htm
 2011-2012,HEPBD_G,LBDHBG,Hepatitis B surface antigen,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
-2011-2012,HEPBD_G,LBDHD,Hepatitis D (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
-2011-2012,HEPBD_G,LBXHBC,Hepatitis B core antibody (Anti-HBc),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
+2011-2012,HEPBD_G,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
+2011-2012,HEPBD_G,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
 2011-2012,HEPBD_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
+2011-2012,HEPBD_G,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPBD_G.htm
 2011-2012,HEPB_S_G,LBXHBS,Hepatitis B Surface Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPB_S_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPB_S_G.htm
 2011-2012,HEPB_S_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPB_S_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPB_S_G.htm
 2011-2012,HEPC_G,LBDHCV,Hepatitis C antibody (confirmed),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPC_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/HEPC_G.htm
@@ -30714,22 +30683,22 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2011-2012,PAXHR_G,PAXVMH,"Hour count: mins valid data, no QC flag",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXHR_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXHR_G.htm
 2011-2012,PAXHR_G,PAXWWMH,Hour sum: valid wake wear minutes,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXHR_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXHR_G.htm
 2011-2012,PAXHR_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXHR_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXHR_G.htm
-2011-2012,PAXMIN_G,PAXAISMM,Minute count: 80hz data idle sleep mode,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXDAYM,Day of PAM measurements for this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXDAYWM,Day of the week for this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXFLGSM,Quality flags triggered,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXLXMM,Mean lux value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXLXSDM,Std deviation: lux values in this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXMTSM,MIMS triaxial value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXMXM,MIMS X-axis value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXMYM,MIMS Y-axis value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXMZM,MIMS Z-axis value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXPREDM,Minute wake/sleep/non-wear prediction,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXQFM,Minute sum: data quality flag count,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXSSNMP,Starting sample number for minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXTRANM,Transition flag for wake/sleep/non-wear,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,PAXTSM,Total seconds with data for this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
-2011-2012,PAXMIN_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXAISMM,Minute count: 80hz data idle sleep mode,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXDAYM,Day of PAM measurements for this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXDAYWM,Day of the week for this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXFLGSM,Quality flags triggered,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXLXMM,Mean lux value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXLXSDM,Std deviation: lux values in this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXMTSM,MIMS triaxial value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXMXM,MIMS X-axis value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXMYM,MIMS Y-axis value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXMZM,MIMS Z-axis value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXPREDM,Minute wake/sleep/non-wear prediction,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXQFM,Minute sum: data quality flag count,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXSSNMP,Starting sample number for minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXTRANM,Transition flag for wake/sleep/non-wear,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,PAXTSM,Total seconds with data for this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
+2011-2012,PAXMIN_G,SEQN,Respondent sequence number,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PAXMIN_G.htm
 2011-2012,PBCD_G,LBDBCDLC,Blood cadmium comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PBCD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PBCD_G.htm
 2011-2012,PBCD_G,LBDBCDSI,Blood cadmium (nmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PBCD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PBCD_G.htm
 2011-2012,PBCD_G,LBDBMNLC,Blood manganese comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PBCD_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/PBCD_G.htm
@@ -31286,6 +31255,10 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2011-2012,SSFR_G,SSTBBA,"2,3,4,5-tetrabromobenzoic acid (ug/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSFR_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSFR_G.htm
 2011-2012,SSFR_G,SSTBBAL,"2,3,4,5-tetrabromobenzoic acid cmt cd",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSFR_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSFR_G.htm
 2011-2012,SSFR_G,WTSSBG2Y,Surplus specimen B 11-12 2 year weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSFR_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSFR_G.htm
+2011-2012,SSHOLO_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.htm
+2011-2012,SSHOLO_G,SSHOLO,Holotranscobalamin (pmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.htm
+2011-2012,SSHOLO_G,SSHOLOLC,Holotranscobalamin comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.htm
+2011-2012,SSHOLO_G,WTSSTT2Y,SSTOCA and SSTOXO 2 year weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSHOLO_G.htm
 2011-2012,SSKL_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSKL_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSKL_G.htm
 2011-2012,SSKL_G,SSKLOTH,Klotho (pg/ml),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSKL_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSKL_G.htm
 2011-2012,SSTOCA_G,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSTOCA_G.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2011/DataFiles/SSTOCA_G.htm
@@ -32539,6 +32512,72 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2013-2014,DLQ_H,DLQ060,Have difficulty dressing or bathing?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DLQ_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DLQ_H.htm
 2013-2014,DLQ_H,DLQ080,Have difficulty doing errands alone ?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DLQ_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DLQ_H.htm
 2013-2014,DLQ_H,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DLQ_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DLQ_H.htm
+2013-2014,DOXPOL_H,LBCD01,"1,2,3,7,8-pncdd (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD01LA,"1,2,3,7,8-pncdd lipid adjusted (pg/g s)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD02,"1,2,3,4,7,8-hxcdd (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD02LA,"1,2,3,4,7,8-hxcdd lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD03,"1,2,3,6,7,8-hxcdd (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD03LA,"1,2,3,6,7,8-hxcdd lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD04,"1,2,3,7,8,9-hxcdd (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD04LA,"1,2,3,7,8,9-hxcdd lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD05,"1,2,3,4,6,7,8-hpcdd (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD05LA,"1,2,3,4,6,7,8-hpcdd lipid adjusted(pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD07,Octachlorodibenzo-p-dioxin (fg/g serum),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCD07LA,Octachlorodibenzo-p-dioxin Lpd Ad (pg/g),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF01,"2,3,7,8-Tetrachlorofuran (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF01LA,"2,3,7,8-tcdf lipid adjusted(pg/g sm lip)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF02,"1,2,3,7,8-Pentachlorofuran (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF02LA,"1,2,3,7,8-pncdf lipid adjusted(pg/g s)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF03,"2,3,4,7,8-Pentachlorofuran (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF03LA,"2,3,4,7,8-pncdf lipid adjust (pg/g s lp)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF04,"1,2,3,4,7,8-hcxdf (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF04LA,"1,2,3,4,7,8-hcxdf lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF05,"1,2,3,6,7,8-hxcdf (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF05LA,"1,2,3,6,7,8-hxcdf lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF06,"1,2,3,7,8,9-Hexachlorodifuran (fg/g ser)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF06LA,"1,2,3,7,8,9-hxcdf lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF07,"2,3,4,6,7,8-Hexchlorofuran (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF07LA,"2,3,4,6,7,8-hxcdf lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF08,"1,2,3,4,6,7,8-Heptachlorodifuran(fg/g s)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF08LA,"1,2,3,4,6,7,8-hpcdf lipid adjusted(pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF09,"1,2,3,4,7,8,9-Heptachlorodifuran(fg/g s)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF09LA,"1,2,3,4,7,8,9-hpcdf lipid adjusted(pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF10,Octachlorodibenzofuran (fg/g serum),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCF10LA,Octachlorodibenzofuran Lipid Adj (pg/g),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCHXC,"3,3',4,4',5,5'-hexachlorobiphenyl(fg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCHXCLA,"3,3',4,4',5,5'-hxcb Lipid adjusted(pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCPCB,"3,3',4,4',5-Pentachlorobiphenyl (fg/g s)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCPCBLA,"3,3',4,4',5-pncb lipid adjusted (pg/g)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCTC2,"3,4,4',5-Tetrachlorobiphenyl(fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCTC2LA,"3,4,4',5-tcb lipid adjusted (pg/g s lpd)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCTCD,"2,3,7,8-Tetrachloro-p-dioxn (fg/g serum)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBCTCDLA,"2,3,7,8-tcdd lipid adjusted (pg/g s lpd)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDD01LC,"1,2,3,7,8-pncdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDD02LC,"1,2,3,4,7,8-hxcdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDD03LC,"1,2,3,6,7,8-hxcdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDD04LC,"1,2,3,7,8,9-hxcdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDD05LC,"1,2,3,4,6,7,8-hpcdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDD07LC,"1,2,3,4,6,7,8,9-ocdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF01LC,"2,3,7,8-tcdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF02LC,"1,2,3,7,8-pncdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF03LC,"2,3,4,7,8-pncdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF04LC,"1,2,3,4,7,8-hcxdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF05LC,"1,2,3,6,7,8-hxcdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF06LC,"1,2,3,7,8,9-hxcdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF07LC,Octachlorodibenzo-p-dioxin comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF08LC,"1,2,3,4,6,7,8-hpcdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF09LC,"1,2,3,4,7,8,9-hpcdf comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDF10LC,Octachlorodibenzofuran comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDHXCLC,"3,3',4,4',5,5'-hxcb comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDPCBLC,"3,3',4,4',5-pncb comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDTC2LC,"3,4,4',5-tcb comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,LBDTCDLC,"2,3,7,8-tcdd comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,RIAGENDR,Gender,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,RIANSMP,Number of samples in a pool,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,RIDAGGRP,Age at Screening Adjudicated - Recode,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,RIDRETH3,Ethnicity - Recode,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,SAMPLEID,Pool identification number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
+2013-2014,DOXPOL_H,WTBSMSMA,Sum of adjusted subsample B weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DOXPOL_H.htm
 2013-2014,DPQ_H,DPQ010,Have little interest in doing things,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DPQ_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DPQ_H.htm
 2013-2014,DPQ_H,DPQ020,"Feeling down, depressed, or hopeless",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DPQ_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DPQ_H.htm
 2013-2014,DPQ_H,DPQ030,Trouble sleeping or sleeping too much,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DPQ_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/DPQ_H.htm
@@ -36696,9 +36735,10 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2013-2014,HEPA_H,LBXHA,Hepatitis A antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPA_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPA_H.htm
 2013-2014,HEPA_H,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPA_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPA_H.htm
 2013-2014,HEPBD_H,LBDHBG,Hepatitis B surface antigen,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.htm
-2013-2014,HEPBD_H,LBDHD,Hepatitis D (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.htm
+2013-2014,HEPBD_H,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.htm
 2013-2014,HEPBD_H,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.htm
 2013-2014,HEPBD_H,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.htm
+2013-2014,HEPBD_H,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPBD_H.htm
 2013-2014,HEPB_S_H,LBXHBS,Hepatitis B Surface Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPB_S_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPB_S_H.htm
 2013-2014,HEPB_S_H,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPB_S_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPB_S_H.htm
 2013-2014,HEPC_H,LBXHCG,Hepatitis C genotype,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPC_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/HEPC_H.htm
@@ -38028,22 +38068,22 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2013-2014,PAXHR_H,PAXVMH,"Hour count: mins valid data, no QC flag",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXHR_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXHR_H.htm
 2013-2014,PAXHR_H,PAXWWMH,Hour sum: valid wake wear minutes,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXHR_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXHR_H.htm
 2013-2014,PAXHR_H,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXHR_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXHR_H.htm
-2013-2014,PAXMIN_H,PAXAISMM,Minute count: 80hz data idle sleep mode,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXDAYM,Day of PAM measurements for this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXDAYWM,Day of the week for this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXFLGSM,Quality flags triggered,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXLXMM,Mean lux value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXLXSDM,Std deviation: lux values in this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXMTSM,MIMS triaxial value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXMXM,MIMS X-axis value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXMYM,MIMS Y-axis value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXMZM,MIMS Z-axis value for the minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXPREDM,Minute wake/sleep/non-wear prediction,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXQFM,Minute sum: data quality flag count,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXSSNMP,Starting sample number for minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXTRANM,Transition flag for wake/sleep/non-wear,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,PAXTSM,Total seconds with data for this minute,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
-2013-2014,PAXMIN_H,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXAISMM,Minute count: 80hz data idle sleep mode,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXDAYM,Day of PAM measurements for this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXDAYWM,Day of the week for this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXFLGSM,Quality flags triggered,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXLXMM,Mean lux value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXLXSDM,Std deviation: lux values in this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXMTSM,MIMS triaxial value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXMXM,MIMS X-axis value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXMYM,MIMS Y-axis value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXMZM,MIMS Z-axis value for the minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXPREDM,Minute wake/sleep/non-wear prediction,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXQFM,Minute sum: data quality flag count,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXSSNMP,Starting sample number for minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXTRANM,Transition flag for wake/sleep/non-wear,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,PAXTSM,Total seconds with data for this minute,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
+2013-2014,PAXMIN_H,SEQN,Respondent sequence number,https://ftp.cdc.gov/pub/NHANES/LargeDataFiles/PAXMIN_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PAXMIN_H.htm
 2013-2014,PBCD_H,LBDBCDLC,Blood cadmium comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PBCD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PBCD_H.htm
 2013-2014,PBCD_H,LBDBCDSI,Blood cadmium (umol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PBCD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PBCD_H.htm
 2013-2014,PBCD_H,LBDBMNLC,Blood manganese comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PBCD_H.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2013/DataFiles/PBCD_H.htm
@@ -42138,9 +42178,10 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2015-2016,HEPA_I,LBXHA,Hepatitis A antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPA_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPA_I.htm
 2015-2016,HEPA_I,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPA_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPA_I.htm
 2015-2016,HEPBD_I,LBDHBG,Hepatitis B surface antigen,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.htm
-2015-2016,HEPBD_I,LBDHD,Hepatitis D (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.htm
+2015-2016,HEPBD_I,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.htm
 2015-2016,HEPBD_I,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.htm
 2015-2016,HEPBD_I,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.htm
+2015-2016,HEPBD_I,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPBD_I.htm
 2015-2016,HEPB_S_I,LBXHBS,Hepatitis B Surface Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPB_S_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPB_S_I.htm
 2015-2016,HEPB_S_I,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPB_S_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPB_S_I.htm
 2015-2016,HEPC_I,LBXHCG,Hepatitis C Genotype,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPC_I.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2015/DataFiles/HEPC_I.htm
@@ -46846,6 +46887,32 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2018,ECQ_J,MCQ080E,Your child was overweight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ECQ_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ECQ_J.htm
 2017-2018,ECQ_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ECQ_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ECQ_J.htm
 2017-2018,ECQ_J,WHQ030E,How do you consider your child's weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ECQ_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ECQ_J.htm
+2017-2018,EPHPP_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URD14DLC,"2,5-dichlorophenol Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDBP3LC,Urinary Benzophenone-3 Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDBPFLC,Urinary Bisphenol F Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDBPHLC,Urinary Bisphenol A Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDBPSLC,Urinary Bisphenol S Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDBUPLC,Butyl paraben Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDDCBLC,"2,4-dichlorophenol Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDEPBLC,Ethyl paraben Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDMPBLC,Methyl paraben Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDPPBLC,Propyl paraben Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDTLCLC,Urinary Triclocarban Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URDTRSLC,Urinary Triclosan Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URX14D,"2,5-dichlorophenol (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXBP3,Urinary Benzophenone-3 (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXBPF,Urinary Bisphenol F (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXBPH,Urinary Bisphenol A (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXBPS,Urinary Bisphenol S (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXBUP,Butyl paraben (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXDCB,"2,4-dichlorophenol (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXEPB,Ethyl paraben  (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXMPB,Methyl paraben (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXPPB,Propyl paraben (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXTLC,Urinary Triclocarban (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,URXTRS,Urinary Triclosan (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
+2017-2018,EPHPP_J,WTSB2YR,Subsample B weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/EPHPP_J.htm
 2017-2018,ETHOX_J,LBDEOALC,Ethylene Oxide comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ETHOX_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ETHOX_J.htm
 2017-2018,ETHOX_J,LBXEOA,Ethylene Oxide (pmol/g Hb),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ETHOX_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ETHOX_J.htm
 2017-2018,ETHOX_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ETHOX_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/ETHOX_J.htm
@@ -46987,6 +47054,7 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2018,HEPBD_J,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.htm
 2017-2018,HEPBD_J,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.htm
 2017-2018,HEPBD_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.htm
+2017-2018,HEPBD_J,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPBD_J.htm
 2017-2018,HEPB_S_J,LBXHBS,Hepatitis B Surface Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPB_S_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPB_S_J.htm
 2017-2018,HEPB_S_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPB_S_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPB_S_J.htm
 2017-2018,HEPC_J,LBDHCI,Hepatitis C Antibody (confirmed),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPC_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/HEPC_J.htm
@@ -47554,6 +47622,20 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2018,OSQ_J,OSQ210,How old father when fractured hip?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/OSQ_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/OSQ_J.htm
 2017-2018,OSQ_J,OSQ220,Over or under 50 years old?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/OSQ_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/OSQ_J.htm
 2017-2018,OSQ_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/OSQ_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/OSQ_J.htm
+2017-2018,PAH_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URDP01LC,1-Hydroxynaphthalene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URDP03LC,3-Hydroxyfluorene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URDP04LC,2-Hydroxyfluorene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URDP06LC,1-Hydroxyphenanthrene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URDP10LC,1-Hydroxypyrene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URDP25LC,2 & 3-Hydroxyphenanthrene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URXP01,1-Hydroxynaphthalene (ng/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URXP03,3-Hydroxyfluorene (ng/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URXP04,2-Hydroxyfluorene (ng/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URXP06,1-Hydroxyphenanthrene (ng/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URXP10,1-Hydroxypyrene (ng/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,URXP25,2 & 3-Hydroxyphenanthrene (ng/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
+2017-2018,PAH_J,WTSA2YR,Subsample A Weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAH_J.htm
 2017-2018,PAQY_J,PAQ706,Days physically active at least 60 min.,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAQY_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAQY_J.htm
 2017-2018,PAQY_J,PAQ710,Hours watch TV or videos past 30 days,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAQY_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAQY_J.htm
 2017-2018,PAQY_J,PAQ715,Hours use computer past 30 days,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAQY_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/PAQY_J.htm
@@ -47879,6 +47961,18 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2018,SSGLYP_J,SSGLYP,Glyphosate (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSGLYP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSGLYP_J.htm
 2017-2018,SSGLYP_J,SSGLYPL,Glyphosate comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSGLYP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSGLYP_J.htm
 2017-2018,SSGLYP_J,WTSSBJ2Y,Surplus specimen B 17-18 2 yr weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSGLYP_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSGLYP_J.htm
+2017-2018,SSNEON_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSAND,N-Desmethylacetamiprid (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSANDLC,N-Desmethylacetamiprid (ug/L) Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSFLUP,Flupyradifurone (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSFLUPLC,Flupyradifurone (ug/L) Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSOHIM,5-Hydroxyimidacloprid (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSOHIMLC,5-Hydroxyimidacloprid (ug/L) Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSSLF1,Sulfoxaflor 1 (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSSLF1LC,Sulfoxaflor 1 (ug/L) Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSSLF2,Sulfoxaflor 2 (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,SSSLF2LC,Sulfoxaflor 2 (ug/L) Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
+2017-2018,SSNEON_J,WTSSBJ2Y,Surplus specimen B 17-18 2 yr weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSNEON_J.htm
 2017-2018,SSPFAS_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSPFAS_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSPFAS_J.htm
 2017-2018,SSPFAS_J,SSCLPF,Chlorohexadecafluorooxanonane sulfonate,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSPFAS_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSPFAS_J.htm
 2017-2018,SSPFAS_J,SSCLPFL,Chlorohexadecafluorooxanonane sulfon cd,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSPFAS_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSPFAS_J.htm
@@ -47920,6 +48014,12 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2018,SSTST_J,SSTSHBG,SHBG (nmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSTST_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSTST_J.htm
 2017-2018,SSTST_J,SSTSHGLC,SHBG Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSTST_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSTST_J.htm
 2017-2018,SSTST_J,WTSSTS2Y,Surplus specimen TST 2 year weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSTST_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSTST_J.htm
+2017-2018,SSUVCM_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.htm
+2017-2018,SSUVCM_J,SSMMAC,N-Acetyl-S-methyl-L-cysteine (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.htm
+2017-2018,SSUVCM_J,SSMMACLC,N-Acetyl-S-methyl-L-cysteine Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.htm
+2017-2018,SSUVCM_J,SSPPMA,PPMA (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.htm
+2017-2018,SSUVCM_J,SSPPMALC,PPMA Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.htm
+2017-2018,SSUVCM_J,WTSSAJ2Y,Surplus specimen A 17-18 2 year weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVCM_J.htm
 2017-2018,SSUVOC_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVOC_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVOC_J.htm
 2017-2018,SSUVOC_J,SSHMFA,5-Hydrxymthl-2-furancrbxylc acid (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVOC_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVOC_J.htm
 2017-2018,SSUVOC_J,SSHMFAL,5-Hydrxymthl-2-furancrbxylc acid comt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVOC_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/SSUVOC_J.htm
@@ -48038,6 +48138,24 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2018,UNI_J,URDUNILC,"Nickel, Urine Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UNI_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UNI_J.htm
 2017-2018,UNI_J,URXUNI,"Nickel, Urine (ug/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UNI_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UNI_J.htm
 2017-2018,UNI_J,WTSA2YR,Subsample A weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UNI_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UNI_J.htm
+2017-2018,UPHOPM_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URD24DLC,"2,4-D Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URD4FPLC,4-fluoro-3-phenoxy-benzoic acid Cmt Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URDCPMLC,"3,5,6-trichloropyridinol Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URDMALLC,Malathion diacid comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URDOPMLC,3-phenoxybenzoic acid Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URDOXYLC,Oxypyrimidine Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URDPARLC,para-Nitrophenol Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URDTCCLC,Dichlorovnl-dimeth prop carboacid Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URX24D,"2,4-D (ug/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URX4FP,4-fluoro-3-phenoxy-benzoic acid (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URXCPM,"3,5,6-trichloropyridinol (ug/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URXMAL,Malathion diacid,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URXOPM,3-phenoxybenzoic acid (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URXOXY,Oxypyrimidine (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URXPAR,para-Nitrophenol (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,URXTCC,Dichlorovnl-dimeth prop carboacid (ug/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
+2017-2018,UPHOPM_J,WTSB2YR,Environmental Subsample B Weights,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UPHOPM_J.htm
 2017-2018,UTAS_J,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UTAS_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UTAS_J.htm
 2017-2018,UTAS_J,URDUASLC,"Arsenic, Total - Urine Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UTAS_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UTAS_J.htm
 2017-2018,UTAS_J,URXUAS,"Arsenic, Total - Urine (ug/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UTAS_J.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/UTAS_J.htm
@@ -50975,6 +51093,7 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2020,P_HEPBD,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.htm
 2017-2020,P_HEPBD,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.htm
 2017-2020,P_HEPBD,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.htm
+2017-2020,P_HEPBD,SSLBDHD,Hepatitis D antibody (anti-HDV)retesting,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPBD.htm
 2017-2020,P_HEPB_S,LBXHBS,Hepatitis B Surface Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPB_S.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPB_S.htm
 2017-2020,P_HEPB_S,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPB_S.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPB_S.htm
 2017-2020,P_HEPC,LBDHCI,Hepatitis C Antibody (confirmed),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPC.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_HEPC.htm
@@ -51682,6 +51801,28 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2017-2020,P_SSFR,SSIPPP,2(isopropyl)phenyl)phenyl phosphateug/L,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSFR.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSFR.htm
 2017-2020,P_SSFR,SSIPPPL,2(isopropyl)phenyl)phenyl phosphate cd,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSFR.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSFR.htm
 2017-2020,P_SSFR,WTSSBPP,Surplus specimen B weights pre-pandemic,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSFR.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSFR.htm
+2017-2020,P_SSMMRV,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSMEASI,Measles IgG Antibody MBA Interpretation,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSMEASQ,Measles IgG Antibody MBA Quantitative,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSMEASQC,Measles IgG Antibody MBA Comment,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSMUMPI,Mumps IgG Antibody MBA Interpretation,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSMUMPQ,Mumps IgG Antibody MBA Quantitative,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSMUMPQC,Mumps IgG Antibody MBA Comment,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSRUBI,Rubella IgG Antibody MBA Interpretation,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSRUBQ,Rubella IgG Antibody MBA Quantitative,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSRUBQC,Rubella IgG Antibody MBA Comment,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSVARGI,Varicella gpELISA Interpretation,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSVARINT,Varicella Overall Interpretation,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSVARMI,Varicella IgG Antibody MBA Interpret,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSVARMQ,Varicella IgG Antibody MBA Quantitative,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,SSVARMQC,Varicella IgG Antibody MBA Comment,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSMMRV,WTSSMMPP,Surplus spec MMRV weights prepandemic,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSMMRV.htm
+2017-2020,P_SSUVCM,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.htm
+2017-2020,P_SSUVCM,SSMMAC,N-Acetyl-S-methyl-L-cysteine (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.htm
+2017-2020,P_SSUVCM,SSMMACLC,N-Acetyl-S-methyl-L-cysteine Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.htm
+2017-2020,P_SSUVCM,SSPPMA,PPMA (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.htm
+2017-2020,P_SSUVCM,SSPPMALC,PPMA Cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.htm
+2017-2020,P_SSUVCM,WTSSAPP,Surplus specimen A weights pre-pandemic,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_SSUVCM.htm
 2017-2020,P_TCHOL,LBDTCSI,Total Cholesterol (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_TCHOL.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_TCHOL.htm
 2017-2020,P_TCHOL,LBXTC,Total Cholesterol (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_TCHOL.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_TCHOL.htm
 2017-2020,P_TCHOL,SEQN,Respondent Sequence Number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_TCHOL.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2017/DataFiles/P_TCHOL.htm
@@ -52003,6 +52144,14 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,AGP_L,LBXAGP,alpha-1-acid glycoprotein (g/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/AGP_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/AGP_L.htm
 2021-2023,AGP_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/AGP_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/AGP_L.htm
 2021-2023,AGP_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/AGP_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/AGP_L.htm
+2021-2023,ALB_CR_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URDACT,Albumin creatinine ratio (mg/g),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URDUCRLC,"Creatinine, urine comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URDUMALC,"Albumin, urine comment code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URXCRS,"Creatinine, urine (umol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URXUCR,"Creatinine, urine (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URXUMA,"Albumin, urine (ug/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
+2021-2023,ALB_CR_L,URXUMS,"Albumin, urine (mg/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALB_CR_L.htm
 2021-2023,ALQ_L,ALQ111,Ever had a drink of any kind of alcohol,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALQ_L.htm
 2021-2023,ALQ_L,ALQ121,Past 12 mos how often drink alc bev,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALQ_L.htm
 2021-2023,ALQ_L,ALQ130,Avg # alcoholic drinks/day/past 12 mos,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ALQ_L.htm
@@ -52088,6 +52237,48 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,BAX_L,BAXTC51,"MRT cond. 5, trial 1, time",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BAX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BAX_L.htm
 2021-2023,BAX_L,BAXTC52,"MRT cond. 5, trial 2, time",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BAX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BAX_L.htm
 2021-2023,BAX_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BAX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BAX_L.htm
+2021-2023,BIOPRO_L,LBDSALSI,"Albumin, refrigerated serum (g/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSBUSI,Blood Urea Nitrogen (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSCASI,Total Calcium (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSCHSI,"Cholesterol, refrigerated serum (mmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSCRSI,"Creatinine, refrigerated serum (umol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSGBSI,Globulin (g/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSGLSI,"Glucose, refrigerated serum (mmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSGTLC,GGT Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSIRSI,"Iron, refrigerated serum (umol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSPHSI,Phosphorus (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSTBLC,Total Bilirubin Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSTBSI,Total Bilirubin (umol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSTPSI,Total Protein (g/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSTRSI,"Triglycerides, refrig serum (mmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBDSUASI,Uric acid (umol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXMAGN,Magnesium (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSAL,"Albumin, refrigerated serum (g/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSAPSI,Alkaline Phosphatase (ALP) (IU/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSASSI,Aspartate Aminotransferase (AST) (IU/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSATSI,Alanine Aminotransferase (ALT) (IU/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSBU,Blood Urea Nitrogen (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSC3SI,Bicarbonate (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSCA,Total Calcium (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSCH,"Cholesterol, refrigerated serum (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSCK,Creatine Phosphokinase (CPK) (U/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSCLSI,Chloride (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSCR,"Creatinine, refrigerated serum (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSGB,Globulin (g/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSGL,"Glucose, refrigerated serum (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSGTSI,Gamma Glutamyl Transferase (GGT) (IU/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSIR,"Iron, refrigerated serum (µg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSKSI,Potassium (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSLDSI,Lactate Dehydrogenase (LDH) (U/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSNASI,Sodium (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSOSSI,Osmolality (mmol/Kg),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSPH,Phosphorus (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSTB,Total Bilirubin (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSTP,Total Protein (g/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSTR,"Triglycerides, refrig serum (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,LBXSUA,Uric acid (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,SEQN,Respondent Sequence Number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
+2021-2023,BIOPRO_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BIOPRO_L.htm
 2021-2023,BMX_L,BMDBMIC,BMI Category - Children/Youth,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.htm
 2021-2023,BMX_L,BMDSTATS,Body Measures Component Status Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.htm
 2021-2023,BMX_L,BMIARMC,Arm Circumference Comment,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/BMX_L.htm
@@ -52753,6 +52944,50 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,ECQ_L,MCQ080E,Your child was overweight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ECQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ECQ_L.htm
 2021-2023,ECQ_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ECQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ECQ_L.htm
 2021-2023,ECQ_L,WHQ030E,How do you consider your child's weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ECQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/ECQ_L.htm
+2021-2023,FAR_L,LBDP1ALC,Arachidic acid (C20:0) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDP1ELC,11-Eicosenoic acid (C20:1n-9) cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDP1GLC,Tetracosanoic acid (C24:0) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPANLC,alpha-Linolenic acid (C18:3n-3) cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPD3LC,Docosapentaenoic acid 3 (C22:5n-3) cmt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPD6LC,Docosapentaenoic acid (C22:5n-6) cmt cd,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPDALC,Docosanoic acid (C22:0) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPEDLC,"11,14-Eicosadienoic acid(C20:2n6) cmt cd",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPGHLC,homo-gamma-Linolenic acd (C20:3n-6) cmt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPHALC,Docosahexaenoic acid (C22:6n-3) cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPLGLC,gamma-Linolenic acid (C18:3n-6) cmt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPMRLC,Myristic acid (C14:0) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPNLLC,Linoleic acid (C18:2n-6) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPNRLC,15-Tetracosenoic acid(C24:1n9) comt code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPOLLC,Oleic acid (C18:1n-9) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPPELC,Eicosapentaenoic acid (C20:5n-3) cmt cd,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPPLLC,Palmitoleic acid (16:1n-7) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPPMLC,Palmitic acid (C16:0) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPRALC,Arachidonic acid (C20:4n-6) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPSTLC,Stearic acid (C18:0) comment code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBDPTALC,Docosatetraenoic acid (C22:4n-6) cmt cd,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXP1A,Arachidic acid (C20:0) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXP1E,11-Eicosenoic acid (C20:1n-9) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXP1G,Tetracosanoic acid (C24:0) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPAN,alpha-Linolenic acid (C18:3n-3) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPD3,Docosapentaenoic acid 3 (C22:5n-3) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPD6,Docosapentaenoic acid (C22:5n-6) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPDA,Docosanoic acid (C22:0) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPED,"11,14-Eicosadienoic acid (C20:2n6) (%)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPGH,homo-gamma-Linolenic acid(C20:3n-6) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPHA,Docosahexaenoic acid (C22:6n-3) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPLG,gamma-Linolenic acid (C18:3n-6) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPMR,Myristic acid (C14:0) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPNL,Linoleic acid (C18:2n-6) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPNR,15-Tetracosenoic acid (C24:1n9) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPOL,Oleic acid (C18:1n-9) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPPE,Eicosapentaenoic acid (C20:5n-3) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPPL,Palmitoleic acid (16:1n-7) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPPM,Palmitic acid (C16:0) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPRA,Arachidonic acid (C20:4n-6) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPST,Stearic acid (C18:0) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,LBXPTA,Docosatetraenoic acid (C22:4n-6) (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
+2021-2023,FAR_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FAR_L.htm
 2021-2023,FASTQX_L,PHAALCHR,Alcohol fast time (hours),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FASTQX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FASTQX_L.htm
 2021-2023,FASTQX_L,PHAALCMN,Alcohol fast time (minutes),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FASTQX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FASTQX_L.htm
 2021-2023,FASTQX_L,PHAANTHR,"Antacids, laxatives fast time (hours)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FASTQX_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FASTQX_L.htm
@@ -52776,6 +53011,21 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,FERTIN_L,LBXFER,Ferritin(ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FERTIN_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FERTIN_L.htm
 2021-2023,FERTIN_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FERTIN_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FERTIN_L.htm
 2021-2023,FERTIN_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FERTIN_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FERTIN_L.htm
+2021-2023,FFMR_L,LBDRF1LC,"5-Methyl-tetrahydrofolate, RBC cmt",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBDRF2LC,"Folic acid, RBC cmt",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBDRF3LC,"5-Formyl-tetrahydrofolate, RBC cmt",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBDRF4LC,"Tetrahydrofolate, RBC cmt",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBDRF5LC,"5,10-Methenyl-tetrahydrofolate, RBC cmt",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBDRF6LC,"MeFox oxidation product, RBC cmt",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBDRF7SI,"Total Folate, RBC (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBXRF1SI,"5-Methyl-tetrahydrofolate, RBC (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBXRF2SI,"Folic acid, RBC (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBXRF3SI,"5-Formyl-tetrahydrofolate, RBC (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBXRF4SI,"Tetrahydrofolate, RBC (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBXRF5SI,"5,10-Methenyl-tetrahydrofolate (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,LBXRF6SI,"MeFox oxidation product, RBC (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
+2021-2023,FFMR_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FFMR_L.htm
 2021-2023,FNQ_L,FNDADI,WG-SS Disability Indicator 18+,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FNQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FNQ_L.htm
 2021-2023,FNQ_L,FNDAEDI,WG-SS Enhanced Disability Indicator 18+,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FNQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FNQ_L.htm
 2021-2023,FNQ_L,FNDCDI,CFM Disability Indicator for 5-17 years,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FNQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FNQ_L.htm
@@ -52828,6 +53078,42 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,FOLFMS_L,LBXSF5SI,"5,10-Methenyl-tetrahydrofolate (nmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FOLFMS_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FOLFMS_L.htm
 2021-2023,FOLFMS_L,LBXSF6SI,Mefox oxidation product (nmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FOLFMS_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FOLFMS_L.htm
 2021-2023,FOLFMS_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FOLFMS_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FOLFMS_L.htm
+2021-2023,FSQ_L,FSD012N,HH FS benefit: # of people received(12m),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD032A,HH Worried run out of food,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD032B,HH Food didn't last,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD032C,HH Couldn't afford balanced meals,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD041,HH Adults cut size or skip meals,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD052,HH How often adults cut size/skip meals,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD061,HH Eat less than should,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD071,"HH Hungry, but didn't eat",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD081,"HH Lost weight, no money for food",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD092,HH Adults not eat whole day,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD102,HH How often adults not eat for day,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD151,HH Emergency food received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD162,HH WIC benefit: receive in last 12 month,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD165N,HH FS benefit: # of people ever received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD225,HH FS benefit: time since last received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD230,HH FS benefit: currently receive,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD230N,HH FS benefit: #people currently receive,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD235,HH FS benefit: amount received last time,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD660ZC,CH WIC benefit: currently receive,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD670ZC,CH WIC benefit: # of months received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD675,CH WIC benefit: received in infancy,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD680,CH WIC benefit: received b/w 1-4 yrs old,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD760N,HH WIC benefit: no. people received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSD795,HH FS benefit: # of months received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSDAD,Adult food security category,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQ012,HH FS benefit: receive in last 12 months,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQ165,HH FS benefit: ever received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQ653,CH WIC benefit: ever received,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQ690,CH WIC benefit: Mom received while preg.,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQ695,CH WIC benefit: starting month of preg.,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQ760,HH WIC benefit: received in last 30 days,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQBOX1,CHECK ITEM,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQBOX2,CHECK ITEM,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQBOX5,CHECK ITEM,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,FSQBOX6,CHECK ITEM,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
+2021-2023,FSQ_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/FSQ_L.htm
 2021-2023,GHB_L,LBXGH,Glycohemoglobin (%),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.htm
 2021-2023,GHB_L,SEQN,Sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.htm
 2021-2023,GHB_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/GHB_L.htm
@@ -52842,9 +53128,23 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,HEPA_L,LBXHA,Hepatitis A antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPA_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPA_L.htm
 2021-2023,HEPA_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPA_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPA_L.htm
 2021-2023,HEPA_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPA_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPA_L.htm
+2021-2023,HEPBD_L,LBDHBG,Hepatitis B surface antigen,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.htm
+2021-2023,HEPBD_L,LBDHD,Hepatitis D antibody (anti-HDV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.htm
+2021-2023,HEPBD_L,LBXHBC,Hepatitis B core antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.htm
+2021-2023,HEPBD_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.htm
+2021-2023,HEPBD_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPBD_L.htm
 2021-2023,HEPB_S_L,LBXHBS,Hepatitis B Surface Antibody,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPB_S_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPB_S_L.htm
 2021-2023,HEPB_S_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPB_S_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPB_S_L.htm
 2021-2023,HEPB_S_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPB_S_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPB_S_L.htm
+2021-2023,HEPC_L,LBDHCI,Hepatitis C Antibody (confirmed),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.htm
+2021-2023,HEPC_L,LBXHCG,Hepatitis C Genotype,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.htm
+2021-2023,HEPC_L,LBXHCR,Hepatitis C RNA,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.htm
+2021-2023,HEPC_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.htm
+2021-2023,HEPC_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPC_L.htm
+2021-2023,HEPE_L,LBDHEG,Hepatitis E IgG (anti-HEV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.htm
+2021-2023,HEPE_L,LBDHEM,Hepatitis E IgM (anti-HEV),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.htm
+2021-2023,HEPE_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.htm
+2021-2023,HEPE_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEPE_L.htm
 2021-2023,HEQ_L,HEQ010,Ever told you have Hepatitis B?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEQ_L.htm
 2021-2023,HEQ_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HEQ_L.htm
 2021-2023,HIQ_L,HIQ011,Covered by health insurance,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HIQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/HIQ_L.htm
@@ -53076,6 +53376,16 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,TFR_L,LBXTFR,Transferrin receptor (mg/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TFR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TFR_L.htm
 2021-2023,TFR_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TFR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TFR_L.htm
 2021-2023,TFR_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TFR_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TFR_L.htm
+2021-2023,TRIGLY_L,LBDLDL,"LDL-Cholesterol, Friedewald (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBDLDLM,"LDL-Cholesterol, Martin-Hopkins (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBDLDLN,"LDL-Cholesterol, NIH equation 2 (mg/dL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBDLDLSI,"LDL-Cholesterol, Friedewald (mmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBDLDMSI,"LDL-Cholesterol, Martin-Hopkins (mmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBDLDNSI,"LDL-Cholesterol, NIH equation 2 (mmol/L)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBDTRSI,Triglyceride (mmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,LBXTLG,Triglyceride (mg/dL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
+2021-2023,TRIGLY_L,WTSAF2YR,Fasting Subsample 2 Year MEC Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TRIGLY_L.htm
 2021-2023,TST_L,LBD17HLC,17α-hydroxyprogesterone Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TST_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TST_L.htm
 2021-2023,TST_L,LBD17HSI,17α-hydroxyprogesterone (nmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TST_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TST_L.htm
 2021-2023,TST_L,LBDAMHLC,Anti-Mullerian hormone Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TST_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/TST_L.htm
@@ -53123,6 +53433,97 @@ cycle name,dataset,variable name,variable explanation,dataset link,dataset docum
 2021-2023,VID_L,LBXVIDMS,25OHD2+25OHD3 (nmol/L),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VID_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VID_L.htm
 2021-2023,VID_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VID_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VID_L.htm
 2021-2023,VID_L,WTPH2YR,Phlebotomy 2 Year Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VID_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VID_L.htm
+2021-2023,VOCWB_L,LBD2DFLC,"Blood 2,5-Dimethylfuran Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV06LC,Blood Hexane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV07LC,Blood Heptane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV08LC,Blood Octane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV1DLC,"Blood 1,2-Dichlorobenzene Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV2ALC,"Blood 1,2-Dichloroethane Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV3BLC,"Blood 1,3-Dichlorobenzene Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDV4CLC,Blood Tetrachloroethene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVAPLC,Blood a-pinene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVBFLC,Blood Bromoform Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVBMLC,Blood Bromodichloromethane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVBZLC,Blood Benzene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVC6LC,Blood Cyclohexane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVCBLC,Blood Chlorobenzene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVCFLC,Blood Chloroform Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVCMLC,Blood Dibromochloromethane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVCTLC,Blood Carbon Tetrachloride Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVDBLC,"Blood 1,4-Dichlorobenzene Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVEALC,Blood Ethyl Acetate Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVEBLC,Blood Ethylbenzene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVECLC,Blood Chloroethane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVEELC,Blood Diethyl Ether Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVFNLC,Blood Furan Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVHTLC,Blood Tetrahydrofuran Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVIBLC,Blood Isobutyronitrile Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVIPLC,Blood Isopropylbenzene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVMCLC,Blood Methylene Chloride Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVMELC,Blood MTBE Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVMKLC,Blood Methyl Isobutyl Ketone Comt Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVMPLC,Blood Methylcyclopentane Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVOXLC,Blood o-Xylene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVSTLC,Blood Styrene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVTCLC,Blood Trichloroethene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVTELC,"Blood 1,1,1-Trichloroethane Comment Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVTOLC,Blood Toluene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVTPLC,"Blood 1,2,3-Trichloropropane Comt Code",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVXYLC,Blood m-/p-Xylene Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBDVZBLC,Blood Benzonitrile Comment Code,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBX2DF,"Blood 2,5-Dimethylfuran (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV06,Blood Hexane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV07N,Blood Heptane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV08N,Blood Octane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV1D,"Blood 1,2-Dichlorobenzene (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV2A,"Blood 1,2-Dichloroethane (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV3B,"Blood 1,3-Dichlorobenzene (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXV4C,Blood Tetrachloroethene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVAPN,Blood a-pinene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVBF,Blood Bromoform (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVBM,Blood Bromodichloromethane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVBZ,Blood Benzene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVBZN,Blood Benzonitrile (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVC6,Blood Cyclohexane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVCB,Blood Chlorobenzene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVCF,Blood Chloroform (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVCM,Blood Dibromochloromethane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVCT,Blood Carbon Tetrachloride (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVDB,"Blood 1,4-Dichlorobenzene (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVDEE,Blood Diethyl Ether (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVEA,Blood Ethyl Acetate (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVEB,Blood Ethylbenzene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVEC,Blood Chloroethane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVFN,Blood Furan (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVIBN,Blood Isobutyronitrile (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVIPB,Blood Isopropylbenzene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVMC,Blood Methylene Chloride (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVMCP,Blood Methylcyclopentane (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVME,Blood MTBE (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVMIK,Blood Methyl Isobutyl Ketone (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVOX,Blood o-Xylene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVST,Blood Styrene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVTC,Blood Trichloroethene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVTE,"Blood 1,1,1-Trichloroethane (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVTHF,Blood Tetrahydrofuran (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVTO,Blood Toluene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVTP,"Blood 1,2,3-Trichloropropane (ng/mL)",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,LBXVXY,Blood m-/p-Xylene (ng/mL),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VOCWB_L,WTSVOC2Y,VOC Subsample Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VOCWB_L.htm
+2021-2023,VTQ_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTD244B,Long ago did you pump gas in your car?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTD261B,Long since use dry cleaning solvents?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTD271B,"How long, in hrs, since you bathed?",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTD281B,"How long, since breathed paint fumes?",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ231A,Use moth balls or toilet deodorizers?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ233A,Past 3 days inhale smoke for 10 minutes,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ233B,When did you last inhale smoke for 10min,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ244A,Did you pump gas into your car?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ261A,In last 48 hrs use dry cleaning solvent?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ271A,"In last 48 hrs, bathe for 5+ minutes?",https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,VTQ281A,In past 48 hrs breathe paint fumes?,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
+2021-2023,VTQ_L,WTSVOC2Y,VOC Subsample Weight,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/VTQ_L.htm
 2021-2023,WHQ_L,SEQN,Respondent sequence number,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/WHQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/WHQ_L.htm
 2021-2023,WHQ_L,WHD010,Current self-reported height (inches),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/WHQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/WHQ_L.htm
 2021-2023,WHQ_L,WHD020,Current self-reported weight (pounds),https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/WHQ_L.xpt,https://wwwn.cdc.gov/Nchs/Data/Nhanes/Public/2021/DataFiles/WHQ_L.htm
