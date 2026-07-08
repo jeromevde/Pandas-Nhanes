@@ -449,18 +449,12 @@
         #corr-doclink { margin-top: 0.3em; display: inline-block; font-size: 0.82em; color: #3182ce; text-decoration: underline; }
         #corr-close { background: none; border: none; font-size: 1.6em; cursor: pointer; color: #718096; padding: 0; line-height: 1; }
         #corr-close:hover { color: #1a202c; }
-        #corr-tabs {
-            display: flex; gap: 0; border-bottom: 2px solid #e2e8f0;
-            background: #f7fafc; padding: 0 1.2em;
+        #corr-summary-bar {
+            padding: 0.45em 1.2em; background: #fff;
+            border-bottom: 1px solid #e2e8f0; font-size: 0.83em;
+            color: #718096; flex-shrink: 0;
         }
-        .corr-tab {
-            padding: 0.55em 1em; font-size: 0.82em; font-weight: 600;
-            color: #718096; cursor: pointer; border: none; background: none;
-            border-bottom: 2px solid transparent; margin-bottom: -2px;
-            transition: color 0.15s, border-color 0.15s;
-        }
-        .corr-tab:hover { color: #2d3748; }
-        .corr-tab.active { color: #2b6cb0; border-bottom-color: #2b6cb0; }
+        #corr-cycle-status { color: #718096; font-size: 0.82em; }
         #corr-body { flex: 1; overflow-y: auto; position: relative; }
         #corr-list { padding: 0; }
         #corr-scatter { display: none; padding: 1em 1.4em; flex-direction: column; align-items: center; height: 100%; overflow: hidden; }
@@ -489,10 +483,19 @@
         .type-r   { background: #ebf8ff; color: #2b6cb0; }
         .type-eta { background: #f0fff4; color: #276749; }
         .type-v   { background: #faf5ff; color: #6b46c1; }
+        .plot-badge {
+            display: inline-block; font-size: 0.68em; font-weight: 800;
+            padding: 1px 6px; border-radius: 4px; margin-top: 4px;
+            color: #4a5568; background: #edf2f7; letter-spacing: 0.02em;
+        }
+        .plot-scatter { background: #ebf8ff; color: #2b6cb0; }
+        .plot-box { background: #f0fff4; color: #276749; }
+        .plot-heatmap { background: #fffaf0; color: #975a16; }
         .corr-loading-msg, .corr-no-data {
             text-align: center; color: #718096; font-size: 0.95em; padding: 2em 1em;
         }
         .corr-table { width: 100%; border-collapse: collapse; }
+        .corr-table tr { content-visibility: auto; contain-intrinsic-size: 36px; }
         .corr-row  { cursor: pointer; transition: background 0.12s; }
         .corr-row:hover  { background: #ebf8ff; }
         .corr-row-scatter { cursor: pointer; transition: background 0.12s; }
@@ -504,6 +507,27 @@
         .corr-bar  { display: inline-block; height: 8px; border-radius: 4px; opacity: 0.65; vertical-align: middle; min-width: 2px; }
         .corr-r    { font-size: 0.82em; font-weight: 700; margin-left: 5px; vertical-align: middle; }
         .corr-n    { font-size: 0.76em; color: #718096; padding: 0.5em 0.4em; white-space: nowrap; }
+        .corr-cycle-values { padding: 0.45em 0.5em; min-width: 290px; }
+        .corr-cycle-value {
+            display: inline-flex; align-items: center; gap: 4px;
+            padding: 2px 6px; margin: 2px 3px 2px 0;
+            border: 1px solid #e2e8f0; border-radius: 5px;
+            background: #fff; color: #4a5568; font-size: 0.72em;
+            white-space: nowrap; cursor: pointer;
+        }
+        .corr-cycle-value:hover { border-color: #90cdf4; background: #f7fafc; }
+        .corr-cycle-value.active { border-color: #63b3ed; background: #ebf8ff; }
+        .corr-cycle-value.nonsig { opacity: 0.55; }
+        .corr-cycle-name { color: #718096; font-weight: 700; }
+        .corr-cycle-assoc { font-weight: 800; }
+        .corr-outlier-note { color: #a0aec0; font-size: 0.76em; margin-left: 0.5em; }
+        .corr-show-more {
+            margin: 0.7em auto 1.2em; display: block;
+            border: 1px solid #bee3f8; background: #ebf8ff; color: #2b6cb0;
+            border-radius: 5px; padding: 0.45em 0.9em; cursor: pointer;
+            font-weight: 700; font-size: 0.82em;
+        }
+        .corr-show-more:hover { background: #bee3f8; }
         .corr-btn {
             background: #ebf8ff; border: 1px solid #bee3f8;
             border-radius: 4px; color: #2b6cb0;
@@ -551,7 +575,8 @@
         .cycles-cell { line-height: 1.8; }
         .var-name-cell { font-family: monospace; font-weight: 700; font-size: 0.88em; white-space: nowrap; padding: 0.8em 0.5em; }
         .var-entry-name { font-family: monospace; font-weight: 700; font-size: 0.8em; color: #2b6cb0; margin-right: 4px; white-space: nowrap; }
-        .var-cycles-row { white-space: nowrap; line-height: 2; }
+        .var-cycles-row { white-space: nowrap; line-height: 2; border-radius: 4px; padding: 0 2px; }
+        .var-cycles-row:hover { background: #f0fff4; }
         #variables-table tbody tr { cursor: pointer; transition: background 0.1s; }
         #variables-table tbody tr:hover { background: #ebf8ff; }
 
@@ -616,7 +641,9 @@
                 </div>
                 <button id="corr-close" title="Close">&times;</button>
             </div>
-            <div id="corr-tabs"></div>
+            <div id="corr-summary-bar">
+                <span id="corr-cycle-status"></span>
+            </div>
             <div id="corr-filter-bar">
                 <span class="flt-label">Subset:</span>
                 <select id="flt-sex" title="Filter by sex">
@@ -961,7 +988,14 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         let corrManifest  = [];
         let corrActiveVar  = null;
         let corrActiveCycle = null;
+        let corrCycleEntries = [];
+        let corrCycleSummaries = [];
+        let corrSummaryRunId = 0;
+        let corrRowsExpanded = false;
         let scatterColX = null, scatterColY = null;
+
+        const SPECIAL_NUMERIC_MISSING = new Set([777, 999, 7777, 9999, 77777, 99999]);
+        const SPECIAL_CAT_MISSING = new Set([77, 99, 777, 999, 7777, 9999, 77777, 99999]);
 
         // ── Data loading ──────────────────────────────────────────────────────
         async function loadManifest() {
@@ -977,10 +1011,138 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         }
         async function loadScatterData(cycle) {
             if (scatterCache[cycle]) return scatterCache[cycle];
-            const r = await fetch(`data/${cycle}.scatter.json`);
-            if (!r.ok) return null;
-            scatterCache[cycle] = await r.json();
-            return scatterCache[cycle];
+            try {
+                const r = await fetch(`data/${cycle}.scatter.json`);
+                if (!r.ok) return null;
+                scatterCache[cycle] = cleanScatterData(await r.json());
+                return scatterCache[cycle];
+            } catch (err) {
+                console.warn(`Could not load scatter data for ${cycle}`, err);
+                return null;
+            }
+        }
+
+        function labelLooksMissing(label) {
+            return /refused|don't know|dont know|missing|not ascertained|blank/i.test(String(label || ''));
+        }
+
+        function isSpecialMissingValue(col, value, type, uniqueValues) {
+            if (value === null) return false;
+            const numericValue = Number(value);
+            if (!Number.isFinite(numericValue)) return false;
+            const absValue = Math.abs(numericValue);
+            const labels = valueLabels[col] || {};
+            const label = labels[String(value)] || labels[value];
+            if (labelLooksMissing(label)) return true;
+            if (type === 'num') return SPECIAL_NUMERIC_MISSING.has(absValue);
+            if (SPECIAL_CAT_MISSING.has(absValue)) return true;
+            if ((absValue === 7 || absValue === 9) && !label && uniqueValues.size <= 6 && (uniqueValues.has('1') || uniqueValues.has('2'))) {
+                return true;
+            }
+            return false;
+        }
+
+        function cleanScatterData(scatterData) {
+            const colTypes = scatterData.col_types || {};
+            const cleanedCounts = {};
+            const cleanData = {};
+            for (const col of scatterData.cols || []) {
+                const type = colTypes[col] || 'num';
+                const raw = scatterData.data[col] || [];
+                const uniqueValues = new Set(raw.filter(v => v !== null).map(v => String(v)));
+                let removed = 0;
+                cleanData[col] = raw.map(value => {
+                    if (isSpecialMissingValue(col, value, type, uniqueValues)) {
+                        removed++;
+                        return null;
+                    }
+                    return value;
+                });
+                if (removed) cleanedCounts[col] = removed;
+            }
+            return { ...scatterData, data: cleanData, cleaned_counts: cleanedCounts };
+        }
+
+        function isScatterOpen() {
+            return document.getElementById('corr-scatter')?.classList.contains('open');
+        }
+
+        function updateFilterStatus(rawData, filteredData) {
+            const statusEl2 = document.getElementById('flt-status');
+            if (!statusEl2) return;
+            statusEl2.textContent = filteredData
+                ? `${filteredData.n_sample.toLocaleString()} of ${rawData.n_sample.toLocaleString()} in subset`
+                : '';
+        }
+
+        function setCycleStatus(text) {
+            const el = document.getElementById('corr-cycle-status');
+            if (el) el.textContent = text || '';
+        }
+
+        function escapeHtml(value) {
+            return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+
+        function escapeAttr(value) {
+            return escapeHtml(value).replace(/"/g, '&quot;');
+        }
+
+        function pairAvailableInCycle(cycle) {
+            if (!scatterColX || !scatterColY) return true;
+            const m = corrManifest.find(x => x.cycle === cycle);
+            return !!(m && m.varSet && m.varSet.has(scatterColX) && m.varSet.has(scatterColY));
+        }
+
+        function formatPValue(p) {
+            return p < 0.0001 ? 'p<0.0001' : `p=${p < 0.01 ? p.toFixed(4) : p.toFixed(3)}`;
+        }
+
+        function formatAssocValue(result) {
+            if (result.tcode === 0) return `${result.sign >= 0 ? '+' : ''}${result.assoc.toFixed(3)}`;
+            return result.assoc.toFixed(3);
+        }
+
+        function relationColor(result) {
+            if (result.tcode === 0) return result.sign >= 0 ? TYPE_COLORS.r_pos : TYPE_COLORS.r_neg;
+            return result.tcode === 1 ? TYPE_COLORS.eta : TYPE_COLORS.V;
+        }
+
+        function cycleIndex(cycle) {
+            return corrManifest.findIndex(m => m.cycle === cycle);
+        }
+
+        function cycleTitleLabel(cycle) {
+            const years = String(cycle || '').match(/\d{4}/g);
+            return years && years.length ? years[years.length - 1] : cycle;
+        }
+
+        function aggregateCycleSummaries(summaries) {
+            const byCol = new Map();
+            summaries.forEach(summary => {
+                summary.results.forEach(result => {
+                    if (!byCol.has(result.col)) byCol.set(result.col, []);
+                    byCol.get(result.col).push({ ...result, cycle: summary.cycle });
+                });
+            });
+            return [...byCol.entries()].map(([col, cycles]) => {
+                cycles.sort((a, b) => cycleIndex(a.cycle) - cycleIndex(b.cycle));
+                const significant = cycles.filter(c => c.p < 0.05);
+                const strongest = cycles.reduce((best, c) => Math.abs(c.assoc) > Math.abs(best.assoc) ? c : best, cycles[0]);
+                const bestP = cycles.reduce((best, c) => c.p < best.p ? c : best, cycles[0]);
+                return { col, cycles, significant, strongest, bestP };
+            }).sort((a, b) => {
+                const aSig = a.significant.length > 0;
+                const bSig = b.significant.length > 0;
+                if (aSig !== bSig) return aSig ? -1 : 1;
+                if (a.bestP.p !== b.bestP.p) return a.bestP.p - b.bestP.p;
+                if (b.cycles.length !== a.cycles.length) return b.cycles.length - a.cycles.length;
+                return Math.abs(b.strongest.assoc) - Math.abs(a.strongest.assoc);
+            });
+        }
+
+        function pickCycleForRelation(cycles) {
+            return cycles.find(c => c.cycle === corrActiveCycle) || cycles[cycles.length - 1];
         }
 
         // ── Association measures ──────────────────────────────────────────────
@@ -988,6 +1150,65 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         const TYPE_LABELS = ['r', 'η', 'V'];
         const TYPE_CSS    = ['type-r', 'type-eta', 'type-v'];
         const TYPE_COLORS = { r_pos:'#2b6cb0', r_neg:'#c53030', eta:'#276749', V:'#6b46c1' };
+        const PLOT_LABELS = ['scatter', 'boxplot', 'heatmap'];
+        const PLOT_CSS = ['plot-scatter', 'plot-box', 'plot-heatmap'];
+        const DEFAULT_CORR_ROW_LIMIT = 650;
+
+        function plotKindForTcode(tcode) {
+            return { label: PLOT_LABELS[tcode] || 'plot', css: PLOT_CSS[tcode] || '' };
+        }
+
+        function quantile(sortedValues, p) {
+            if (!sortedValues.length) return null;
+            const idx = (sortedValues.length - 1) * p;
+            const lo = Math.floor(idx);
+            const hi = Math.ceil(idx);
+            if (lo === hi) return sortedValues[lo];
+            return sortedValues[lo] + (sortedValues[hi] - sortedValues[lo]) * (idx - lo);
+        }
+
+        function robustRange(values) {
+            const sorted = values.filter(v => v !== null && Number.isFinite(v)).slice().sort((a, b) => a - b);
+            if (sorted.length < 4) return null;
+            let lower = quantile(sorted, 0.01);
+            let upper = quantile(sorted, 0.99);
+            if (lower === null || upper === null) return null;
+            if (lower === upper) {
+                lower = sorted[0];
+                upper = sorted[sorted.length - 1];
+            }
+            if (lower === upper) return null;
+            const pad = (upper - lower) * 0.04;
+            const clipped = sorted.filter(v => v < lower || v > upper).length;
+            return { range: [lower - pad, upper + pad], lower, upper, clipped };
+        }
+
+        function clippedAxisNote(...ranges) {
+            const clipped = ranges.reduce((sum, r) => sum + (r ? r.clipped : 0), 0);
+            return clipped ? ` · axis 1-99% (${clipped.toLocaleString()} outside view)` : '';
+        }
+
+        function cleanedCodeNote(scatterData, ...cols) {
+            const cleaned = cols.reduce((sum, col) => sum + ((scatterData.cleaned_counts || {})[col] || 0), 0);
+            return cleaned ? ` · ${cleaned.toLocaleString()} coded missing removed` : '';
+        }
+
+        function groupStats(values) {
+            const sorted = values.filter(v => v !== null && Number.isFinite(v)).slice().sort((a, b) => a - b);
+            if (!sorted.length) return { n: 0, mean: 0, median: 0 };
+            const mean = sorted.reduce((sum, v) => sum + v, 0) / sorted.length;
+            return { n: sorted.length, mean, median: quantile(sorted, 0.5) };
+        }
+
+        function sortGroupKeysByMedian(groups) {
+            return Object.keys(groups).sort((a, b) => {
+                const sa = groupStats(groups[a]);
+                const sb = groupStats(groups[b]);
+                if (sa.median !== sb.median) return sa.median - sb.median;
+                if (sa.mean !== sb.mean) return sa.mean - sb.mean;
+                return Number(a) - Number(b);
+            });
+        }
 
         // ── P-value helpers ───────────────────────────────────────────────────
         function _normalCDF(x) {
@@ -1094,6 +1315,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         // ── Show modal ────────────────────────────────────────────────────────
         async function showCorrelates(varName, varDesc, varDocLink, preferredCycle) {
             corrActiveVar = varName;
+            scatterColX = null;
+            scatterColY = null;
+            corrCycleEntries = [];
+            corrCycleSummaries = [];
+            corrSummaryRunId++;
+            corrRowsExpanded = false;
+            setCycleStatus('Loading relationships...');
             document.getElementById('corr-title').textContent = varName;
             document.getElementById('corr-desc').textContent  = varDesc || '';
             // Detailed description from nhanes_var_details.json
@@ -1122,6 +1350,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
             const manifest = await loadManifest();
             if (!manifest.length) {
+                setCycleStatus('No cycle data available');
                 document.getElementById('corr-list').innerHTML =
                     '<p class="corr-no-data">No cycle data available. Run <code>python3 build_cycle_data.py</code> first.</p>';
                 return;
@@ -1129,7 +1358,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
             const cyclesWithVar = manifest.filter(m => m.varSet.has(varName));
             if (!cyclesWithVar.length) {
-                document.getElementById('corr-tabs').innerHTML = '';
+                setCycleStatus('Variable not in built cycle data');
                 document.getElementById('corr-list').innerHTML =
                     `<p class="corr-no-data"><b>${varName}</b> is not in the dataset.<br><br>` +
                     `<span style="font-size:0.88em;color:#718096;">` +
@@ -1139,132 +1368,172 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     `${manifest.reduce((s,m)=>s+(m.n_cols||0),0).toLocaleString()} variables total.</span></p>`;
                 return;
             }
+            corrCycleEntries = cyclesWithVar;
 
-            const tabsEl = document.getElementById('corr-tabs');
-            tabsEl.innerHTML = '';
             const defaultCycle = cyclesWithVar.find(m => m.cycle === preferredCycle)
                 ? preferredCycle : cyclesWithVar[cyclesWithVar.length-1].cycle;
-            for (const m of cyclesWithVar) {
-                const btn = document.createElement('button');
-                btn.className = 'corr-tab' + (m.cycle === defaultCycle ? ' active' : '');
-                btn.textContent = m.cycle;
-                btn.addEventListener('click', () => switchCycleTab(m.cycle));
-                tabsEl.appendChild(btn);
-            }
-            switchCycleTab(defaultCycle);
+            selectCorrelationCycle(defaultCycle);
         }
 
-        async function switchCycleTab(cycle) {
+        async function selectCorrelationCycle(cycle) {
             corrActiveCycle = cycle;
-            document.querySelectorAll('.corr-tab').forEach(t =>
-                t.classList.toggle('active', t.textContent === cycle));
             if (corrViewMode === 'distribution') {
                 refreshDistribution();
+                return;
+            }
+            if (isScatterOpen() && scatterColX && scatterColY) {
+                await drawScatterFromCache();
                 return;
             }
             document.getElementById('corr-scatter').classList.remove('open');
             const listEl = document.getElementById('corr-list');
             listEl.style.display = '';
-            listEl.innerHTML = '<div class="corr-loading-msg">Loading…</div>';
-
-            const t0 = performance.now();
-            const data = await loadScatterData(cycle);
-            if (!data || !data.data[corrActiveVar]) {
-                listEl.innerHTML = `<p class="corr-no-data"><b>${corrActiveVar}</b> not found in ${cycle} data.</p>`;
-                return;
-            }
-            const filtered  = applyPopFilter(data);
-            const workData  = filtered || data;
-            const statusEl2 = document.getElementById('flt-status');
-            if (statusEl2) statusEl2.textContent = filtered ? `${filtered.n_sample.toLocaleString()} of ${data.n_sample.toLocaleString()} in subset` : '';
-            const results = computeCorrelates(workData, corrActiveVar);
-            const ms = Math.round(performance.now() - t0);
-            renderCorrTable(results, workData, ms);
+            await hydrateCorrelationSummary(corrCycleEntries, cycle);
         }
 
-        function renderCorrTable(results, scatterData, ms) {
+        async function hydrateCorrelationSummary(cyclesWithVar, preferredCycle) {
+            const runId = ++corrSummaryRunId;
+            corrCycleSummaries = [];
+            const listEl = document.getElementById('corr-list');
+            listEl.innerHTML = '<div class="corr-loading-msg">Loading relationships across cycles…</div>';
+            setCycleStatus(`Loading 0/${cyclesWithVar.length} cycles`);
+
+            const orderedCycles = [...cyclesWithVar].sort((a, b) => {
+                if (a.cycle === preferredCycle) return -1;
+                if (b.cycle === preferredCycle) return 1;
+                return cycleIndex(a.cycle) - cycleIndex(b.cycle);
+            });
+
+            let lastRender = 0;
+            for (const m of orderedCycles) {
+                const t0 = performance.now();
+                const data = await loadScatterData(m.cycle);
+                if (runId !== corrSummaryRunId) return;
+                if (!data || !data.data[corrActiveVar]) continue;
+                const filtered = applyPopFilter(data);
+                const workData = filtered || data;
+                if (m.cycle === corrActiveCycle) updateFilterStatus(data, filtered);
+                const results = computeCorrelates(workData, corrActiveVar);
+                corrCycleSummaries.push({ cycle: m.cycle, results, scatterData: workData, ms: Math.round(performance.now() - t0) });
+                const now = performance.now();
+                if (corrCycleSummaries.length === 1 || now - lastRender > 500 || corrCycleSummaries.length === orderedCycles.length) {
+                    renderCorrSummaryTable(corrCycleSummaries, cyclesWithVar.length, true);
+                    lastRender = now;
+                    await new Promise(resolve => requestAnimationFrame(resolve));
+                }
+            }
+
+            if (runId !== corrSummaryRunId) return;
+            renderCorrSummaryTable(corrCycleSummaries, cyclesWithVar.length, false);
+        }
+
+        function renderCorrSummaryTable(summaries, totalCycles, loading) {
             const listEl = document.getElementById('corr-list');
             listEl.innerHTML = '';
-            const colTypes = scatterData.col_types || {};
-            const nNum = Object.values(colTypes).filter(t => t === 'num').length;
-            const nCat = Object.values(colTypes).filter(t => t === 'cat').length;
+            const allRows = aggregateCycleSummaries(summaries);
+            const rows = corrRowsExpanded ? allRows : allRows.slice(0, DEFAULT_CORR_ROW_LIMIT);
             const SIG = 0.05;
-            const nSig = results.filter(r => r.p < SIG).length;
+            const nSigRows = allRows.filter(row => row.significant.length).length;
+            const loadedCycles = summaries.length;
+            setCycleStatus(loading
+                ? `Loaded ${loadedCycles}/${totalCycles} cycles`
+                : `${allRows.length.toLocaleString()} relationships across ${loadedCycles}/${totalCycles} cycles`);
 
             const info = document.createElement('div');
             info.style.cssText = 'padding:0.5em 1.2em;font-size:0.78em;color:#718096;display:flex;gap:1em;align-items:center;flex-wrap:wrap;';
             info.innerHTML =
-                `<span>${nSig} significant · ${results.length - nSig} not · ${ms}ms</span>` +
-                `<span>${scatterData.cols.length} variables (${nNum} numeric, ${nCat} categorical) · ` +
-                `${scatterData.n_total.toLocaleString()} respondents · ` +
-                `${scatterData.n_sample.toLocaleString()} sampled</span>`;
+                `<span>${nSigRows.toLocaleString()} variables significant in at least one cycle · ${allRows.length.toLocaleString()} related variables</span>` +
+                `<span>${loadedCycles}/${totalCycles} cycles loaded${loading ? ' · loading more...' : ''}</span>` +
+                (!corrRowsExpanded && allRows.length > rows.length ? `<span>showing top ${rows.length.toLocaleString()}</span>` : '');
             listEl.appendChild(info);
+
+            if (!allRows.length) {
+                const empty = document.createElement('p');
+                empty.className = 'corr-no-data';
+                empty.textContent = loading
+                    ? 'Looking for relationships in available cycles...'
+                    : 'No relationships met the shared-data threshold for this subset.';
+                listEl.appendChild(empty);
+                return;
+            }
 
             const tbl = document.createElement('table');
             tbl.className = 'corr-table';
 
             let sepInserted = false;
-            results.forEach(({col, assoc, tcode, n, sign, p}, idx) => {
-                // Insert separator between significant and non-significant
-                if (!sepInserted && p >= SIG) {
+            rows.forEach((row, idx) => {
+                if (!sepInserted && !row.significant.length) {
                     sepInserted = true;
                     const sepTr = document.createElement('tr');
                     sepTr.className = 'corr-sig-sep';
-                    sepTr.innerHTML = '<td colspan="5">not significant (p ≥ 0.05)</td>';
+                    sepTr.innerHTML = '<td colspan="5">not significant in loaded cycles (p ≥ 0.05)</td>';
                     tbl.appendChild(sepTr);
                 }
 
-                const desc = (varMeta[col] && varMeta[col].desc) || col;
-                const absA = assoc !== null ? Math.abs(assoc) : 0;
-                const label = TYPE_LABELS[tcode];
-                const typeClass = TYPE_CSS[tcode];
-                const isSig = p < SIG;
-
-                let color, rStr;
-                if (assoc === null) {
-                    color = '#a0aec0';
-                    rStr  = '—';
-                } else if (tcode === 0) {
-                    color = sign >= 0 ? TYPE_COLORS.r_pos : TYPE_COLORS.r_neg;
-                    rStr  = (sign >= 0 ? '+' : '') + assoc.toFixed(3);
-                } else {
-                    color = tcode === 1 ? TYPE_COLORS.eta : TYPE_COLORS.V;
-                    rStr  = assoc.toFixed(3);
-                }
-
-                const pStr = p < 0.0001 ? 'p<0.0001' : `p=${p < 0.01 ? p.toFixed(4) : p.toFixed(3)}`;
-                const nFmt = n >= 1000 ? (n/1000).toFixed(1)+'k' : String(n);
+                const desc = (varMeta[row.col] && varMeta[row.col].desc) || row.col;
                 const shortD = desc.length > 50 ? desc.slice(0, 50) + '\u2026' : desc;
-                const colType = colTypes[col] || 'num';
-                const catBadge = colType === 'cat'
-                    ? ' <span style="font-size:0.68em;color:#a0aec0">cat</span>' : '';
-                const clickable = assoc !== null;
+                const chosen = pickCycleForRelation(row.cycles);
+                const color = relationColor(row.strongest);
+                const absA = Math.abs(row.strongest.assoc);
+                const colType = TYPE_LABELS[row.strongest.tcode];
+                const plotKind = plotKindForTcode(row.strongest.tcode);
+                const catBadge = row.strongest.tcode !== 0
+                    ? ` <span style="font-size:0.68em;color:#a0aec0">${colType}</span>` : '';
+                const cycleValues = row.cycles.map(cycleResult => {
+                    const activeClass = cycleResult.cycle === corrActiveCycle ? ' active' : '';
+                    const sigClass = cycleResult.p < SIG ? '' : ' nonsig';
+                    const assocText = formatAssocValue(cycleResult);
+                    return `<span class="corr-cycle-value${activeClass}${sigClass}" data-cycle="${escapeAttr(cycleResult.cycle)}" title="Open ${escapeAttr(cycleResult.cycle)} · ${escapeAttr(formatPValue(cycleResult.p))} · n=${cycleResult.n.toLocaleString()}">` +
+                        `<span class="corr-cycle-name">${escapeHtml(cycleResult.cycle)}</span>` +
+                        `<span class="corr-cycle-assoc" style="color:${relationColor(cycleResult)}">${assocText}</span>` +
+                        `<span class="type-badge ${TYPE_CSS[cycleResult.tcode]}">${TYPE_LABELS[cycleResult.tcode]}</span>` +
+                        `</span>`;
+                }).join('');
 
                 const tr = document.createElement('tr');
-                tr.className = isSig
-                    ? (clickable ? 'corr-row-scatter' : 'corr-row')
-                    : 'corr-row-nonsig';
-                if (clickable) tr.title = 'Click to view chart';
+                tr.dataset.col = row.col;
+                tr.dataset.cycle = chosen.cycle;
+                tr.className = row.significant.length ? 'corr-row-scatter' : 'corr-row-nonsig';
+                tr.title = chosen.cycle === corrActiveCycle
+                    ? 'Click to view chart for the active cycle'
+                    : `Click to view chart in ${chosen.cycle}; this pair is not available in the active cycle`;
                 tr.innerHTML = `
                     <td class="corr-rank">${idx+1}</td>
-                    <td class="corr-varname">${col}${catBadge}</td>
-                    <td class="corr-vardesc" title="${desc.replace(/"/g,'&quot;')}">${shortD}</td>
+                    <td class="corr-varname">${escapeHtml(row.col)}${catBadge}<br><span class="plot-badge ${plotKind.css}">${plotKind.label}</span></td>
+                    <td class="corr-vardesc" title="${escapeAttr(desc)}">${escapeHtml(shortD)}</td>
+                    <td class="corr-cycle-values">${cycleValues}</td>
                     <td class="corr-bar-cell">
                         <div class="corr-bar" style="width:${Math.round(absA*100)}px;background:${color}"></div>
-                        <span class="corr-r" style="color:${color}">${rStr}
-                          <span class="type-badge ${typeClass}">${label}</span></span>
-                        <span class="corr-pval">${pStr}</span>
-                    </td>
-                    <td class="corr-n" title="${n.toLocaleString()} shared observations">n=${nFmt}</td>`;
-                if (clickable) tr.addEventListener('click', () => openScatter(corrActiveVar, col));
+                        <span class="corr-r" style="color:${color}">${formatAssocValue(row.strongest)}</span>
+                    </td>`;
                 tbl.appendChild(tr);
             });
+            tbl.addEventListener('click', event => {
+                const rowEl = event.target.closest('tr[data-col]');
+                if (!rowEl) return;
+                const cycleEl = event.target.closest('[data-cycle]');
+                openScatter(corrActiveVar, rowEl.dataset.col, cycleEl ? cycleEl.dataset.cycle : rowEl.dataset.cycle);
+            });
             listEl.appendChild(tbl);
+
+            if (!corrRowsExpanded && allRows.length > rows.length) {
+                const btn = document.createElement('button');
+                btn.className = 'corr-show-more';
+                btn.textContent = `Show all ${allRows.length.toLocaleString()} relationships`;
+                btn.addEventListener('click', () => {
+                    corrRowsExpanded = true;
+                    renderCorrSummaryTable(corrCycleSummaries, corrCycleEntries.length, false);
+                });
+                listEl.appendChild(btn);
+            }
         }
 
         // ── Scatter plot ─────────────────────────────────────────────────────
-        function openScatter(colA, colB) {
+        function openScatter(colA, colB, preferredCycle) {
             scatterColX = colB; scatterColY = colA;
+            if (preferredCycle && preferredCycle !== corrActiveCycle) {
+                corrActiveCycle = preferredCycle;
+            }
             document.getElementById('corr-list').style.display = 'none';
             document.getElementById('corr-scatter').classList.add('open');
             drawScatterFromCache();
@@ -1273,19 +1542,39 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
         async function drawScatterFromCache() {
             const panel = document.getElementById('scatter-plot');
             panel.innerHTML = '<div class="corr-loading-msg">Loading scatter data…</div>';
-            const scatter = await loadScatterData(corrActiveCycle);
-            if (!scatter) {
-                panel.innerHTML = '<p class="corr-no-data">Scatter data not available for this cycle.</p>';
-                return;
+            if (window.Plotly) Plotly.purge('scatter-plot');
+            try {
+                const scatter = await loadScatterData(corrActiveCycle);
+                if (!scatter) {
+                    panel.innerHTML = '<p class="corr-no-data">Scatter data not available for this cycle.</p>';
+                    setCycleStatus('No scatter file for this cycle');
+                    return;
+                }
+                const filtered = applyPopFilter(scatter);
+                updateFilterStatus(scatter, filtered);
+                const workData = filtered || scatter;
+                await drawScatter(workData);
+            } catch (err) {
+                console.warn('Could not draw scatter plot', err);
+                panel.innerHTML = '<p class="corr-no-data">Scatter plot could not be drawn for this selection.</p>';
+                setCycleStatus('Chart unavailable');
             }
-            drawScatter(applyPopFilter(scatter) || scatter);
         }
 
-        function drawScatter(scatterData) {
+        async function drawScatter(scatterData) {
+            const panel = document.getElementById('scatter-plot');
             const dataX = scatterData.data[scatterColX];
             const dataY = scatterData.data[scatterColY];
             const colTypes = scatterData.col_types || {};
-            if (!dataX || !dataY) return;
+            if (!dataX || !dataY) {
+                const missing = [scatterColX, scatterColY].filter(col => !scatterData.data[col]).join(', ');
+                panel.innerHTML = `<p class="corr-no-data"><b>${missing}</b> not available in ${corrActiveCycle} data.</p>`;
+                document.getElementById('scatter-title').textContent = `${cycleTitleLabel(corrActiveCycle)}: ${scatterColY} × ${scatterColX}`;
+                document.getElementById('scatter-stats').textContent = 'Choose another cycle or correlate.';
+                setCycleStatus('Pair not available in this cycle');
+                return;
+            }
+            setCycleStatus(pairAvailableInCycle(corrActiveCycle) ? '' : 'Pair not available in this cycle');
             const typeX = colTypes[scatterColX] || 'num';
             const typeY = colTypes[scatterColY] || 'num';
             const metaX = varMeta[scatterColX] || {};
@@ -1298,7 +1587,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 if (dataX[i] !== null && dataY[i] !== null) { xs.push(dataX[i]); ys.push(dataY[i]); }
             }
 
-            document.getElementById('scatter-title').textContent = `${scatterColY} × ${scatterColX}`;
+            document.getElementById('scatter-title').textContent = `${cycleTitleLabel(corrActiveCycle)}: ${scatterColY} × ${scatterColX}`;
 
             if (xs.length < 2) {
                 document.getElementById('scatter-plot').innerHTML =
@@ -1325,10 +1614,14 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 const r = denom ? (nn*sxy-sx*sy)/denom : 0;
                 const slope = (nn*sxx-sx*sx) ? (nn*sxy-sx*sy)/(nn*sxx-sx*sx) : 0;
                 const intercept = sy/nn - slope*(sx/nn);
-                const xMin=Math.min(...xs), xMax=Math.max(...xs);
+                const rangeX = robustRange(xs);
+                const rangeY = robustRange(ys);
+                const xMin = rangeX ? rangeX.range[0] : Math.min(...xs);
+                const xMax = rangeX ? rangeX.range[1] : Math.max(...xs);
                 document.getElementById('scatter-stats').textContent =
-                    `Pearson r = ${r>=0?'+':''}${r.toFixed(3)}  ·  n = ${nn.toLocaleString()}`;
-                Plotly.react('scatter-plot', [
+                    `Pearson r = ${r>=0?'+':''}${r.toFixed(3)}  ·  n = ${nn.toLocaleString()}` +
+                    clippedAxisNote(rangeX, rangeY) + cleanedCodeNote(scatterData, scatterColX, scatterColY);
+                await Plotly.react('scatter-plot', [
                     { x: xs, y: ys, type: 'scatter', mode: 'markers', name: 'Data',
                       marker: { size: 5, opacity: 0.35, color: '#3182ce' },
                       hovertemplate: `${scatterColX}: %{x:.3g}<br>${scatterColY}: %{y:.3g}<extra></extra>` },
@@ -1336,8 +1629,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                       type: 'scatter', mode: 'lines', name: 'OLS',
                       line: { color: '#e53e3e', width: 2.5 }, hoverinfo: 'skip' }
                 ], { ...baseLayout,
-                     xaxis: { title: xLabel, automargin: true },
-                     yaxis: { title: yLabel, automargin: true } }, cfg);
+                     xaxis: { title: xLabel, automargin: true, ...(rangeX ? { range: rangeX.range } : {}) },
+                     yaxis: { title: yLabel, automargin: true, ...(rangeY ? { range: rangeY.range } : {}) } }, cfg);
 
             } else if (typeX === 'cat' && typeY === 'num') {
                 // Box plot: X = category groups, Y = numeric
@@ -1347,11 +1640,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     if (!(k in groups)) groups[k] = [];
                     groups[k].push(ys[i]);
                 }
-                const cats = Object.keys(groups).sort((a,b) => Number(a)-Number(b));
+                const cats = sortGroupKeysByMedian(groups);
                 const labX = getLabels(scatterColX);
+                const rangeY = robustRange(ys);
                 document.getElementById('scatter-stats').textContent =
-                    `η association  ·  n = ${xs.length.toLocaleString()}  ·  ${cats.length} categories`;
-                Plotly.react('scatter-plot',
+                    `η association  ·  n = ${xs.length.toLocaleString()}  ·  ${cats.length} categories sorted by median` +
+                    clippedAxisNote(rangeY) + cleanedCodeNote(scatterData, scatterColX, scatterColY);
+                await Plotly.react('scatter-plot',
                     cats.map(cat => ({
                         y: groups[cat], type: 'box', name: applyLabel(labX, cat),
                         boxpoints: groups[cat].length <= 300 ? 'outliers' : false,
@@ -1359,7 +1654,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     })),
                     { ...baseLayout,
                       xaxis: { title: xLabel },
-                      yaxis: { title: yLabel, automargin: true } }, cfg);
+                                            yaxis: { title: yLabel, automargin: true, ...(rangeY ? { range: rangeY.range } : {}) } }, cfg);
 
             } else if (typeX === 'num' && typeY === 'cat') {
                 // Horizontal box plot: Y = category groups, X = numeric
@@ -1369,18 +1664,20 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     if (!(k in groups)) groups[k] = [];
                     groups[k].push(xs[i]);
                 }
-                const cats = Object.keys(groups).sort((a,b) => Number(a)-Number(b));
+                const cats = sortGroupKeysByMedian(groups);
                 const labY = getLabels(scatterColY);
+                const rangeX = robustRange(xs);
                 document.getElementById('scatter-stats').textContent =
-                    `η association  ·  n = ${xs.length.toLocaleString()}  ·  ${cats.length} categories`;
-                Plotly.react('scatter-plot',
+                    `η association  ·  n = ${xs.length.toLocaleString()}  ·  ${cats.length} categories sorted by median` +
+                    clippedAxisNote(rangeX) + cleanedCodeNote(scatterData, scatterColX, scatterColY);
+                await Plotly.react('scatter-plot',
                     cats.map(cat => ({
                         x: groups[cat], type: 'box', name: applyLabel(labY, cat), orientation: 'h',
                         boxpoints: groups[cat].length <= 300 ? 'outliers' : false,
                         marker: { size: 3, opacity: 0.5, color: '#3182ce' }
                     })),
                     { ...baseLayout,
-                      xaxis: { title: xLabel, automargin: true },
+                                            xaxis: { title: xLabel, automargin: true, ...(rangeX ? { range: rangeX.range } : {}) },
                       yaxis: { title: yLabel } }, cfg);
 
             } else {
@@ -1399,8 +1696,9 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                     })
                 );
                 document.getElementById('scatter-stats').textContent =
-                    `Cramér's V  ·  n = ${xs.length.toLocaleString()}  ·  ${rowCats.length} × ${colCats.length} categories`;
-                Plotly.react('scatter-plot',
+                    `Cramér's V  ·  n = ${xs.length.toLocaleString()}  ·  ${rowCats.length} × ${colCats.length} categories` +
+                    cleanedCodeNote(scatterData, scatterColX, scatterColY);
+                await Plotly.react('scatter-plot',
                     [{ z, x: xLabels, y: yLabels,
                        type: 'heatmap', colorscale: 'Blues', showscale: true,
                        hovertemplate: `${scatterColX}=%{x}<br>${scatterColY}=%{y}<br>count=%{z}<extra></extra>` }],
@@ -1412,16 +1710,16 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
         function swapScatterAxes() {
             const tmp = scatterColX; scatterColX = scatterColY; scatterColY = tmp;
-            if (corrActiveCycle && scatterCache[corrActiveCycle]) {
-                drawScatter(scatterCache[corrActiveCycle]);
-            }
+            if (corrActiveCycle) drawScatterFromCache();
         }
 
         function closeScatter() {
             const plotDiv = document.getElementById('scatter-plot');
-            if (plotDiv && plotDiv.data) Plotly.purge(plotDiv);
+            if (window.Plotly && plotDiv && plotDiv.data) Plotly.purge(plotDiv);
             document.getElementById('corr-scatter').classList.remove('open');
             document.getElementById('corr-list').style.display = '';
+            setCycleStatus('');
+            if (corrCycleSummaries.length) renderCorrSummaryTable(corrCycleSummaries, corrCycleEntries.length, false);
         }
 
         // ── Population subset filter ──────────────────────────────────────────
@@ -1477,6 +1775,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             });
             const resetBtn = document.getElementById('flt-reset');
             if (resetBtn) resetBtn.classList.toggle('visible', anyActive);
+        }
+
+        function refreshActiveRelationshipView() {
+            if (!corrActiveCycle) return;
+            if (corrViewMode === 'distribution') refreshDistribution();
+            else if (isScatterOpen() && scatterColX && scatterColY) drawScatterFromCache();
+            else selectCorrelationCycle(corrActiveCycle);
         }
 
         function closeCorrelates() {
@@ -1602,10 +1907,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             if (!stratifyBy) {
                 // ── Unstratified ──────────────────────────────────────────────
                 if (isNum) {
-                    const h    = Math.max(1e-10, 1.06 * distStdDev(valid) * Math.pow(valid.length, -0.2));
-                    const xMin = Math.min(...valid), xMax = Math.max(...valid);
+                    const rangeX = robustRange(valid);
+                    const kdeVals = rangeX ? valid.filter(v => v >= rangeX.lower && v <= rangeX.upper) : valid;
+                    const h    = Math.max(1e-10, 1.06 * distStdDev(kdeVals) * Math.pow(kdeVals.length, -0.2));
+                    const xMin = rangeX ? rangeX.lower : Math.min(...valid);
+                    const xMax = rangeX ? rangeX.upper : Math.max(...valid);
                     const pts  = Array.from({length: 300}, (_, i) => xMin + (i / 299) * (xMax - xMin));
-                    const kde  = gaussianKDE(valid, h, pts);
+                    const kde  = gaussianKDE(kdeVals, h, pts);
                     Plotly.react('dist-plot', [
                         { x: valid, type: 'histogram', histnorm: 'probability density',
                           name: varName, marker: { color: DIST_PALETTE[0], opacity: 0.45, line: { width: 0 } },
@@ -1613,8 +1921,9 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                         { x: pts, y: kde, type: 'scatter', mode: 'lines', name: 'KDE',
                           line: { color: '#1a365d', width: 2.5 }, showlegend: false, hoverinfo: 'skip' }
                     ], { ...baseLayout,
-                         title: { text: `Distribution of ${varName}  (n=${valid.length.toLocaleString()})`, font: { size: 13 } },
-                         yaxis: { title: 'Density', automargin: true } }, cfg);
+                        title: { text: `Distribution of ${varName}  (n=${valid.length.toLocaleString()})${clippedAxisNote(rangeX)}${cleanedCodeNote(scatterData, varName)}`, font: { size: 13 } },
+                        xaxis: { title: varName, automargin: true, ...(rangeX ? { range: rangeX.range } : {}) },
+                        yaxis: { title: 'Density', automargin: true } }, cfg);
                 } else {
                     const counts   = {};
                     for (const v of valid) counts[v] = (counts[v] || 0) + 1;
@@ -1660,10 +1969,13 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
                 if (isNum) {
                     const allVals = orderedKeys.flatMap(k => groups[k]);
-                    const xMin   = Math.min(...allVals), xMax = Math.max(...allVals);
+                    const rangeX = robustRange(allVals);
+                    const xMin   = rangeX ? rangeX.lower : Math.min(...allVals);
+                    const xMax   = rangeX ? rangeX.upper : Math.max(...allVals);
                     const pts    = Array.from({length: 300}, (_, i) => xMin + (i / 299) * (xMax - xMin));
                     const traces = orderedKeys.map((key, idx) => {
-                        const vals  = groups[key];
+                        const vals  = rangeX ? groups[key].filter(v => v >= rangeX.lower && v <= rangeX.upper) : groups[key];
+                        if (!vals.length) return null;
                         const h     = Math.max(1e-10, 1.06 * distStdDev(vals) * Math.pow(vals.length, -0.2));
                         const kde   = gaussianKDE(vals, h, pts);
                         const label = applyLabel(stratLabels, key);
@@ -1672,10 +1984,15 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                                  line: { color: DIST_PALETTE[idx % DIST_PALETTE.length], width: 2.2 },
                                  fill: 'tozeroy', fillcolor: DIST_PALETTE_FILL[idx % DIST_PALETTE_FILL.length],
                                  hovertemplate: `%{x:.3g}<extra>${label}</extra>` };
-                    });
+                    }).filter(Boolean);
+                    if (!traces.length) {
+                        panel.innerHTML = '<p class="corr-no-data">No values inside the display range for the selected stratification.</p>';
+                        return;
+                    }
                     Plotly.react('dist-plot', traces, {
                         ...baseLayout,
-                        title: { text: `${varName} by ${stratifyBy.replace('_bin', '')}`, font: { size: 13 } },
+                        title: { text: `${varName} by ${stratifyBy.replace('_bin', '')}${clippedAxisNote(rangeX)}${cleanedCodeNote(scatterData, varName)}`, font: { size: 13 } },
+                        xaxis: { title: varName, automargin: true, ...(rangeX ? { range: rangeX.range } : {}) },
                         yaxis: { title: 'Density', automargin: true }
                     }, cfg);
                 } else {
@@ -1737,9 +2054,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
             ['flt-sex','flt-age','flt-race','flt-educ','flt-pir'].forEach(id => {
                 document.getElementById(id).addEventListener('change', () => {
                     syncFilterUI();
-                    if (!corrActiveCycle) return;
-                    if (corrViewMode === 'distribution') refreshDistribution();
-                    else switchCycleTab(corrActiveCycle);
+                    refreshActiveRelationshipView();
                 });
             });
             document.getElementById('flt-reset').addEventListener('click', () => {
@@ -1749,9 +2064,7 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 syncFilterUI();
                 const statusEl2 = document.getElementById('flt-status');
                 if (statusEl2) statusEl2.textContent = '';
-                if (!corrActiveCycle) return;
-                if (corrViewMode === 'distribution') refreshDistribution();
-                else switchCycleTab(corrActiveCycle);
+                refreshActiveRelationshipView();
             });
             // Prefetch manifest so the first click is instant
             if (window.requestIdleCallback) {
@@ -1850,6 +2163,16 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
                 if (e.target.closest('a')) return; // let doc link open normally
                 const tr = e.target.closest('tr');
                 if (!tr || !tr.dataset.var) return;
+                const varOption = e.target.closest('[data-var-option]');
+                if (varOption) {
+                    showCorrelates(
+                        varOption.dataset.varOption,
+                        tr.dataset.desc,
+                        varOption.dataset.varDoc || tr.dataset.doc,
+                        varOption.dataset.varCycle || tr.dataset.cycle
+                    );
+                    return;
+                }
                 showCorrelates(tr.dataset.var, tr.dataset.desc, tr.dataset.doc, tr.dataset.cycle);
             });
 
@@ -1872,6 +2195,9 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
             // Group rows: Step 1 by varName, Step 2 merge by normalized explanation
             function normalizeExpl(s) { return (s || '').trim().replace(/\s+/g, ' ').toLowerCase(); }
+            function escAttr(s) {
+                return String(s || '').replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            }
 
             function buildMeasurementData(rawData) {
                 const byVar = new Map();
@@ -1927,7 +2253,8 @@ function loadImagesIndividually(plotExamples, baseWidth = 300) {
 
                 const varCellHtml = entry.varEntries.map(ve => {
                     const chips = ve.cycles.map(c => `<span class="cycle-chip">${c}</span>`).join('');
-                    return `<div class="var-cycles-row"><span class="var-entry-name">${ve.varName}</span>${chips}</div>`;
+                    const latestCycle = ve.cycles[ve.cycles.length - 1] || '';
+                    return `<div class="var-cycles-row" data-var-option="${escAttr(ve.varName)}" data-var-cycle="${escAttr(latestCycle)}" data-var-doc="${escAttr(ve.docLink)}"><span class="var-entry-name">${ve.varName}</span>${chips}</div>`;
                 }).join('');
 
                 const docHtml = entry.bestDocLink

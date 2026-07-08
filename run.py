@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """run.py — start a local HTTP server, killing whatever is already on the port.
 Serves data/*.json with gzip compression so local testing mirrors GitHub Pages CDN."""
-import gzip, io, os, signal, subprocess, sys, time
+import gzip, os, shutil, signal, subprocess, sys, time
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+from urllib.parse import urlsplit
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
 
@@ -20,28 +21,50 @@ def kill_port(port: int):
 class GzipHandler(SimpleHTTPRequestHandler):
     """Transparently gzip JSON responses when the client supports it."""
 
+    def should_gzip_json(self):
+        path = urlsplit(self.path).path
+        return (path.startswith("/data/") and path.endswith(".json")
+                and "gzip" in self.headers.get("Accept-Encoding", ""))
+
+    def send_gzip_json_headers(self, fs_path):
+        if not os.path.exists(fs_path):
+            self.send_error(404)
+            return False
+        self.send_response(200)
+        self.send_header("Content-Type", "application/json")
+        self.send_header("Content-Encoding", "gzip")
+        self.send_header("Vary", "Accept-Encoding")
+        self.end_headers()
+        return True
+
+    def do_HEAD(self):
+        if self.should_gzip_json():
+            self.send_gzip_json_headers(self.translate_path(self.path))
+            return
+        return super().do_HEAD()
+
+    def do_GET(self):
+        if not self.should_gzip_json():
+            return super().do_GET()
+
+        fs_path = self.translate_path(self.path)
+        if not self.send_gzip_json_headers(fs_path):
+            return
+        try:
+            with open(fs_path, "rb") as src:
+                with gzip.GzipFile(fileobj=self.wfile, mode="wb", compresslevel=6) as gz:
+                    shutil.copyfileobj(src, gz, length=1024 * 1024)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
+
     def send_head(self):
-        # Only gzip .json files whose path starts with /data/
-        path = self.translate_path(self.path)
-        if (self.path.startswith("/data/") and self.path.endswith(".json")
-                and "gzip" in self.headers.get("Accept-Encoding", "")):
-            try:
-                with open(path, "rb") as f:
-                    raw = f.read()
-                buf = io.BytesIO()
-                with gzip.GzipFile(fileobj=buf, mode="wb", compresslevel=6) as gz:
-                    gz.write(raw)
-                data = buf.getvalue()
-                self.send_response(200)
-                self.send_header("Content-Type", "application/json")
-                self.send_header("Content-Encoding", "gzip")
-                self.send_header("Content-Length", str(len(data)))
-                self.end_headers()
-                return io.BytesIO(data)
-            except FileNotFoundError:
-                self.send_error(404)
-                return None
         return super().send_head()
+
+    def copyfile(self, source, outputfile):
+        try:
+            return super().copyfile(source, outputfile)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
     def log_message(self, fmt, *args):
         # Suppress per-request noise; show only errors and first-byte of large files
